@@ -2,17 +2,39 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Проекты | Глеб Чернов</title>
     <meta name="description" content="Портфолио проектов Глеба Чернова - веб и десктоп приложения">
+    <meta name="theme-color" content="#8B5FBF">
+    
+    <!-- Preload resources -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        .loading {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loaded {
+            opacity: 1;
+        }
+    </style>
 </head>
-<body>
+<body class="loading">
     <div class="glass-container">
         <!-- Navigation -->
         <nav class="neo-nav" aria-label="Основная навигация">
             <div class="nav-container">
                 <a href="index.html" class="neo-logo">Gleb Chernov</a>
+                
+                <button class="mobile-menu-toggle" aria-label="Открыть меню">
+                    <span>☰</span>
+                </button>
+                
                 <ul class="neo-nav__list">
                     <li class="neo-nav__item"><a href="index.html" class="neo-nav__link">Главная</a></li>
                     <li class="neo-nav__item"><a href="skills.html" class="neo-nav__link">Навыки</a></li>
@@ -41,20 +63,20 @@
         </div>
 
         <!-- Project Modal -->
-        <div class="modal" id="projectModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000;">
-            <div class="modal-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--color-glass); backdrop-filter: var(--blur-intensity); border-radius: var(--border-radius); padding: 2rem; max-width: 90vw; max-height: 90vh; overflow-y: auto;">
-                <span class="close-modal" style="position: absolute; top: 1rem; right: 1rem; font-size: 2rem; cursor: pointer; color: var(--color-text);">&times;</span>
-                <div class="modal-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div class="modal" id="projectModal">
+            <div class="modal-content">
+                <button class="close-modal" aria-label="Закрыть окно">&times;</button>
+                <div class="modal-body">
                     <div class="modal-image">
-                        <img id="modalImg" src="" alt="" style="width: 100%; border-radius: var(--border-radius);">
+                        <img id="modalImg" src="" alt="" loading="lazy">
                     </div>
                     <div class="modal-info">
-                        <h2 id="modalTitle" style="margin-bottom: 1rem;"></h2>
-                        <p id="modalDescription" style="margin-bottom: 1.5rem;"></p>
-                        <div class="modal-tech" id="modalTech" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;"></div>
-                        <div class="modal-links" style="display: flex; gap: 1rem;">
-                            <a href="#" id="modalLive" class="glass-button" target="_blank" style="display: inline-block;">🚀 Live Demo</a>
-                            <a href="#" id="modalGitHub" class="glass-button glass-button-outline" target="_blank" style="display: inline-block;">💻 GitHub</a>
+                        <h2 id="modalTitle"></h2>
+                        <p id="modalDescription"></p>
+                        <div class="modal-tech" id="modalTech"></div>
+                        <div class="modal-links">
+                            <a href="#" id="modalLive" class="glass-button" target="_blank" rel="noopener">🚀 Live Demo</a>
+                            <a href="#" id="modalGitHub" class="glass-button glass-button-outline" target="_blank" rel="noopener">💻 GitHub</a>
                         </div>
                     </div>
                 </div>
@@ -65,11 +87,11 @@
         <section id="contacts" class="contacts-section">
             <h2 class="section-title animated-gradient-text">Заинтересованы в сотрудничестве?</h2>
             <div class="contacts-grid">
-                <a href="https://t.me/Sabitoshi" class="contact-card glass-card" target="_blank">
+                <a href="https://t.me/mm0l0d0y" class="contact-card glass-card" target="_blank" rel="noopener">
                     <div class="contact-icon">📱</div>
                     <span>Telegram</span>
                 </a>
-                <a href="https://github.com/Sabitoshi" class="contact-card glass-card" target="_blank">
+                <a href="https://github.com/Samurai2306" class="contact-card glass-card" target="_blank" rel="noopener">
                     <div class="contact-icon">💻</div>
                     <span>GitHub</span>
                 </a>

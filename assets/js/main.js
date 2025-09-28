@@ -1,50 +1,158 @@
-// Enhanced animations and interactions
-class PortfolioAnimations {
+// Enhanced mobile navigation and animations
+class MobilePortfolio {
     constructor() {
+        this.isMobileMenuOpen = false;
         this.init();
     }
 
     init() {
-        this.initCounterAnimation();
-        this.initTypingAnimation();
-        this.initMarqueeAnimation();
-        this.initScrollAnimations();
-        this.initFloatingEffects();
-        this.initParticleEffect();
-        this.initNavigation();
+        this.initMobileNavigation();
+        this.initTouchEvents();
+        this.initSmoothScroll();
+        this.initAnimations();
+        this.initPerformanceOptimizations();
+        this.setupLoadingState();
     }
 
-    // Animated counters for statistics
-    initCounterAnimation() {
-        const counters = document.querySelectorAll('.stat-number');
-        if (!counters.length) return;
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = parseInt(counter.getAttribute('data-count'));
-                    const duration = 2000;
-                    const step = target / (duration / 16);
-                    let current = 0;
+    // Setup loading state
+    setupLoadingState() {
+        window.addEventListener('load', () => {
+            document.body.classList.remove('loading');
+            document.body.classList.add('loaded');
+        });
 
-                    const updateCounter = () => {
-                        current += step;
-                        if (current < target) {
-                            counter.textContent = Math.floor(current);
-                            requestAnimationFrame(updateCounter);
-                        } else {
-                            counter.textContent = target;
-                        }
-                    };
+        // Fallback in case load event doesn't fire
+        setTimeout(() => {
+            document.body.classList.remove('loading');
+            document.body.classList.add('loaded');
+        }, 1000);
+    }
 
-                    updateCounter();
-                    observer.unobserve(counter);
+    // Mobile navigation with touch gestures
+    initMobileNavigation() {
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        const navList = document.querySelector('.neo-nav__list');
+        const navLinks = document.querySelectorAll('.neo-nav__link');
+
+        if (toggle && navList) {
+            // Toggle menu
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleMobileMenu();
+            });
+
+            // Close menu when clicking on links
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    this.closeMobileMenu();
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (this.isMobileMenuOpen && !navList.contains(e.target) && !toggle.contains(e.target)) {
+                    this.closeMobileMenu();
                 }
             });
-        }, { threshold: 0.5 });
 
-        counters.forEach(counter => observer.observe(counter));
+            // Close menu on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && this.isMobileMenuOpen) {
+                    this.closeMobileMenu();
+                }
+            });
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768 && this.isMobileMenuOpen) {
+                this.closeMobileMenu();
+            }
+        });
+    }
+
+    toggleMobileMenu() {
+        const navList = document.querySelector('.neo-nav__list');
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        
+        if (navList && toggle) {
+            this.isMobileMenuOpen = !this.isMobileMenuOpen;
+            navList.classList.toggle('mobile-open');
+            toggle.textContent = this.isMobileMenuOpen ? '✕' : '☰';
+            toggle.setAttribute('aria-label', this.isMobileMenuOpen ? 'Закрыть меню' : 'Открыть меню');
+            
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = this.isMobileMenuOpen ? 'hidden' : '';
+        }
+    }
+
+    closeMobileMenu() {
+        const navList = document.querySelector('.neo-nav__list');
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        
+        if (navList && toggle) {
+            this.isMobileMenuOpen = false;
+            navList.classList.remove('mobile-open');
+            toggle.textContent = '☰';
+            toggle.setAttribute('aria-label', 'Открыть меню');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Touch event optimizations
+    initTouchEvents() {
+        // Add touch-specific classes for better UX
+        if ('ontouchstart' in window) {
+            document.documentElement.classList.add('touch-device');
+        }
+
+        // Prevent zoom on double tap for buttons
+        const buttons = document.querySelectorAll('button, .glass-button');
+        buttons.forEach(button => {
+            button.addEventListener('touchstart', function() {
+                // Add active state
+                this.style.transform = 'scale(0.98)';
+            });
+
+            button.addEventListener('touchend', function() {
+                // Remove active state
+                this.style.transform = '';
+            });
+        });
+    }
+
+    // Smooth scroll with mobile optimizations
+    initSmoothScroll() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const target = document.querySelector(targetId);
+                if (target) {
+                    const offset = 80; // Account for fixed header
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu if open
+                    this.closeMobileMenu();
+                }
+            }.bind(this));
+        });
+    }
+
+    // Performance-optimized animations
+    initAnimations() {
+        this.initLazyLoading();
+        this.initIntersectionObserver();
+        this.initPerformanceCounters();
+        this.initTypingAnimation();
+        this.initMarqueeAnimation();
     }
 
     // Typing animation for subtitle
@@ -84,104 +192,133 @@ class PortfolioAnimations {
         const clone = marquee.cloneNode(true);
         marquee.parentNode.appendChild(clone);
 
-        let animation;
         if (typeof gsap !== 'undefined') {
-            animation = gsap.to('.marquee-track', {
+            gsap.to('.marquee-track', {
                 x: '-50%',
                 duration: 20,
                 repeat: -1,
                 ease: 'linear'
             });
-        } else {
-            // Fallback CSS animation
-            marquee.style.animation = 'marquee 20s linear infinite';
-            clone.style.animation = 'marquee 20s linear infinite';
         }
     }
 
-    // Scroll animations
-    initScrollAnimations() {
-        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-            gsap.registerPlugin(ScrollTrigger);
-
-            gsap.utils.toArray('.aspiration-card, .project-card, .skills-category').forEach(element => {
-                gsap.fromTo(element, {
-                    opacity: 0,
-                    y: 50
-                }, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    scrollTrigger: {
-                        trigger: element,
-                        start: 'top 80%',
-                        end: 'bottom 20%',
-                        toggleActions: 'play none none reverse'
-                    }
-                });
-            });
-
-            // Parallax effect for hero
-            gsap.to('.hero', {
-                y: -100,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.hero',
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true
-                }
-            });
-        } else {
-            // Fallback: simple intersection observer
-            const observer = new IntersectionObserver((entries) => {
+    // Lazy loading for images
+    initLazyLoading() {
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                        }
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
                     }
                 });
-            }, { threshold: 0.1 });
+            });
 
-            document.querySelectorAll('.aspiration-card, .project-card, .skills-category').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(el);
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
             });
         }
     }
 
-    // Floating elements animation
-    initFloatingEffects() {
-        // Floating cards
-        const floatingCard = document.querySelector('.floating-card');
-        if (floatingCard) {
-            if (typeof gsap !== 'undefined') {
-                gsap.to('.floating-card', {
-                    y: -20,
-                    duration: 2,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: 'power1.inOut'
-                });
-            }
-        }
+    // Intersection Observer for animations
+    initIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate counters if element has data-count
+                    const counters = entry.target.querySelectorAll('[data-count]');
+                    counters.forEach(counter => {
+                        this.animateCounter(counter);
+                    });
+                }
+            });
+        }, { 
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
 
-        // Floating orbs
-        const projectOrb = document.querySelector('.project-orb');
-        if (projectOrb) {
-            if (typeof gsap !== 'undefined') {
-                gsap.to('.project-orb', {
-                    rotation: 360,
-                    duration: 20,
-                    repeat: -1,
-                    ease: 'none'
-                });
+        // Observe elements for animation
+        document.querySelectorAll('.skills-category, .aspiration-card, .project-card').forEach(el => {
+            observer.observe(el);
+        });
+    }
+
+    // Animated counters
+    animateCounter(counter) {
+        const target = parseInt(counter.getAttribute('data-count'));
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+
+        const updateCounter = () => {
+            current += step;
+            if (current < target) {
+                counter.textContent = Math.floor(current);
+                requestAnimationFrame(updateCounter);
             } else {
-                projectOrb.style.animation = 'float 3s ease-in-out infinite';
+                counter.textContent = target;
             }
-        }
+        };
+
+        updateCounter();
+    }
+
+    // Performance monitoring
+    initPerformanceCounters() {
+        // Only animate counters when they come into view
+        const statNumbers = document.querySelectorAll('.stat-number');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.animateCounter(entry.target);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statNumbers.forEach(stat => statsObserver.observe(stat));
+    }
+
+    // Performance optimizations
+    initPerformanceOptimizations() {
+        // Debounce resize events
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.handleResize();
+            }, 250);
+        });
+
+        // Preload critical images
+        this.preloadCriticalImages();
+        
+        // Initialize particle effect
+        this.initParticleEffect();
+    }
+
+    handleResize() {
+        // Update any layout-specific calculations
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+
+    preloadCriticalImages() {
+        // Preload hero images or critical above-the-fold images
+        const criticalImages = [
+            // Add paths to critical images here
+        ];
+
+        criticalImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
     }
 
     // Particle background effect
@@ -192,6 +329,7 @@ class PortfolioAnimations {
 
         const ctx = canvas.getContext('2d');
         let particles = [];
+        let animationId;
 
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
@@ -245,93 +383,34 @@ class PortfolioAnimations {
                 particle.draw();
             });
             
-            requestAnimationFrame(animateParticles);
+            animationId = requestAnimationFrame(animateParticles);
+        };
+
+        const stopParticles = () => {
+            cancelAnimationFrame(animationId);
         };
 
         // Initialize
         resizeCanvas();
         initParticles();
-        animateParticles();
+        
+        // Only animate when page is visible
+        if (document.visibilityState === 'visible') {
+            animateParticles();
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                animateParticles();
+            } else {
+                stopParticles();
+            }
+        });
 
         window.addEventListener('resize', () => {
             resizeCanvas();
             initParticles();
         });
-    }
-
-    // Enhanced navigation with smooth scroll
-    initNavigation() {
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const target = document.querySelector(targetId);
-                if (target) {
-                    const offsetTop = target.getBoundingClientRect().top + window.pageYOffset - 80;
-                    
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Mobile menu toggle
-        const mobileMenuToggle = document.createElement('button');
-        mobileMenuToggle.innerHTML = '☰';
-        mobileMenuToggle.className = 'mobile-menu-toggle';
-        
-        const navContainer = document.querySelector('.nav-container');
-        if (navContainer) {
-            navContainer.appendChild(mobileMenuToggle);
-
-            mobileMenuToggle.addEventListener('click', () => {
-                const navList = document.querySelector('.neo-nav__list');
-                if (navList) {
-                    navList.classList.toggle('mobile-open');
-                }
-            });
-
-            // Mobile menu styles
-            const mobileStyles = `
-                @media (max-width: 768px) {
-                    .mobile-menu-toggle {
-                        display: block;
-                        background: var(--color-glass);
-                        backdrop-filter: var(--blur-intensity);
-                        border: 1px solid var(--color-border);
-                        color: var(--color-text);
-                        padding: 0.5rem 1rem;
-                        border-radius: var(--border-radius);
-                        cursor: pointer;
-                    }
-                    
-                    .neo-nav__list {
-                        display: none;
-                        position: absolute;
-                        top: 100%;
-                        left: 0;
-                        width: 100%;
-                        background: var(--color-bg);
-                        backdrop-filter: blur(20px);
-                        flex-direction: column;
-                        padding: 1rem;
-                    }
-                    
-                    .neo-nav__list.mobile-open {
-                        display: flex;
-                    }
-                }
-            `;
-            
-            const styleSheet = document.createElement('style');
-            styleSheet.textContent = mobileStyles;
-            document.head.appendChild(styleSheet);
-        }
     }
 }
 
@@ -354,39 +433,30 @@ class PulseAnimation {
     }
 }
 
-// Initialize all animations when DOM is loaded
+// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new PortfolioAnimations();
+    new MobilePortfolio();
     new PulseAnimation();
 });
 
-// Utility functions
-class PortfolioUtils {
-    static formatNumber(num) {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    static debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    static isMobile() {
-        return window.innerWidth <= 768;
-    }
+// Performance monitoring
+if ('performance' in window) {
+    window.addEventListener('load', () => {
+        const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+        console.log(`Page load time: ${loadTime}ms`);
+        
+        if (loadTime > 3000) {
+            console.warn('Page load time is slow, consider optimization');
+        }
+    });
 }
+
+// Error handling
+window.addEventListener('error', (e) => {
+    console.error('Script error:', e.error);
+});
 
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { PortfolioAnimations, PortfolioUtils };
-} else {
-    window.PortfolioAnimations = PortfolioAnimations;
-    window.PortfolioUtils = PortfolioUtils;
+    module.exports = { MobilePortfolio, PulseAnimation };
 }

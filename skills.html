@@ -2,35 +2,55 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Навыки | Глеб Чернов - Fullstack разработчик</title>
     <meta name="description" content="Полный стек навыков Fullstack разработчика: веб-разработка, десктоп приложения, системное администрирование">
+    <meta name="theme-color" content="#8B5FBF">
+    
+    <!-- Preload resources -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        .loading {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loaded {
+            opacity: 1;
+        }
+    </style>
 </head>
-<body>
+<body class="loading">
     <div class="glass-container">
+        <!-- Navigation -->
+        <nav class="neo-nav" aria-label="Основная навигация">
+            <div class="nav-container">
+                <a href="index.html" class="neo-logo">Gleb Chernov</a>
+                
+                <button class="mobile-menu-toggle" aria-label="Открыть меню">
+                    <span>☰</span>
+                </button>
+                
+                <ul class="neo-nav__list">
+                    <li class="neo-nav__item"><a href="index.html" class="neo-nav__link">Главная</a></li>
+                    <li class="neo-nav__item"><a href="skills.html" class="neo-nav__link neo-nav__link--active">Навыки</a></li>
+                    <li class="neo-nav__item"><a href="projects.html" class="neo-nav__link">Проекты</a></li>
+                    <li class="neo-nav__item"><a href="#contacts" class="neo-nav__link">Контакты</a></li>
+                </ul>
+            </div>
+        </nav>
+
         <header class="hero">
             <h1 class="animated-gradient-text">Мои навыки</h1>
             <p class="subtitle">Fullstack разработчик с расширенными компетенциями уровня Junior++</p>
-            
-            <!-- Enhanced Navigation -->
-            <nav class="neo-nav" aria-label="Основная навигация">
-                <div class="nav-container">
-                    <a href="index.html" class="neo-logo">Gleb Chernov</a>
-                    <ul class="neo-nav__list">
-                        <li class="neo-nav__item"><a href="index.html" class="neo-nav__link">Главная</a></li>
-                        <li class="neo-nav__item"><a href="skills.html" class="neo-nav__link neo-nav__link--active">Навыки</a></li>
-                        <li class="neo-nav__item"><a href="projects.html" class="neo-nav__link">Проекты</a></li>
-                        <li class="neo-nav__item">
-                            <a href="#contacts" class="neo-nav__link">Контакты</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
         </header>
 
         <!-- Quick Navigation -->
-        <nav class="anchor-nav" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+        <nav class="anchor-nav" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0; padding: 0 1rem;">
             <a href="#web" class="glass-button">🌐 Веб-разработка</a>
             <a href="#desktop" class="glass-button">💻 Десктоп</a>
             <a href="#sysadmin" class="glass-button">⚙️ Системное администрирование</a>
@@ -38,7 +58,7 @@
         </nav>
 
         <!-- Веб-разработка -->
-        <section id="web" class="skills-category gradient-border">
+        <section id="web" class="skills-category">
             <h2 class="section-title animated-gradient-text anchor-link">🌐 Веб-разработка</h2>
             <p style="text-align: center; margin-bottom: 2rem;">Полный цикл разработки современных веб-приложений</p>
             
@@ -67,7 +87,7 @@
         </section>
 
         <!-- Десктоп разработка -->
-        <section id="desktop" class="skills-category gradient-border">
+        <section id="desktop" class="skills-category">
             <h2 class="section-title animated-gradient-text anchor-link">💻 Десктоп разработка</h2>
             <p style="text-align: center; margin-bottom: 2rem;">Создание нативных приложений для Windows</p>
             
@@ -96,7 +116,7 @@
         </section>
 
         <!-- Системное администрирование -->
-        <section id="sysadmin" class="skills-category gradient-border">
+        <section id="sysadmin" class="skills-category">
             <h2 class="section-title animated-gradient-text anchor-link">⚙️ Системное администрирование</h2>
             <p style="text-align: center; margin-bottom: 2rem;">Обеспечение стабильной работы IT-инфраструктуры</p>
             
@@ -125,7 +145,7 @@
         </section>
 
         <!-- Soft Skills -->
-        <section id="soft-skills" class="skills-category gradient-border">
+        <section id="soft-skills" class="skills-category">
             <h2 class="section-title animated-gradient-text anchor-link">🚀 Профессиональные навыки</h2>
             <p style="text-align: center; margin-bottom: 2rem;">Компетенции уровня Junior++</p>
             
@@ -153,14 +173,32 @@
             </div>
         </section>
 
+        <!-- Contacts Section -->
+        <section id="contacts" class="contacts-section">
+            <h2 class="section-title animated-gradient-text">Всегда на связи</h2>
+            <div class="contacts-grid">
+                <a href="https://t.me/Sabitoshi" class="contact-card glass-card" target="_blank" rel="noopener">
+                    <div class="contact-icon">📱</div>
+                    <span>Telegram</span>
+                </a>
+                <a href="https://github.com/Sabitoshi" class="contact-card glass-card" target="_blank" rel="noopener">
+                    <div class="contact-icon">💻</div>
+                    <span>GitHub</span>
+                </a>
+                <a href="mailto:undertale2006rus@gmail.com" class="contact-card glass-card">
+                    <div class="contact-icon">📧</div>
+                    <span>Email</span>
+                </a>
+            </div>
+        </section>
+
         <footer class="neo-footer">
             <div class="footer-content">
-                <div class="footer-info">
-                    <p>&copy; 2024 Глеб Чернов. Все права защищены.</p>
-                </div>
+                <p>&copy; 2024 Глеб Чернов. Все права защищены.</p>
                 <div class="footer-links">
                     <a href="index.html">Главная</a>
-                    <a href="#top">Наверх</a>
+                    <a href="skills.html">Навыки</a>
+                    <a href="projects.html">Проекты</a>
                 </div>
             </div>
         </footer>

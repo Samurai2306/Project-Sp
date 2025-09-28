@@ -1,8 +1,9 @@
+// Projects data with detailed information
 const projectsData = [
     {
         id: 1,
         title: "Образовательная LMS платформа",
-        description: "Полнофункциональная система управления обучением с видео-стримингом, тестированием и аналитикой успеваемости. Реализована система реального времени для интерактивных занятий.",
+        description: "Полнофункциональная система управления обучением с видео-стримингом, тестированием и аналитикой успеваемости.",
         fullDescription: "Это масштабный проект образовательной платформы, который включает в себя все современные функции для дистанционного обучения. Система поддерживает потоковую передачу видео, интерактивные тесты, домашние задания и подробную аналитику для преподавателей. Особенность проекта - модульная архитектура, позволяющая легко расширять функциональность.",
         technologies: ["React", "Node.js", "MongoDB", "WebRTC", "Redis", "Docker"],
         category: "fullstack",
@@ -15,7 +16,7 @@ const projectsData = [
     {
         id: 2,
         title: "Десктопный клиент для управления проектами",
-        description: "Кроссплатформенное приложение для управления задачами с оффлайн-режимом и синхронизацией в облаке. Интуитивный интерфейс и высокая производительность.",
+        description: "Кроссплатформенное приложение для управления задачами с оффлайн-режимом и синхронизацией в облаке.",
         fullDescription: "Десктопное приложение, разработанное с использованием Electron и React. Поддерживает все основные функции управления проектами: канбан-доски, временные линии, уведомления. Особенность - умная синхронизация, позволяющая работать оффлайн с последующей синхронизацией при появлении интернета.",
         technologies: ["Electron", "React", "SQLite", "WebSocket", "IndexedDB"],
         category: "desktop",
@@ -28,7 +29,7 @@ const projectsData = [
     {
         id: 3,
         title: "E-commerce платформа",
-        description: "Многофункциональный интернет-магазин с системой рекомендаций, интеграцией платежей и админ-панелью для управления контентом.",
+        description: "Многофункциональный интернет-магазин с системой рекомендаций, интеграцией платежей и админ-панелью.",
         fullDescription: "Современная e-commerce платформа с акцентом на пользовательский опыт. Включает умную систему рекомендаций на основе машинного обучения, несколько вариантов оплаты, систему отзывов и рейтингов. Админ-панель позволяет полностью управлять каталогом, заказами и клиентами.",
         technologies: ["Vue.js", "Laravel", "MySQL", "Redis", "Algolia"],
         category: "web",
@@ -41,7 +42,7 @@ const projectsData = [
     {
         id: 4,
         title: "Система мониторинга серверов",
-        description: "Веб-приложение для мониторинга состояния серверов и IT-инфраструктуры с оповещениями и аналитикой в реальном времени.",
+        description: "Веб-приложение для мониторинга состояния серверов и IT-инфраструктуры с оповещениями в реальном времени.",
         fullDescription: "Комплексная система мониторинга, позволяющая отслеживать состояние серверов, сетевого оборудования и приложений. Включает дашборды с графиками, систему оповещений через различные каналы (Email, Telegram, Slack) и историю инцидентов.",
         technologies: ["React", "Python", "FastAPI", "PostgreSQL", "WebSocket"],
         category: "fullstack",
@@ -92,6 +93,7 @@ class ProjectsManager {
         this.renderProjects();
         this.initFilters();
         this.initModal();
+        this.setupImageFallbacks();
     }
 
     renderProjects() {
@@ -116,7 +118,8 @@ class ProjectsManager {
 
         card.innerHTML = `
             <div class="project-image">
-                <img src="${project.image}" alt="${project.title}" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYTFhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+                <img src="${project.image}" alt="${project.title}" loading="lazy" 
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYTFhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
                 ${project.featured ? '<span class="featured-badge">⭐ Избранный</span>' : ''}
                 ${project.status === 'in-progress' ? '<span class="status-badge">🚧 В разработке</span>' : ''}
             </div>
@@ -126,7 +129,7 @@ class ProjectsManager {
                 <div class="project-tech">${tagsHTML}</div>
                 <div class="project-actions">
                     <button class="view-details" data-id="${project.id}">Подробнее</button>
-                    ${project.liveUrl !== '#' ? `<a href="${project.liveUrl}" class="view-live" target="_blank">Live Demo</a>` : ''}
+                    ${project.liveUrl !== '#' ? `<a href="${project.liveUrl}" class="view-live" target="_blank" rel="noopener">Live Demo</a>` : ''}
                 </div>
             </div>
         `;
@@ -166,7 +169,7 @@ class ProjectsManager {
         const closeBtn = document.querySelector('.close-modal');
         
         if (!modal || !closeBtn) return;
-
+        
         // Close modal
         closeBtn.addEventListener('click', () => {
             modal.style.display = 'none';
@@ -175,6 +178,13 @@ class ProjectsManager {
         // Close on outside click
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
                 modal.style.display = 'none';
             }
         });
@@ -225,6 +235,19 @@ class ProjectsManager {
 
         // Show modal
         modal.style.display = 'block';
+        
+        // Focus trap for accessibility
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    setupImageFallbacks() {
+        // Add error handling for images
+        document.addEventListener('error', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYTFhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+            }
+        }, true);
     }
 }
 
@@ -232,3 +255,16 @@ class ProjectsManager {
 document.addEventListener('DOMContentLoaded', () => {
     new ProjectsManager();
 });
+
+// Handle responsive images
+function handleImageResponsiveness() {
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        // Add loading lazy for better performance
+        if (!img.loading) {
+            img.loading = 'lazy';
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', handleImageResponsiveness);
