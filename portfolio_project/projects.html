@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проекты | Глеб Чернов</title>
+    <meta name="description" content="Портфолио проектов Глеба Чернова - веб и десктоп приложения">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="glass-container">
+        <!-- Navigation -->
+        <nav class="neo-nav" aria-label="Основная навигация">
+            <div class="nav-container">
+                <a href="index.html" class="neo-logo">Gleb Chernov</a>
+                <ul class="neo-nav__list">
+                    <li class="neo-nav__item"><a href="index.html" class="neo-nav__link">Главная</a></li>
+                    <li class="neo-nav__item"><a href="skills.html" class="neo-nav__link">Навыки</a></li>
+                    <li class="neo-nav__item"><a href="projects.html" class="neo-nav__link neo-nav__link--active">Проекты</a></li>
+                    <li class="neo-nav__item"><a href="#contacts" class="neo-nav__link">Контакты</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="hero">
+            <h1 class="animated-gradient-text">Мои проекты</h1>
+            <p class="subtitle">Веб-приложения, десктопные программы и инновационные решения</p>
+        </header>
+
+        <!-- Projects Filter -->
+        <div class="projects-filter">
+            <button class="filter-btn active" data-filter="all">Все проекты</button>
+            <button class="filter-btn" data-filter="web">Веб-разработка</button>
+            <button class="filter-btn" data-filter="desktop">Десктоп</button>
+            <button class="filter-btn" data-filter="fullstack">Fullstack</button>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Projects will be loaded dynamically -->
+        </div>
+
+        <!-- Project Modal -->
+        <div class="modal" id="projectModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000;">
+            <div class="modal-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--color-glass); backdrop-filter: var(--blur-intensity); border-radius: var(--border-radius); padding: 2rem; max-width: 90vw; max-height: 90vh; overflow-y: auto;">
+                <span class="close-modal" style="position: absolute; top: 1rem; right: 1rem; font-size: 2rem; cursor: pointer; color: var(--color-text);">&times;</span>
+                <div class="modal-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div class="modal-image">
+                        <img id="modalImg" src="" alt="" style="width: 100%; border-radius: var(--border-radius);">
+                    </div>
+                    <div class="modal-info">
+                        <h2 id="modalTitle" style="margin-bottom: 1rem;"></h2>
+                        <p id="modalDescription" style="margin-bottom: 1.5rem;"></p>
+                        <div class="modal-tech" id="modalTech" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;"></div>
+                        <div class="modal-links" style="display: flex; gap: 1rem;">
+                            <a href="#" id="modalLive" class="glass-button" target="_blank" style="display: inline-block;">🚀 Live Demo</a>
+                            <a href="#" id="modalGitHub" class="glass-button glass-button-outline" target="_blank" style="display: inline-block;">💻 GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contacts Section -->
+        <section id="contacts" class="contacts-section">
+            <h2 class="section-title animated-gradient-text">Заинтересованы в сотрудничестве?</h2>
+            <div class="contacts-grid">
+                <a href="https://t.me/Sabitoshi" class="contact-card glass-card" target="_blank">
+                    <div class="contact-icon">📱</div>
+                    <span>Telegram</span>
+                </a>
+                <a href="https://github.com/Sabitoshi" class="contact-card glass-card" target="_blank">
+                    <div class="contact-icon">💻</div>
+                    <span>GitHub</span>
+                </a>
+                <a href="mailto:undertale2006rus@gmail.com" class="contact-card glass-card">
+                    <div class="contact-icon">📧</div>
+                    <span>Email</span>
+                </a>
+            </div>
+        </section>
+
+        <footer class="neo-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Глеб Чернов. Все права защищены.</p>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="skills.html">Навыки</a>
+                    <a href="projects.html">Проекты</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/projects.js"></script>
+</body>
+</html>

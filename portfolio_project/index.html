@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Глеб Чернов | Fullstack разработчик</title>
+    <meta name="description" content="Портфолио Глеба Чернова - Fullstack разработчика, студента РТУ МИРЭА">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Подключаем GSAP для анимаций -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <div class="glass-container">
+        <!-- Enhanced Navigation -->
+        <nav class="neo-nav" aria-label="Основная навигация">
+            <div class="nav-container">
+                <a href="index.html" class="neo-logo">Gleb Chernov</a>
+                <ul class="neo-nav__list">
+                    <li class="neo-nav__item">
+                        <a href="index.html" class="neo-nav__link neo-nav__link--active">Главная</a>
+                    </li>
+                    <li class="neo-nav__item">
+                        <a href="skills.html" class="neo-nav__link">Навыки</a>
+                        <ul class="neo-submenu">
+                            <li><a href="skills.html#web" class="neo-nav__link">Веб-разработка</a></li>
+                            <li><a href="skills.html#desktop" class="neo-nav__link">Десктоп</a></li>
+                            <li><a href="skills.html#sysadmin" class="neo-nav__link">Системное администрирование</a></li>
+                        </ul>
+                    </li>
+                    <li class="neo-nav__item">
+                        <a href="projects.html" class="neo-nav__link">Проекты</a>
+                    </li>
+                    <li class="neo-nav__item">
+                        <a href="#contacts" class="neo-nav__link">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section with Enhanced Animations -->
+        <header class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="animated-gradient-text">Глеб Чернов</h1>
+                    <p class="subtitle typing-animation">Fullstack разработчик & Студент РТУ МИРЭА</p>
+                    <p class="hero-description">Создаю современные веб-приложения, десктопные решения и управляю IT-инфраструктурой. Junior++ с passion к инновациям.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number" data-count="15">0</span>
+                            <span class="stat-label">Завершенных проектов</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-count="3">0</span>
+                            <span class="stat-label">Года опыта</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-count="10">0</span>
+                            <span class="stat-label">Технологий</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-links">
+                        <a href="projects.html" class="glass-button pulse-animation">
+                            <span>🚀 Смотреть проекты</span>
+                        </a>
+                        <a href="#contacts" class="glass-button glass-button-outline">
+                            <span>💬 Связаться со мной</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="floating-card">
+                        <div class="code-snippet">
+                            <pre><code class="language-javascript">const developer = {
+  name: "Глеб Чернов",
+  role: "Fullstack Developer",
+  skills: ["React", "Node.js", "C#", "Python"],
+  level: "Junior++",
+  passion: "Создавать инновации"
+};</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Quick Skills Preview -->
+        <section class="quick-skills">
+            <h2 class="section-title animated-gradient-text">Технологический стек</h2>
+            <div class="skills-marquee">
+                <div class="marquee-track">
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">C#/.NET</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">Electron</span>
+                    <span class="skill-tag">Linux</span>
+                    <!-- Duplicate for seamless loop -->
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">C#/.NET</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">Electron</span>
+                    <span class="skill-tag">Linux</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Projects -->
+        <section class="featured-projects">
+            <h2 class="section-title animated-gradient-text">Избранные проекты</h2>
+            <div class="projects-showcase">
+                <div class="project-highlight">
+                    <div class="project-visual">
+                        <div class="project-orb"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Веб-платформа для образования</h3>
+                        <p>Полнофункциональная LMS система с реальным временем и аналитикой</p>
+                        <div class="tech-stack">
+                            <span class="tech">React</span>
+                            <span class="tech">Node.js</span>
+                            <span class="tech">MongoDB</span>
+                        </div>
+                        <a href="projects.html" class="glass-button">Исследовать проект</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Aspirations Section -->
+        <section class="aspirations">
+            <h2 class="section-title animated-gradient-text">Мои стремления</h2>
+            <div class="aspiration-cards">
+                <div class="aspiration-card">
+                    <div class="aspiration-icon">🚀</div>
+                    <h3>Инновации</h3>
+                    <p>Создание продуктов, которые меняют подход к решению повседневных задач</p>
+                </div>
+                <div class="aspiration-card">
+                    <div class="aspiration-icon">🌍</div>
+                    <h3>Глобальное влияние</h3>
+                    <p>Разработка решений, которые улучшают жизнь людей по всему миру</p>
+                </div>
+                <div class="aspiration-card">
+                    <div class="aspiration-icon">📚</div>
+                    <h3>Непрерывное обучение</h3>
+                    <p>Постоянное освоение новых технологий и методологий разработки</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacts Section -->
+        <section id="contacts" class="contacts-section">
+            <h2 class="section-title animated-gradient-text">Давайте создавать вместе</h2>
+            <div class="contacts-grid">
+                <a href="https://t.me/Sabitoshi" class="contact-card glass-card" target="_blank">
+                    <div class="contact-icon">📱</div>
+                    <span>Telegram</span>
+                    <small>@Sabitoshi</small>
+                </a>
+                <a href="https://github.com/Sabitoshi" class="contact-card glass-card" target="_blank">
+                    <div class="contact-icon">💻</div>
+                    <span>GitHub</span>
+                    <small>Sabitoshi</small>
+                </a>
+                <a href="mailto:undertale2006rus@gmail.com" class="contact-card glass-card">
+                    <div class="contact-icon">📧</div>
+                    <span>Email</span>
+                    <small>undertale2006rus@gmail.com</small>
+                </a>
+                <a href="https://career.habr.com/" class="contact-card glass-card" target="_blank">
+                    <div class="contact-icon">💼</div>
+                    <span>Хабр Карьера</span>
+                    <small>Глеб Чернов</small>
+                </a>
+            </div>
+        </section>
+
+        <footer class="neo-footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Глеб Чернов</h3>
+                    <p>Fullstack разработчик & Студент РТУ МИРЭА</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="skills.html">Навыки</a>
+                    <a href="projects.html">Проекты</a>
+                    <a href="#contacts">Контакты</a>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; 2024 Глеб Чернов. Создано с ❤️ и большим количеством кода.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
