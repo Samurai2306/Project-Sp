@@ -56,6 +56,71 @@ body {
 }
 
 /* ==== CONTAINERS ==== */
+.pov-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* всегда под контентом */
+    pointer-events: none;
+    overflow: hidden;
+    filter: blur(3px) brightness(0.8) saturate(0.8); /* меньше blur, чуть ярче */
+}
+
+.pov {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.tray {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.die {
+    width: 320px;
+    height: 55px;
+    padding-bottom: 9px;
+    perspective: 999px;
+    position: relative;
+}
+
+.cube {
+    position: absolute;
+    width: 100%;
+    height: 700%;
+    transform-style: preserve-3d;
+}
+
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 900;
+    letter-spacing: -1px;
+    backface-visibility: hidden;
+    user-select: none;
+    text-shadow: 0 2px 16px var(--color-primary), 0 0 2px #000;
+    opacity: 0.7; /* надписи более чёткие */
+}
+
+@media (max-width: 600px) {
+  .die { width: 180px; }
+  .face { font-size: 32px !important; }
+}
 .glass-container {
     width: 100%;
     max-width: 100%;

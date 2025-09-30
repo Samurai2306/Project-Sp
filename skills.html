@@ -12,6 +12,64 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+    .skills-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+        filter: blur(2px) brightness(0.85) saturate(0.85);
+    }
+    .skills-pov {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .skills-tray {
+        width: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .skills-die {
+        width: 280px;
+        height: 50px;
+        padding-bottom: 8px;
+        perspective: 900px;
+        position: relative;
+    }
+    .skills-cube {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+    }
+    .skills-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+        font-weight: 900;
+        letter-spacing: -1px;
+        backface-visibility: hidden;
+        user-select: none;
+        text-shadow: 0 2px 12px #8B5FBF, 0 0 2px #000;
+        opacity: 0.65;
+        font-size: 30px;
+    }
+    </style>
     
     <style>
         .loading {
@@ -25,7 +83,77 @@
     </style>
 </head>
 <body class="loading">
+    <div class="skills-bg">
+        <div class="skills-pov">
+            <div class="skills-tray">
+                <div class="skills-die">
+                    <div class="skills-cube">
+                        <div class="skills-face">SKILLS</div>
+                        <div class="skills-face">STACK</div>
+                        <div class="skills-face">LEVEL</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="glass-container">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+    // Уникальная анимация кубиков для страницы навыков
+    window.addEventListener('DOMContentLoaded', function() {
+        if (!window.gsap || !document.querySelector('.skills-pov')) return;
+        const n = 13;
+        const rots = [
+            { ry: 270, a:0.5 },
+            { ry: 0,   a:0.85 },
+            { ry: 90,  a:0.4 },
+            { ry: 180, a:0.0 }
+        ];
+        gsap.set('.skills-face', {
+            z: 180,
+            rotateY: i => rots[i].ry,
+            transformOrigin: '50% 50% -181px'
+        });
+        for (let i=0; i<n; i++){
+            let die = document.querySelector('.skills-die');
+            let cube = die.querySelector('.skills-cube');
+            if (i>0){
+                let clone = die.cloneNode(true);
+                document.querySelector('.skills-tray').append(clone);
+                cube = clone.querySelector('.skills-cube');
+            }
+            gsap.timeline({repeat:-1, yoyo:true, defaults:{ease:'power3.inOut', duration:1}})
+            .fromTo(cube, {
+                rotateY:-90
+            },{
+                rotateY:90,
+                ease:'power1.inOut',
+                duration:8
+            })
+            .fromTo(cube.querySelectorAll('.skills-face'), {
+                color:(j)=>'hsl('+(i/n*60+220)+', 38%,'+(45*[rots[3].a, rots[0].a, rots[1].a][j])+'%)'
+            },{
+                color:(j)=>'hsl('+(i/n*60+220)+', 32%,'+(38*[rots[0].a, rots[1].a, rots[2].a][j])+'%)'
+            }, 0)
+            .to(cube.querySelectorAll('.skills-face'), {
+                color:(j)=>'hsl('+(i/n*60+220)+', 28%,'+(30*[rots[1].a, rots[2].a, rots[3].a][j])+'%)'
+            }, 1)
+            .progress(i/n);
+        }
+        gsap.timeline()
+            .from('.skills-tray', {yPercent:-2, duration:2, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            .fromTo('.skills-tray', {rotate:-10},{rotate:10, duration:5, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            .from('.skills-die', {duration:0.01, opacity:0, stagger:{each:-0.05, ease:'power1.in'}}, 0)
+            .to('.skills-tray', {scale:1.15, duration:2, ease:'power3.inOut', yoyo:true, repeat:-1}, 0);
+        function setSkillsBgScale() {
+            const h = n*14;
+            gsap.set('.skills-tray', {height:h});
+            gsap.set('.skills-pov', {scale:window.innerHeight/h});
+        }
+        window.addEventListener('resize', setSkillsBgScale);
+        setSkillsBgScale();
+    });
+    </script>
         <!-- Navigation -->
         <nav class="neo-nav" aria-label="Основная навигация">
             <div class="nav-container">

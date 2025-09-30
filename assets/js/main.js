@@ -12,6 +12,83 @@ class MobilePortfolio {
         this.initAnimations();
         this.initPerformanceOptimizations();
         this.setupLoadingState();
+            this.initCubeBgAnimation();
+    }
+    // Cube background animation
+    initCubeBgAnimation() {
+        // Проверяем, что GSAP загружен и элемент .pov существует
+        if (!window.gsap || !document.querySelector('.pov')) return;
+        // Количество кубиков (строк)
+        const n = 19;
+        // Массив с параметрами для каждой грани кубика: угол поворота и прозрачность
+        const rots = [
+            { ry: 270, a:0.5 }, // левая грань
+            { ry: 0,   a:0.85 }, // передняя грань
+            { ry: 90,  a:0.4 }, // правая грань
+            { ry: 180, a:0.0 }  // задняя грань
+        ];
+
+        // Устанавливаем начальные стили для всех граней кубика
+        gsap.set('.face', {
+            z: 200, // отдаление по оси Z
+            rotateY: i => rots[i].ry, // угол поворота для каждой грани
+            transformOrigin: '50% 50% -201px' // точка трансформации для 3D
+        });
+
+        // Создаём и анимируем n кубиков
+        for (let i=0; i<n; i++){
+            let die = document.querySelector('.die'); // исходный кубик
+            let cube = die.querySelector('.cube');
+            // Клонируем кубик, если это не первый
+            if (i>0){    
+                let clone = die.cloneNode(true);
+                document.querySelector('.tray').append(clone);
+                cube = clone.querySelector('.cube');
+            }
+            // Анимация вращения кубика и смены цвета граней
+            gsap.timeline({repeat:-1, yoyo:true, defaults:{ease:'power3.inOut', duration:1}})
+            // Вращение кубика по оси Y
+            .fromTo(cube, {
+                rotateY:-90
+            },{
+                rotateY:90,
+                ease:'power1.inOut',
+                duration:7 // медленно, чтобы можно было прочитать
+            })
+            // Анимация цвета граней (начальный -> промежуточный)
+            .fromTo(cube.querySelectorAll('.face'), {
+                color:(j)=>'hsl('+(i/n*75+240)+', 45%,'+(55*[rots[3].a, rots[0].a, rots[1].a][j])+'%)'
+            },{
+                color:(j)=>'hsl('+(i/n*75+240)+', 40%,'+(45*[rots[0].a, rots[1].a, rots[2].a][j])+'%)'
+            }, 0)
+            // Анимация цвета граней (промежуточный -> конечный)
+            .to(cube.querySelectorAll('.face'), {
+                color:(j)=>'hsl('+(i/n*75+240)+', 35%,'+(35*[rots[1].a, rots[2].a, rots[3].a][j])+'%)'
+            }, 1)
+            // Смещение прогресса анимации для эффекта волны
+            .progress(i/n);
+        }
+
+        // Анимация всей "ленты" кубиков (движение, вращение, масштаб)
+        gsap.timeline()
+            // Вертикальное покачивание всей ленты
+            .from('.tray', {yPercent:-3, duration:2, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            // Горизонтальное покачивание всей ленты
+            .fromTo('.tray', {rotate:-15},{rotate:15, duration:4, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            // Плавное появление кубиков
+            .from('.die', {duration:0.01, opacity:0, stagger:{each:-0.05, ease:'power1.in'}}, 0)
+            // Пульсация масштаба всей ленты
+            .to('.tray', {scale:1.2, duration:2, ease:'power3.inOut', yoyo:true, repeat:-1}, 0);
+
+        // Масштабирование анимации под размер окна
+        window.addEventListener('resize', setCubeBgScale);
+        setCubeBgScale();
+        // Функция для установки масштаба и высоты ленты
+        function setCubeBgScale() {
+            const h = n*12; // высота ленты зависит от количества кубиков
+            gsap.set('.tray', {height:h});
+            gsap.set('.pov', {scale:window.innerHeight/h});
+        }
     }
 
     // Setup loading state
