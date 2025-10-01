@@ -73,12 +73,12 @@ class MobilePortfolio {
         gsap.timeline()
             // Вертикальное покачивание всей ленты
             .from('.tray', {yPercent:-3, duration:2, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
-            // Горизонтальное покачивание всей ленты
-            .fromTo('.tray', {rotate:-15},{rotate:15, duration:4, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            // Горизонтальное покачивание всей ленты (уменьшен угол)
+            .fromTo('.tray', {rotate:-5},{rotate:5, duration:4, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
             // Плавное появление кубиков
             .from('.die', {duration:0.01, opacity:0, stagger:{each:-0.05, ease:'power1.in'}}, 0)
-            // Пульсация масштаба всей ленты
-            .to('.tray', {scale:1.2, duration:2, ease:'power3.inOut', yoyo:true, repeat:-1}, 0);
+            // Пульсация масштаба всей ленты (уменьшена)
+            .to('.tray', {scale:1.05, duration:2, ease:'power3.inOut', yoyo:true, repeat:-1}, 0);
 
         // Масштабирование анимации под размер окна
         window.addEventListener('resize', setCubeBgScale);

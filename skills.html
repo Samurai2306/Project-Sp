@@ -142,9 +142,9 @@
         }
         gsap.timeline()
             .from('.skills-tray', {yPercent:-2, duration:2, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
-            .fromTo('.skills-tray', {rotate:-10},{rotate:10, duration:5, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            .fromTo('.skills-tray', {rotate:-5},{rotate:5, duration:5, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
             .from('.skills-die', {duration:0.01, opacity:0, stagger:{each:-0.05, ease:'power1.in'}}, 0)
-            .to('.skills-tray', {scale:1.15, duration:2, ease:'power3.inOut', yoyo:true, repeat:-1}, 0);
+            .to('.skills-tray', {scale:1.05, duration:2, ease:'power3.inOut', yoyo:true, repeat:-1}, 0);
         function setSkillsBgScale() {
             const h = n*14;
             gsap.set('.skills-tray', {height:h});
