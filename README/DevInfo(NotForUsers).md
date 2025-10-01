@@ -188,3 +188,94 @@ PWA (Progressive Web App)
 Задеплой новую версию
 
 Проверь live версию
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+        id: 1,
+        title: "Образовательная LMS платформа",
+        description: "Полнофункциональная система управления обучением с видео-стримингом, тестированием и аналитикой успеваемости.",
+        fullDescription: "Это масштабный проект образовательной платформы, который включает в себя все современные функции для дистанционного обучения. Система поддерживает потоковую передачу видео, интерактивные тесты, домашние задания и подробную аналитику для преподавателей. Особенность проекта - модульная архитектура, позволяющая легко расширять функциональность.",
+        technologies: ["React", "Node.js", "MongoDB", "WebRTC", "Redis", "Docker"],
+        category: "fullstack",
+        image: "assets/images/project1.jpg",
+        liveUrl: "https://education-platform.demo.com",
+        githubUrl: "https://github.com/Sabitoshi/education-platform",
+        featured: true,
+        status: "completed"
+    },
+    {
+        id: 2,
+        title: "Десктопный клиент для управления проектами",
+        description: "Кроссплатформенное приложение для управления задачами с оффлайн-режимом и синхронизацией в облаке.",
+        fullDescription: "Десктопное приложение, разработанное с использованием Electron и React. Поддерживает все основные функции управления проектами: канбан-доски, временные линии, уведомления. Особенность - умная синхронизация, позволяющая работать оффлайн с последующей синхронизацией при появлении интернета.",
+        technologies: ["Electron", "React", "SQLite", "WebSocket", "IndexedDB"],
+        category: "desktop",
+        image: "assets/images/project2.jpg",
+        liveUrl: "#",
+        githubUrl: "https://github.com/Sabitoshi/task-manager-desktop",
+        featured: true,
+        status: "completed"
+    },
+    {
+        id: 3,
+        title: "E-commerce платформа",
+        description: "Многофункциональный интернет-магазин с системой рекомендаций, интеграцией платежей и админ-панелью.",
+        fullDescription: "Современная e-commerce платформа с акцентом на пользовательский опыт. Включает умную систему рекомендаций на основе машинного обучения, несколько вариантов оплаты, систему отзывов и рейтингов. Админ-панель позволяет полностью управлять каталогом, заказами и клиентами.",
+        technologies: ["Vue.js", "Laravel", "MySQL", "Redis", "Algolia"],
+        category: "web",
+        image: "assets/images/project3.jpg",
+        liveUrl: "https://store.demo.com",
+        githubUrl: "https://github.com/Sabitoshi/ecommerce-platform",
+        featured: false,
+        status: "completed"
+    },
+    {
+        id: 4,
+        title: "Система мониторинга серверов",
+        description: "Веб-приложение для мониторинга состояния серверов и IT-инфраструктуры с оповещениями в реальном времени.",
+        fullDescription: "Комплексная система мониторинга, позволяющая отслеживать состояние серверов, сетевого оборудования и приложений. Включает дашборды с графиками, систему оповещений через различные каналы (Email, Telegram, Slack) и историю инцидентов.",
+        technologies: ["React", "Python", "FastAPI", "PostgreSQL", "WebSocket"],
+        category: "fullstack",
+        image: "assets/images/project4.jpg",
+        liveUrl: "https://monitoring.demo.com",
+        githubUrl: "https://github.com/Sabitoshi/server-monitoring",
+        featured: false,
+        status: "in-progress"
+    },
+    {
+        id: 5,
+        title: "Мобильное приложение для фитнеса",
+        description: "React Native приложение с трекингом тренировок, питанием и прогрессом. Интеграция с wearable устройствами.",
+        fullDescription: "Кроссплатформенное мобильное приложение для ведения здорового образа жизни. Включает планировщик тренировок, трекинг питания, мониторинг прогресса и социальные функции. Интегрируется с популярными фитнес-трекерами и умными часами.",
+        technologies: ["React Native", "Node.js", "MongoDB", "Firebase", "Apple HealthKit"],
+        category: "web",
+        image: "assets/images/project5.jpg",
+        liveUrl: "#",
+        githubUrl: "https://github.com/Sabitoshi/fitness-app",
+        featured: false,
+        status: "completed"
+    },
+    {
+        id: 6,
+        title: "API для социальной сети разработчиков",
+        description: "Масштабируемый backend для социальной платформы с реальным временем, уведомлениями и системой репутации.",
+        fullDescription: "Высоконагруженный backend для социальной сети, ориентированной на разработчиков. Включает систему постов, комментариев, лайков, подписок, личных сообщений и уведомлений в реальном времени. Реализована система репутации на основе активности пользователей.",
+        technologies: ["Node.js", "GraphQL", "PostgreSQL", "Redis", "WebSocket"],
+        category: "web",
+        image: "assets/images/project6.jpg",
+        liveUrl: "https://api.dev-community.com",
+        githubUrl: "https://github.com/Sabitoshi/dev-social-api",
+        featured: false,
+        status: "completed"
+    }
