@@ -1,24 +1,34 @@
-// Enhanced mobile navigation and animations
+// Главный класс для управления мобильным портфолио
+// Здесь реализованы все основные функции интерфейса и анимации
 class MobilePortfolio {
     constructor() {
+        // Флаг состояния мобильного меню (открыто/закрыто)
         this.isMobileMenuOpen = false;
+        // Инициализация всех функций при создании экземпляра
         this.init();
     }
 
     init() {
+        // Инициализация мобильной навигации (бургер-меню)
         this.initMobileNavigation();
+        // Инициализация событий для сенсорных устройств
         this.initTouchEvents();
+        // Инициализация плавной прокрутки по якорям
         this.initSmoothScroll();
+        // Инициализация анимаций (например, появление элементов)
         this.initAnimations();
+        // Оптимизация производительности (например, отключение лишних обработчиков)
         this.initPerformanceOptimizations();
+        // Установка состояния загрузки (плавное появление страницы)
         this.setupLoadingState();
+        // Запуск фоновой анимации кубиков
             this.initCubeBgAnimation();
     }
     // Cube background animation
     initCubeBgAnimation() {
-        // Проверяем, что GSAP загружен и элемент .pov существует
+        // Проверяем, что библиотека GSAP загружена и есть элемент для анимации
         if (!window.gsap || !document.querySelector('.pov')) return;
-        // Количество кубиков (строк)
+        // Задаём количество кубиков для анимации
         const n = 19;
         // Массив с параметрами для каждой грани кубика: угол поворота и прозрачность
         const rots = [
@@ -28,40 +38,40 @@ class MobilePortfolio {
             { ry: 180, a:0.0 }  // задняя грань
         ];
 
-        // Устанавливаем начальные стили для всех граней кубика
+        // Устанавливаем стили для граней кубика (3D-эффект)
         gsap.set('.face', {
             z: 200, // отдаление по оси Z
             rotateY: i => rots[i].ry, // угол поворота для каждой грани
             transformOrigin: '50% 50% -201px' // точка трансформации для 3D
         });
 
-        // Создаём и анимируем n кубиков
+        // Генерируем и анимируем каждый кубик
         for (let i=0; i<n; i++){
             let die = document.querySelector('.die'); // исходный кубик
             let cube = die.querySelector('.cube');
-            // Клонируем кубик, если это не первый
+            // Клонируем кубик, если это не первый (создаём "ленту" кубиков)
             if (i>0){    
                 let clone = die.cloneNode(true);
                 document.querySelector('.tray').append(clone);
                 cube = clone.querySelector('.cube');
             }
-            // Анимация вращения кубика и смены цвета граней
+            // Анимация вращения кубика и плавной смены цвета граней
             gsap.timeline({repeat:-1, yoyo:true, defaults:{ease:'power3.inOut', duration:1}})
-            // Вращение кубика по оси Y
+            // Вращение кубика по оси Y (создаёт эффект движения надписей)
             .fromTo(cube, {
                 rotateY:-90
             },{
                 rotateY:90,
                 ease:'power1.inOut',
-                duration:7 // медленно, чтобы можно было прочитать
+                duration:7 // медленно, чтобы надписи были читаемы
             })
-            // Анимация цвета граней (начальный -> промежуточный)
+            // Плавная смена цвета граней (начальный -> промежуточный)
             .fromTo(cube.querySelectorAll('.face'), {
                 color:(j)=>'hsl('+(i/n*75+240)+', 45%,'+(55*[rots[3].a, rots[0].a, rots[1].a][j])+'%)'
             },{
                 color:(j)=>'hsl('+(i/n*75+240)+', 40%,'+(45*[rots[0].a, rots[1].a, rots[2].a][j])+'%)'
             }, 0)
-            // Анимация цвета граней (промежуточный -> конечный)
+            // Плавная смена цвета граней (промежуточный -> конечный)
             .to(cube.querySelectorAll('.face'), {
                 color:(j)=>'hsl('+(i/n*75+240)+', 35%,'+(35*[rots[1].a, rots[2].a, rots[3].a][j])+'%)'
             }, 1)
@@ -69,7 +79,7 @@ class MobilePortfolio {
             .progress(i/n);
         }
 
-        // Анимация всей "ленты" кубиков (движение, вращение, масштаб)
+        // Анимация всей ленты кубиков: покачивание, вращение, масштаб
         gsap.timeline()
             // Вертикальное покачивание всей ленты
             .from('.tray', {yPercent:-3, duration:2, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
@@ -80,10 +90,10 @@ class MobilePortfolio {
             // Пульсация масштаба всей ленты (уменьшена)
             .to('.tray', {scale:1.05, duration:2, ease:'power3.inOut', yoyo:true, repeat:-1}, 0);
 
-        // Масштабирование анимации под размер окна
+        // Масштабирование анимации под размер окна браузера
         window.addEventListener('resize', setCubeBgScale);
         setCubeBgScale();
-        // Функция для установки масштаба и высоты ленты
+        // Функция для установки масштаба и высоты ленты кубиков
         function setCubeBgScale() {
             const h = n*12; // высота ленты зависит от количества кубиков
             gsap.set('.tray', {height:h});
