@@ -7,12 +7,15 @@
     <meta name="description" content="Полный стек навыков Fullstack разработчика: веб-разработка, десктоп приложения, системное администрирование">
     <meta name="theme-color" content="#8B5FBF">
     
-    <!-- Preload resources -->
+    <!-- Предзагрузка ресурсов для ускорения работы сайта -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
+    <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Встроенные стили для фоновой анимации и состояния загрузки -->
     <style>
+    /* skills-bg: Фоновая анимация кубиков для страницы навыков */
     .skills-bg {
         position: fixed;
         top: 0;
@@ -24,6 +27,7 @@
         overflow: hidden;
         filter: blur(2px) brightness(0.85) saturate(0.85);
     }
+    /* skills-pov: Контейнер для размещения ленты кубиков */
     .skills-pov {
         width: 100vw;
         height: 100vh;
@@ -32,6 +36,7 @@
         justify-content: center;
         position: relative;
     }
+    /* skills-tray: Лента кубиков, реализуется через JS */
     .skills-tray {
         width: 100%;
         position: relative;
@@ -40,6 +45,7 @@
         align-items: center;
         justify-content: center;
     }
+    /* skills-die: Отдельный кубик */
     .skills-die {
         width: 280px;
         height: 50px;
@@ -47,12 +53,14 @@
         perspective: 900px;
         position: relative;
     }
+    /* skills-cube: 3D-кубик с надписями */
     .skills-cube {
         position: absolute;
         width: 100%;
         height: 100%;
         transform-style: preserve-3d;
     }
+    /* skills-face: Грани кубика с текстом */
     .skills-face {
         position: absolute;
         width: 100%;
@@ -72,6 +80,7 @@
     </style>
     
     <style>
+        /* Стили для состояния загрузки страницы */
         .loading {
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -83,6 +92,7 @@
     </style>
 </head>
 <body class="loading">
+    <!-- skills-bg: Фоновая анимация кубиков для страницы навыков -->
     <div class="skills-bg">
         <div class="skills-pov">
             <div class="skills-tray">
@@ -96,8 +106,10 @@
             </div>
         </div>
     </div>
+    <!-- glass-container: Основной контейнер для контента с эффектом "стекла" -->
     <div class="glass-container">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <!-- Подключение GSAP для анимаций -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
     // Уникальная анимация кубиков для страницы навыков
     window.addEventListener('DOMContentLoaded', function() {

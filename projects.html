@@ -7,12 +7,15 @@
     <meta name="description" content="Портфолио проектов Глеба Чернова - веб и десктоп приложения">
     <meta name="theme-color" content="#8B5FBF">
     
-    <!-- Preload resources -->
+    <!-- Предзагрузка ресурсов для ускорения работы сайта -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
+    <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Встроенные стили для фоновой анимации и состояния загрузки -->
     <style>
+    /* projects-bg: Фоновая анимация кубиков для страницы проектов */
     .projects-bg {
         position: fixed;
         top: 0;
@@ -24,6 +27,7 @@
         overflow: hidden;
         filter: blur(2px) brightness(0.85) saturate(0.85);
     }
+    /* projects-pov: Контейнер для размещения ленты кубиков */
     .projects-pov {
         width: 100vw;
         height: 100vh;
@@ -32,6 +36,7 @@
         justify-content: center;
         position: relative;
     }
+    /* projects-tray: Лента кубиков, реализуется через JS */
     .projects-tray {
         width: 100%;
         position: relative;
@@ -40,6 +45,7 @@
         align-items: center;
         justify-content: center;
     }
+    /* projects-die: Отдельный кубик */
     .projects-die {
         width: 280px;
         height: 50px;
@@ -47,12 +53,14 @@
         perspective: 900px;
         position: relative;
     }
+    /* projects-cube: 3D-кубик с надписями */
     .projects-cube {
         position: absolute;
         width: 100%;
         height: 100%;
         transform-style: preserve-3d;
     }
+    /* projects-face: Грани кубика с текстом */
     .projects-face {
         position: absolute;
         width: 100%;
@@ -72,6 +80,7 @@
     </style>
     
     <style>
+        /* Стили для состояния загрузки страницы */
         .loading {
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -83,6 +92,7 @@
     </style>
 </head>
 <body class="loading">
+    <!-- projects-bg: Фоновая анимация кубиков для страницы проектов -->
     <div class="projects-bg">
         <div class="projects-pov">
             <div class="projects-tray">
@@ -96,8 +106,10 @@
             </div>
         </div>
     </div>
+    <!-- glass-container: Основной контейнер для контента с эффектом "стекла" -->
     <div class="glass-container">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <!-- Подключение GSAP для анимаций -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
     // Уникальная анимация кубиков для страницы проектов
     window.addEventListener('DOMContentLoaded', function() {

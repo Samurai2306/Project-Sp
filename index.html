@@ -9,18 +9,19 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <!-- Preload resources -->
+    <!-- Предзагрузка ресурсов для ускорения работы сайта -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
-    <!-- GSAP for animations -->
+    <!-- Подключение библиотеки GSAP для сложных анимаций -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
+    <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
     
     <style>
-        /* Fallback animations if GSAP doesn't load */
+        /* Резервные анимации, если GSAP не загрузился */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
@@ -31,7 +32,7 @@
             100% { transform: translateX(-50%); }
         }
         
-        /* Loading state */
+        /* Стили для состояния загрузки страницы */
         .loading {
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -43,35 +44,39 @@
     </style>
 </head>
 <body class="loading">
-        <div class="pov-bg">
-            <div class="pov">
-                <div class="tray">
-                    <div class="die">
-                        <div class="cube">
-                            <div class="face" style="font-size:35px">CODE</div>
-                            <div class="face" style="font-size:35px">EAT</div>
-                            <div class="face" style="font-size:35px">SLEEP</div>
-                        </div>
+    <!-- pov-bg: Фоновая анимация кубиков, реализуется через JS и GSAP -->
+    <div class="pov-bg">
+        <div class="pov">
+            <div class="tray">
+                <div class="die">
+                    <div class="cube">
+                        <div class="face" style="font-size:35px">CODE</div>
+                        <div class="face" style="font-size:35px">EAT</div>
+                        <div class="face" style="font-size:35px">SLEEP</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="glass-container">
-        <!-- Navigation -->
+    </div>
+    <!-- glass-container: Основной контейнер для контента с эффектом "стекла" -->
+    <div class="glass-container">
+        <!-- Навигация сайта: меню с разделами портфолио -->
         <nav class="neo-nav" aria-label="Основная навигация">
             <div class="nav-container">
+                <!-- Логотип/имя владельца портфолио -->
                 <a href="index.html" class="neo-logo">Gleb Chernov</a>
-                
+                <!-- Кнопка для открытия мобильного меню (бургер) -->
                 <button class="mobile-menu-toggle" aria-label="Открыть меню">
                     <span>☰</span>
                 </button>
-                
+                <!-- Список разделов сайта -->
                 <ul class="neo-nav__list">
                     <li class="neo-nav__item">
                         <a href="index.html" class="neo-nav__link neo-nav__link--active">Главная</a>
                     </li>
                     <li class="neo-nav__item">
                         <a href="skills.html" class="neo-nav__link">Навыки</a>
+                        <!-- Вложенное меню для навыков -->
                         <ul class="neo-submenu">
                             <li><a href="skills.html#web" class="neo-nav__link">Веб-разработка</a></li>
                             <li><a href="skills.html#desktop" class="neo-nav__link">Десктоп</a></li>
@@ -88,14 +93,15 @@
             </div>
         </nav>
 
-        <!-- Hero Section -->
+        <!-- Hero Section: Главный блок с именем, описанием и краткой информацией -->
         <header class="hero">
             <div class="hero-content">
                 <div class="hero-text">
+                    <!-- Имя и статус владельца портфолио -->
                     <h1 class="animated-gradient-text">Глеб Чернов</h1>
                     <p class="subtitle typing-animation">Fullstack разработчик & Студент РТУ МИРЭА & классный парень</p>
                     <p class="hero-description">Создаю современные веб-приложения, десктопные решения и управляю IT-инфраструктурой. Junior++ с passion к инновациям.</p>
-                    
+                    <!-- hero-stats: Блок с дополнительной статистикой (например, опыт, проекты, навыки) -->
                     <div class="hero-stats">
                         <div class="stat">
                             <span class="stat-number" data-count="2">0</span>
@@ -217,24 +223,19 @@
             <h2 class="section-title animated-gradient-text">Давайте создавать вместе</h2>
             <div class="contacts-grid">
                 <a href="https://t.me/mm0l0d0y" class="contact-card glass-card" target="_blank" rel="noopener">
-                    <div class="contact-icon">📱</div>
+                    <link rel="icon" type="image/svg+xml" href="/assets/icons/icons8-tg.svg">
                     <span>Telegram</span>
                     <small>@mm0l0d0y</small>
                 </a>
                 <a href="https://github.com/Samurai2306" class="contact-card glass-card" target="_blank" rel="noopener">
-                    <div class="contact-icon">💻</div>
+                    <link rel="icon" type="image/svg+xml" href="/assets/icons/icons8-github.svg">
                     <span>GitHub</span>
                     <small>Samurai2306</small>
                 </a>
                 <a href="mailto:undertale2006rus@gmail.com" class="contact-card glass-card">
-                    <div class="contact-icon">📧</div>
+                    <link rel="icon" type="image/svg+xml" href="/assets/icons/icons8-gmail.svg">
                     <span>Email</span>
                     <small>undertale2006rus@gmail.com</small>
-                </a>
-                <a href="https://career.habr.com/" class="contact-card glass-card" target="_blank" rel="noopener">
-                    <div class="contact-icon">💼</div>
-                    <span>Хабр Карьера</span>
-                    <small>Глеб Чернов</small>
                 </a>
             </div>
         </section>

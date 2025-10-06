@@ -1,4 +1,6 @@
-// Projects data with detailed information
+// Массив projectsData — содержит подробную информацию о всех проектах портфолио
+// Каждый объект описывает отдельный проект: название, описание, технологии, статус, ссылки и изображения
+// Используется для динамического отображения проектов на странице
 const projectsData = [
     {
         id: 1,
@@ -80,22 +82,38 @@ const projectsData = [
     }
 ];
 
-// Projects management class
+// Класс ProjectsManager — отвечает за управление отображением и фильтрацией проектов на странице
+// Включает методы для рендеринга, фильтрации, открытия модальных окон и обработки изображений
 class ProjectsManager {
     constructor() {
+        // this.projects — исходный массив всех проектов
         this.projects = projectsData;
+        // this.filteredProjects — массив проектов после применения фильтра
         this.filteredProjects = [...this.projects];
+        // this.currentFilter — текущий выбранный фильтр (например, категория)
         this.currentFilter = 'all';
+        // При создании экземпляра сразу запускается инициализация всех функций
         this.init();
     }
 
+    /**
+     * Метод init — запускает все основные функции управления проектами:
+     * 1. Отрисовка проектов на странице
+     * 2. Инициализация фильтров по категориям
+     * 3. Подключение модальных окон для подробного просмотра
+     * 4. Обработка ошибок загрузки изображений
+     */
     init() {
-        this.renderProjects();
-        this.initFilters();
-        this.initModal();
-        this.setupImageFallbacks();
+        this.renderProjects(); // отрисовка сетки проектов
+        this.initFilters(); // подключение фильтров
+        this.initModal(); // модальные окна для подробностей
+        this.setupImageFallbacks(); // обработка ошибок изображений
     }
 
+    /**
+     * Метод renderProjects — отвечает за динамическую отрисовку проектов в сетке
+     * Получает DOM-элемент сетки и добавляет карточки проектов согласно фильтру
+     */
     renderProjects() {
         const grid = document.getElementById('projectsGrid');
         if (!grid) return;
