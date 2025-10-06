@@ -7,12 +7,15 @@
     <meta name="description" content="Полный стек навыков Fullstack разработчика: веб-разработка, десктоп приложения, системное администрирование">
     <meta name="theme-color" content="#8B5FBF">
     
-    <!-- Preload resources -->
+    <!-- Предзагрузка ресурсов для ускорения работы сайта -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
+    <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Встроенные стили для фоновой анимации и состояния загрузки -->
     <style>
+    /* skills-bg: Фоновая анимация кубиков для страницы навыков */
     .skills-bg {
         position: fixed;
         top: 0;
@@ -24,6 +27,7 @@
         overflow: hidden;
         filter: blur(2px) brightness(0.85) saturate(0.85);
     }
+    /* skills-pov: Контейнер для размещения ленты кубиков */
     .skills-pov {
         width: 100vw;
         height: 100vh;
@@ -32,6 +36,7 @@
         justify-content: center;
         position: relative;
     }
+    /* skills-tray: Лента кубиков, реализуется через JS */
     .skills-tray {
         width: 100%;
         position: relative;
@@ -40,6 +45,7 @@
         align-items: center;
         justify-content: center;
     }
+    /* skills-die: Отдельный кубик */
     .skills-die {
         width: 280px;
         height: 50px;
@@ -47,12 +53,14 @@
         perspective: 900px;
         position: relative;
     }
+    /* skills-cube: 3D-кубик с надписями */
     .skills-cube {
         position: absolute;
         width: 100%;
         height: 100%;
         transform-style: preserve-3d;
     }
+    /* skills-face: Грани кубика с текстом */
     .skills-face {
         position: absolute;
         width: 100%;
@@ -72,6 +80,7 @@
     </style>
     
     <style>
+        /* Стили для состояния загрузки страницы */
         .loading {
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -83,6 +92,7 @@
     </style>
 </head>
 <body class="loading">
+    <!-- skills-bg: Фоновая анимация кубиков для страницы навыков -->
     <div class="skills-bg">
         <div class="skills-pov">
             <div class="skills-tray">
@@ -96,8 +106,10 @@
             </div>
         </div>
     </div>
+    <!-- glass-container: Основной контейнер для контента с эффектом "стекла" -->
     <div class="glass-container">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <!-- Подключение GSAP для анимаций -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
     // Уникальная анимация кубиков для страницы навыков
     window.addEventListener('DOMContentLoaded', function() {
@@ -167,23 +179,15 @@
                     <li class="neo-nav__item"><a href="index.html" class="neo-nav__link">Главная</a></li>
                     <li class="neo-nav__item"><a href="skills.html" class="neo-nav__link neo-nav__link--active">Навыки</a></li>
                     <li class="neo-nav__item"><a href="projects.html" class="neo-nav__link">Проекты</a></li>
-                    <li class="neo-nav__item"><a href="#contacts" class="neo-nav__link">Контакты</a></li>
+                    <li class="neo-nav__item"><a href="contacts.html" class="neo-nav__link">Контакты</a></li>
                 </ul>
             </div>
         </nav>
 
         <header class="hero">
             <h1 class="animated-gradient-text">Мои навыки</h1>
-            <p class="subtitle">Fullstack разработчик с расширенными компетенциями уровня Junior++</p>
+            <p>Fullstack разработчик с расширенными компетенциями /уровня Junior++</p>
         </header>
-
-        <!-- Quick Navigation -->
-        <nav class="anchor-nav" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0; padding: 0 1rem;">
-            <a href="#web" class="glass-button">🌐 Веб-разработка</a>
-            <a href="#desktop" class="glass-button">💻 Десктоп</a>
-            <a href="#sysadmin" class="glass-button">⚙️ Системное администрирование</a>
-            <a href="#soft-skills" class="glass-button">🚀 Soft Skills</a>
-        </nav>
 
         <!-- Веб-разработка -->
         <section id="web" class="skills-category">
@@ -303,19 +307,25 @@
 
         <!-- Contacts Section -->
         <section id="contacts" class="contacts-section">
-            <h2 class="section-title animated-gradient-text">Всегда на связи</h2>
+            <h2 class="section-title animated-gradient-text">Давайте создавать вместе</h2>
             <div class="contacts-grid">
-                <a href="https://t.me/Sabitoshi" class="contact-card glass-card" target="_blank" rel="noopener">
-                    <div class="contact-icon">📱</div>
-                    <span>Telegram</span>
+                <a href="https://t.me/mm0l0d0y" target="_blank" class="contact-card glass-button" target="_blank"
+                    rel="noopener">
+                    <img src="/assets/icons/icons8-tg.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>@mm0l0d0y</small>
                 </a>
-                <a href="https://github.com/Sabitoshi" class="contact-card glass-card" target="_blank" rel="noopener">
-                    <div class="contact-icon">💻</div>
-                    <span>GitHub</span>
+                <a href="https://github.com/Samurai2306" target="_blank" class="contact-card glass-button" target="_blank"
+                    rel="noopener">
+                    <img src="/assets/icons/icons8-github.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>Samurai2306</small>
                 </a>
-                <a href="mailto:undertale2006rus@gmail.com" class="contact-card glass-card">
-                    <div class="contact-icon">📧</div>
-                    <span>Email</span>
+                <a href="mailto:undertale2006rus@gmail.com" target="_blank" class="contact-card glass-button">
+                    <img src="/assets/icons/icons8-gmail.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>undertale2006rus@gmail.com</small>
+                </a>
+                <a href="https://vk.com/glebnigger" target="_blank" class="contact-card glass-button">
+                    <img src="/assets/icons/icons8-vk.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>glebnigger</small>
                 </a>
             </div>
         </section>

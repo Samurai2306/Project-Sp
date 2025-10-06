@@ -7,12 +7,15 @@
     <meta name="description" content="Портфолио проектов Глеба Чернова - веб и десктоп приложения">
     <meta name="theme-color" content="#8B5FBF">
     
-    <!-- Preload resources -->
+    <!-- Предзагрузка ресурсов для ускорения работы сайта -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
+    <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Встроенные стили для фоновой анимации и состояния загрузки -->
     <style>
+    /* projects-bg: Фоновая анимация кубиков для страницы проектов */
     .projects-bg {
         position: fixed;
         top: 0;
@@ -24,6 +27,7 @@
         overflow: hidden;
         filter: blur(2px) brightness(0.85) saturate(0.85);
     }
+    /* projects-pov: Контейнер для размещения ленты кубиков */
     .projects-pov {
         width: 100vw;
         height: 100vh;
@@ -32,6 +36,7 @@
         justify-content: center;
         position: relative;
     }
+    /* projects-tray: Лента кубиков, реализуется через JS */
     .projects-tray {
         width: 100%;
         position: relative;
@@ -40,6 +45,7 @@
         align-items: center;
         justify-content: center;
     }
+    /* projects-die: Отдельный кубик */
     .projects-die {
         width: 280px;
         height: 50px;
@@ -47,12 +53,14 @@
         perspective: 900px;
         position: relative;
     }
+    /* projects-cube: 3D-кубик с надписями */
     .projects-cube {
         position: absolute;
         width: 100%;
         height: 100%;
         transform-style: preserve-3d;
     }
+    /* projects-face: Грани кубика с текстом */
     .projects-face {
         position: absolute;
         width: 100%;
@@ -72,6 +80,7 @@
     </style>
     
     <style>
+        /* Стили для состояния загрузки страницы */
         .loading {
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -83,6 +92,7 @@
     </style>
 </head>
 <body class="loading">
+    <!-- projects-bg: Фоновая анимация кубиков для страницы проектов -->
     <div class="projects-bg">
         <div class="projects-pov">
             <div class="projects-tray">
@@ -96,8 +106,10 @@
             </div>
         </div>
     </div>
+    <!-- glass-container: Основной контейнер для контента с эффектом "стекла" -->
     <div class="glass-container">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <!-- Подключение GSAP для анимаций -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
     // Уникальная анимация кубиков для страницы проектов
     window.addEventListener('DOMContentLoaded', function() {
@@ -167,7 +179,7 @@
                     <li class="neo-nav__item"><a href="index.html" class="neo-nav__link">Главная</a></li>
                     <li class="neo-nav__item"><a href="skills.html" class="neo-nav__link">Навыки</a></li>
                     <li class="neo-nav__item"><a href="projects.html" class="neo-nav__link neo-nav__link--active">Проекты</a></li>
-                    <li class="neo-nav__item"><a href="#contacts" class="neo-nav__link">Контакты</a></li>
+                    <li class="neo-nav__item"><a href="contacts.html" class="neo-nav__link">Контакты</a></li>
                 </ul>
             </div>
         </nav>
@@ -213,19 +225,25 @@
 
         <!-- Contacts Section -->
         <section id="contacts" class="contacts-section">
-            <h2 class="section-title animated-gradient-text">Заинтересованы в сотрудничестве?</h2>
+            <h2 class="section-title animated-gradient-text">Давайте создавать вместе</h2>
             <div class="contacts-grid">
-                <a href="https://t.me/mm0l0d0y" class="contact-card glass-card" target="_blank" rel="noopener">
-                    <div class="contact-icon">📱</div>
-                    <span>Telegram</span>
+                <a href="https://t.me/mm0l0d0y" target="_blank" class="contact-card glass-button" target="_blank"
+                    rel="noopener">
+                    <img src="/assets/icons/icons8-tg.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>@mm0l0d0y</small>
                 </a>
-                <a href="https://github.com/Samurai2306" class="contact-card glass-card" target="_blank" rel="noopener">
-                    <div class="contact-icon">💻</div>
-                    <span>GitHub</span>
+                <a href="https://github.com/Samurai2306" target="_blank" class="contact-card glass-button" target="_blank"
+                    rel="noopener">
+                    <img src="/assets/icons/icons8-github.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>Samurai2306</small>
                 </a>
-                <a href="mailto:undertale2006rus@gmail.com" class="contact-card glass-card">
-                    <div class="contact-icon">📧</div>
-                    <span>Email</span>
+                <a href="mailto:undertale2006rus@gmail.com" target="_blank" class="contact-card glass-button">
+                    <img src="/assets/icons/icons8-gmail.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>undertale2006rus@gmail.com</small>
+                </a>
+                <a href="https://vk.com/glebnigger" target="_blank" class="contact-card glass-button">
+                    <img src="/assets/icons/icons8-vk.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>glebnigger</small>
                 </a>
             </div>
         </section>
