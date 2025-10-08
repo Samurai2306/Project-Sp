@@ -27,8 +27,8 @@ class MobilePortfolio {
         // Кастомные курсоры отключены
         // Инициализация скролл-теллинга
         this.initScrollTelling();
-        // Инициализация 3D объектов
-        this.initThreeJS();
+        // Инициализация 3D объектов - отключено по запросу
+        // this.initThreeJS();
         // Инициализация магнитных эффектов
         this.initMagneticEffects();
         // Инициализация анимации дисплея
@@ -43,21 +43,21 @@ class MobilePortfolio {
         if (!window.gsap || !document.querySelector('.pov')) return;
         
         // Уменьшенное количество кубиков для более спокойной анимации
-        const n = 12;
+        const n = 10;
         
         // Мягкие параметры для граней кубика
         const rots = [
-            { ry: 270, a:0.3 }, // левая грань - уменьшенная прозрачность
-            { ry: 0,   a:0.6 }, // передняя грань
-            { ry: 90,  a:0.2 }, // правая грань
-            { ry: 180, a:0.0 }  // задняя грань
+            { ry: 270, a:0.4 }, // левая грань - увеличенная прозрачность для видимости
+            { ry: 0,   a:0.7 }, // передняя грань
+            { ry: 90,  a:0.3 }, // правая грань
+            { ry: 180, a:0.1 }  // задняя грань
         ];
 
-        // Устанавливаем стили для граней кубика (3D-эффект)
+        // Устанавливаем стили для граней кубика (3D-эффект) - уменьшенный размер
         gsap.set('.face', {
-            z: 200,
+            z: 120, // уменьшено с 200
             rotateY: i => rots[i].ry,
-            transformOrigin: '50% 50% -201px'
+            transformOrigin: '50% 50% -121px' // уменьшено с -201px
         });
 
         // Генерируем и анимируем каждый кубик с более мягкими параметрами
@@ -74,20 +74,20 @@ class MobilePortfolio {
             // Более медленная и плавная анимация
             gsap.timeline({repeat:-1, yoyo:true, defaults:{ease:'power2.inOut', duration:2}})
             .fromTo(cube, {
-                rotateY:-45 // уменьшенный угол вращения
+                rotateY:-35 // уменьшенный угол вращения
             },{
-                rotateY:45,
+                rotateY:35,
                 ease:'power2.inOut',
-                duration:12 // значительно медленнее
+                duration:10 // медленнее
             })
-            // Более мягкие цвета с фиолетовыми оттенками
+            // Более мягкие цвета с фиолетовыми оттенками (уменьшенная яркость)
             .fromTo(cube.querySelectorAll('.face'), {
-                color:(j)=>'hsl('+(i/n*40+280)+', 30%,'+(40*[rots[3].a, rots[0].a, rots[1].a][j])+'%)'
+                color:(j)=>'hsl('+(i/n*40+280)+', 25%,'+(35*[rots[3].a, rots[0].a, rots[1].a][j])+'%)'
             },{
-                color:(j)=>'hsl('+(i/n*40+280)+', 25%,'+(35*[rots[0].a, rots[1].a, rots[2].a][j])+'%)'
+                color:(j)=>'hsl('+(i/n*40+280)+', 20%,'+(30*[rots[0].a, rots[1].a, rots[2].a][j])+'%)'
             }, 0)
             .to(cube.querySelectorAll('.face'), {
-                color:(j)=>'hsl('+(i/n*40+280)+', 20%,'+(30*[rots[1].a, rots[2].a, rots[3].a][j])+'%)'
+                color:(j)=>'hsl('+(i/n*40+280)+', 15%,'+(25*[rots[1].a, rots[2].a, rots[3].a][j])+'%)'
             }, 1)
             .progress(i/n);
         }
@@ -95,20 +95,20 @@ class MobilePortfolio {
         // Очень мягкая анимация всей ленты
         gsap.timeline()
             // Минимальное вертикальное покачивание
-            .from('.tray', {yPercent:-1, duration:4, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            .from('.tray', {yPercent:-0.5, duration:5, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
             // Очень небольшое горизонтальное покачивание
-            .fromTo('.tray', {rotate:-2},{rotate:2, duration:6, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            .fromTo('.tray', {rotate:-1},{rotate:1, duration:7, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
             // Плавное появление кубиков
             .from('.die', {duration:0.5, opacity:0, stagger:{each:0.1, ease:'power2.in'}}, 0)
             // Очень небольшая пульсация
-            .to('.tray', {scale:1.02, duration:3, ease:'power2.inOut', yoyo:true, repeat:-1}, 0);
+            .to('.tray', {scale:1.01, duration:4, ease:'power2.inOut', yoyo:true, repeat:-1}, 0);
 
         // Масштабирование анимации под размер окна браузера
         window.addEventListener('resize', setCubeBgScale);
         setCubeBgScale();
         
         function setCubeBgScale() {
-            const h = n*15; // увеличенная высота для более плавного отображения
+            const h = n*12; // уменьшенная высота
             gsap.set('.tray', {height:h});
             gsap.set('.pov', {scale:window.innerHeight/h});
         }
