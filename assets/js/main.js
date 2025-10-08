@@ -24,87 +24,91 @@ class MobilePortfolio {
         this.setupLoadingState();
         // Запуск фоновой анимации кубиков (визуальный эффект на главном экране)
         this.initCubeBgAnimation();
+        // Кастомные курсоры отключены
+        // Инициализация скролл-теллинга
+        this.initScrollTelling();
+        // Инициализация 3D объектов
+        this.initThreeJS();
+        // Инициализация магнитных эффектов
+        this.initMagneticEffects();
+        // Инициализация анимации дисплея
+        this.initDisplayAnimation();
     }
     /**
-     * Метод initCubeBgAnimation — отвечает за создание и анимацию фоновой ленты кубиков на главном экране.
-     * Использует библиотеку GSAP для сложных 3D-анимаций.
-     * 1. Проверяет наличие GSAP и нужного DOM-элемента.
-     * 2. Генерирует несколько кубиков, каждый с уникальными параметрами цвета и вращения.
-     * 3. Для каждого кубика запускает бесконечную анимацию вращения и смены цвета граней.
-     * 4. Анимирует всю ленту кубиков: покачивание, масштаб, плавное появление.
-     * 5. Автоматически подстраивает масштаб под размер окна браузера.
+     * Метод initCubeBgAnimation — создает мягкую и приятную фоновую анимацию.
+     * Использует библиотеку GSAP для плавных 3D-анимаций с уменьшенной интенсивностью.
      */
     initCubeBgAnimation() {
         // Проверяем, что библиотека GSAP загружена и есть элемент для анимации
         if (!window.gsap || !document.querySelector('.pov')) return;
-        // Количество кубиков в ленте
-        const n = 19;
-        // Массив параметров для каждой грани кубика: угол поворота и прозрачность
+        
+        // Уменьшенное количество кубиков для более спокойной анимации
+        const n = 12;
+        
+        // Мягкие параметры для граней кубика
         const rots = [
-            { ry: 270, a:0.5 }, // левая грань
-            { ry: 0,   a:0.85 }, // передняя грань
-            { ry: 90,  a:0.4 }, // правая грань
+            { ry: 270, a:0.3 }, // левая грань - уменьшенная прозрачность
+            { ry: 0,   a:0.6 }, // передняя грань
+            { ry: 90,  a:0.2 }, // правая грань
             { ry: 180, a:0.0 }  // задняя грань
         ];
 
         // Устанавливаем стили для граней кубика (3D-эффект)
         gsap.set('.face', {
-            z: 200, // отдаление по оси Z
-            rotateY: i => rots[i].ry, // угол поворота для каждой грани
-            transformOrigin: '50% 50% -201px' // точка трансформации для 3D
+            z: 200,
+            rotateY: i => rots[i].ry,
+            transformOrigin: '50% 50% -201px'
         });
 
-        // Генерируем и анимируем каждый кубик
+        // Генерируем и анимируем каждый кубик с более мягкими параметрами
         for (let i=0; i<n; i++){
-            let die = document.querySelector('.die'); // исходный кубик
+            let die = document.querySelector('.die');
             let cube = die.querySelector('.cube');
-            // Клонируем кубик, если это не первый (создаём "ленту" кубиков)
+            
             if (i>0){    
                 let clone = die.cloneNode(true);
                 document.querySelector('.tray').append(clone);
                 cube = clone.querySelector('.cube');
             }
-            // Анимация вращения кубика и плавной смены цвета граней
-            gsap.timeline({repeat:-1, yoyo:true, defaults:{ease:'power3.inOut', duration:1}})
-            // Вращение кубика по оси Y (создаёт эффект движения надписей)
+            
+            // Более медленная и плавная анимация
+            gsap.timeline({repeat:-1, yoyo:true, defaults:{ease:'power2.inOut', duration:2}})
             .fromTo(cube, {
-                rotateY:-90
+                rotateY:-45 // уменьшенный угол вращения
             },{
-                rotateY:90,
-                ease:'power1.inOut',
-                duration:7 // медленно, чтобы надписи были читаемы
+                rotateY:45,
+                ease:'power2.inOut',
+                duration:12 // значительно медленнее
             })
-            // Плавная смена цвета граней (начальный -> промежуточный)
+            // Более мягкие цвета с фиолетовыми оттенками
             .fromTo(cube.querySelectorAll('.face'), {
-                color:(j)=>'hsl('+(i/n*75+240)+', 45%,'+(55*[rots[3].a, rots[0].a, rots[1].a][j])+'%)'
+                color:(j)=>'hsl('+(i/n*40+280)+', 30%,'+(40*[rots[3].a, rots[0].a, rots[1].a][j])+'%)'
             },{
-                color:(j)=>'hsl('+(i/n*75+240)+', 40%,'+(45*[rots[0].a, rots[1].a, rots[2].a][j])+'%)'
+                color:(j)=>'hsl('+(i/n*40+280)+', 25%,'+(35*[rots[0].a, rots[1].a, rots[2].a][j])+'%)'
             }, 0)
-            // Плавная смена цвета граней (промежуточный -> конечный)
             .to(cube.querySelectorAll('.face'), {
-                color:(j)=>'hsl('+(i/n*75+240)+', 35%,'+(35*[rots[1].a, rots[2].a, rots[3].a][j])+'%)'
+                color:(j)=>'hsl('+(i/n*40+280)+', 20%,'+(30*[rots[1].a, rots[2].a, rots[3].a][j])+'%)'
             }, 1)
-            // Смещение прогресса анимации для эффекта волны
             .progress(i/n);
         }
 
-        // Анимация всей ленты кубиков: покачивание, вращение, масштаб
+        // Очень мягкая анимация всей ленты
         gsap.timeline()
-            // Вертикальное покачивание всей ленты
-            .from('.tray', {yPercent:-3, duration:2, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
-            // Горизонтальное покачивание всей ленты (уменьшен угол)
-            .fromTo('.tray', {rotate:-5},{rotate:5, duration:4, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            // Минимальное вертикальное покачивание
+            .from('.tray', {yPercent:-1, duration:4, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            // Очень небольшое горизонтальное покачивание
+            .fromTo('.tray', {rotate:-2},{rotate:2, duration:6, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
             // Плавное появление кубиков
-            .from('.die', {duration:0.01, opacity:0, stagger:{each:-0.05, ease:'power1.in'}}, 0)
-            // Пульсация масштаба всей ленты (уменьшена)
-            .to('.tray', {scale:1.05, duration:2, ease:'power3.inOut', yoyo:true, repeat:-1}, 0);
+            .from('.die', {duration:0.5, opacity:0, stagger:{each:0.1, ease:'power2.in'}}, 0)
+            // Очень небольшая пульсация
+            .to('.tray', {scale:1.02, duration:3, ease:'power2.inOut', yoyo:true, repeat:-1}, 0);
 
         // Масштабирование анимации под размер окна браузера
         window.addEventListener('resize', setCubeBgScale);
         setCubeBgScale();
-        // Функция для установки масштаба и высоты ленты кубиков
+        
         function setCubeBgScale() {
-            const h = n*12; // высота ленты зависит от количества кубиков
+            const h = n*15; // увеличенная высота для более плавного отображения
             gsap.set('.tray', {height:h});
             gsap.set('.pov', {scale:window.innerHeight/h});
         }
@@ -395,8 +399,16 @@ class MobilePortfolio {
         // Preload critical images
         this.preloadCriticalImages();
         
-        // Initialize particle effect
-        this.initParticleEffect();
+        // Initialize particle effect only on desktop
+        if (window.innerWidth > 768) {
+            this.initParticleEffect();
+        }
+        
+        // Lazy load heavy features
+        this.initLazyLoading();
+        
+        // Performance monitoring
+        this.initPerformanceMonitoring();
     }
 
     handleResize() {
@@ -417,7 +429,7 @@ class MobilePortfolio {
         });
     }
 
-    // Particle background effect
+    // Gentle Particle Background Effect
     initParticleEffect() {
         const canvas = document.createElement('canvas');
         canvas.className = 'particle-canvas';
@@ -426,48 +438,71 @@ class MobilePortfolio {
         const ctx = canvas.getContext('2d');
         let particles = [];
         let animationId;
+        let mouseX = 0, mouseY = 0;
 
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         };
 
-        class Particle {
+        class GentleParticle {
             constructor() {
                 this.reset();
+                this.originalX = this.x;
+                this.originalY = this.y;
             }
 
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.color = `rgba(${139 + Math.floor(Math.random() * 50)}, ${95 + Math.floor(Math.random() * 50)}, ${191 + Math.floor(Math.random() * 50)}, ${Math.random() * 0.3 + 0.1})`;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.4 + 0.1;
+                this.hue = 250 + Math.random() * 40; // Purple range
+                this.originalX = this.x;
+                this.originalY = this.y;
             }
 
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+                // Gentle floating motion
+                this.x += this.speedX + Math.sin(Date.now() * 0.001 + this.originalX * 0.01) * 0.1;
+                this.y += this.speedY + Math.cos(Date.now() * 0.001 + this.originalY * 0.01) * 0.1;
+                
+                // Mouse interaction (subtle)
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 100) {
+                    const force = (100 - distance) / 100;
+                    this.x -= dx * force * 0.01;
+                    this.y -= dy * force * 0.01;
+                }
 
-                if (this.x < 0 || this.x > canvas.width) this.reset();
-                if (this.y < 0 || this.y > canvas.height) this.reset();
+                // Soft boundary reset
+                if (this.x < -50 || this.x > canvas.width + 50) this.reset();
+                if (this.y < -50 || this.y > canvas.height + 50) this.reset();
             }
 
             draw() {
-                ctx.fillStyle = this.color;
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2);
+                gradient.addColorStop(0, `hsla(${this.hue}, 60%, 70%, ${this.opacity})`);
+                gradient.addColorStop(1, `hsla(${this.hue}, 60%, 70%, 0)`);
+                
+                ctx.fillStyle = gradient;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
 
         const initParticles = () => {
             particles = [];
-            const particleCount = Math.min(50, Math.floor(window.innerWidth / 20));
+            const particleCount = Math.min(30, Math.floor(window.innerWidth / 30));
             
             for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
+                particles.push(new GentleParticle());
             }
         };
 
@@ -485,6 +520,12 @@ class MobilePortfolio {
         const stopParticles = () => {
             cancelAnimationFrame(animationId);
         };
+
+        // Mouse tracking for gentle interaction
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
 
         // Initialize
         resizeCanvas();
@@ -506,6 +547,252 @@ class MobilePortfolio {
         window.addEventListener('resize', () => {
             resizeCanvas();
             initParticles();
+        });
+    }
+
+    // Custom cursor disabled
+
+    // Scroll Telling
+    initScrollTelling() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements for scroll revealing
+        document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Parallax scrolling
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax-element');
+            
+            parallaxElements.forEach((el, index) => {
+                const speed = 0.5 + (index * 0.1);
+                el.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    }
+
+    // Three.js 3D Objects
+    initThreeJS() {
+        if (!window.THREE) return;
+        
+        const container = document.querySelector('.hero-visual');
+        if (!container) return;
+        
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(300, 300);
+        renderer.setClearColor(0x000000, 0);
+        container.appendChild(renderer.domElement);
+        
+        // Create floating geometric shapes
+        const geometry = new THREE.IcosahedronGeometry(1, 0);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0x8B5FBF,
+            transparent: true,
+            opacity: 0.8,
+            shininess: 100
+        });
+        
+        const shapes = [];
+        for (let i = 0; i < 5; i++) {
+            const shape = new THREE.Mesh(geometry, material.clone());
+            shape.position.set(
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10
+            );
+            shape.scale.setScalar(Math.random() * 0.5 + 0.5);
+            scene.add(shape);
+            shapes.push(shape);
+        }
+        
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+        
+        camera.position.z = 5;
+        
+        // Animation
+        const animate = () => {
+            requestAnimationFrame(animate);
+            
+            shapes.forEach((shape, index) => {
+                shape.rotation.x += 0.01 * (index + 1);
+                shape.rotation.y += 0.01 * (index + 1);
+                shape.position.y += Math.sin(Date.now() * 0.001 + index) * 0.01;
+            });
+            
+            renderer.render(scene, camera);
+        };
+        animate();
+        
+        // Resize handler
+        window.addEventListener('resize', () => {
+            const width = 300;
+            const height = 300;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        });
+    }
+
+    // Magnetic Effects
+    initMagneticEffects() {
+        const magneticElements = document.querySelectorAll('.magnetic, .glass-button, .contact-card');
+        
+        magneticElements.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                const distance = Math.sqrt(x * x + y * y);
+                const maxDistance = 50;
+                
+                if (distance < maxDistance) {
+                    const force = (maxDistance - distance) / maxDistance;
+                    const moveX = x * force * 0.3;
+                    const moveY = y * force * 0.3;
+                    
+                    el.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
+                }
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'translate(0px, 0px) scale(1)';
+            });
+        });
+    }
+
+    // Performance Monitoring
+    initPerformanceMonitoring() {
+        // Monitor FPS
+        let fps = 0;
+        let lastTime = performance.now();
+        
+        const measureFPS = () => {
+            const now = performance.now();
+            fps = 1000 / (now - lastTime);
+            lastTime = now;
+            
+            // Reduce effects if FPS is low
+            if (fps < 30) {
+                document.documentElement.style.setProperty('--animation-duration', '0.1s');
+            }
+            
+            requestAnimationFrame(measureFPS);
+        };
+        
+        if (window.innerWidth > 768) {
+            measureFPS();
+        }
+        
+        // Monitor memory usage
+        if ('memory' in performance) {
+            setInterval(() => {
+                const memory = performance.memory;
+                if (memory.usedJSHeapSize > memory.jsHeapSizeLimit * 0.8) {
+                    console.warn('High memory usage detected');
+                    // Disable heavy animations
+                    document.documentElement.classList.add('low-performance');
+                }
+            }, 5000);
+        }
+    }
+
+    // Lazy Loading for Heavy Features
+    initLazyLoading() {
+        const lazyFeatures = [
+            { selector: '.three-js-container', load: () => this.initThreeJS() },
+            { selector: '.particle-canvas', load: () => this.initParticleEffect() }
+        ];
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const feature = lazyFeatures.find(f => 
+                        entry.target.matches(f.selector)
+                    );
+                    if (feature) {
+                        feature.load();
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        });
+        
+        lazyFeatures.forEach(feature => {
+            const elements = document.querySelectorAll(feature.selector);
+            elements.forEach(el => observer.observe(el));
+        });
+    }
+
+    // Display Animation
+    initDisplayAnimation() {
+        const displayScreen = document.querySelector('.display-screen');
+        if (!displayScreen) return;
+
+        // Add random glitch effects
+        setInterval(() => {
+            if (Math.random() < 0.1) { // 10% chance every interval
+                displayScreen.style.filter = 'hue-rotate(90deg) saturate(1.5)';
+                setTimeout(() => {
+                    displayScreen.style.filter = 'none';
+                }, 100);
+            }
+        }, 2000);
+
+        // Add subtle screen flicker
+        setInterval(() => {
+            if (Math.random() < 0.05) { // 5% chance
+                displayScreen.style.opacity = '0.98';
+                setTimeout(() => {
+                    displayScreen.style.opacity = '1';
+                }, 50);
+            }
+        }, 3000);
+
+        // Add typing effect to commands
+        const commands = document.querySelectorAll('.command.typing');
+        commands.forEach((command, index) => {
+            const text = command.textContent;
+            command.textContent = '';
+            command.style.borderRight = '2px solid #A78BFA';
+            
+            setTimeout(() => {
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < text.length) {
+                        command.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 100);
+                    } else {
+                        setTimeout(() => {
+                            command.style.borderRight = 'none';
+                        }, 1000);
+                    }
+                };
+                typeWriter();
+            }, index * 2000);
         });
     }
 }

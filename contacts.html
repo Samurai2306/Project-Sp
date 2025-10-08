@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Проекты | Глеб Чернов</title>
+    <title>Контакты | Глеб Чернов</title>
     <meta name="description" content="Способы связи с Глебом Черновым - Telegram, GitHub, Email и VK">
     <meta name="theme-color" content="#8B5FBF">
 
     <!-- Предзагрузка ресурсов для ускорения работы сайта -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Google Fonts для выразительной типографики -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
@@ -27,6 +31,9 @@
         }
     </style>
 </head>
+<body class="loading">
+    <!-- glass-container: Основной контейнер для контента с эффектом "стекла" -->
+    <div class="glass-container">
         <!-- Navigation -->
         <nav class="neo-nav" aria-label="Основная навигация">
             <div class="nav-container">
@@ -40,6 +47,7 @@
                     <li class="neo-nav__item"><a href="index.html" class="neo-nav__link">Главная</a></li>
                     <li class="neo-nav__item"><a href="skills.html" class="neo-nav__link">Навыки</a></li>
                     <li class="neo-nav__item"><a href="projects.html" class="neo-nav__link">Проекты</a></li>
+                    <li class="neo-nav__item"><a href="order.html" class="neo-nav__link">Заказать</a></li>
                     <li class="neo-nav__item"><a href="contacts.html" class="neo-nav__link neo-nav__link--active">Контакты</a></li>
                 </ul>
             </div>
@@ -47,32 +55,105 @@
 
         <header class="hero">
             <h1 class="animated-gradient-text">Мои контакты</h1>
+            <p class="subtitle">Свяжитесь со мной для обсуждения проектов и сотрудничества</p>
+        </header>
 
-        <!-- Contacts Section -->
-        <section id="contacts" class="contacts-section">
-            <h2 class="section-title animated-gradient-text">Давайте создавать вместе</h2>
+        <!-- Main Contacts Section -->
+        <section class="contacts-main scroll-reveal">
             <div class="contacts-grid">
-                <a href="https://t.me/mm0l0d0y" target="_blank" class="contact-card glass-button" target="_blank"
-                    rel="noopener">
-                    <img src="/assets/icons/icons8-tg.svg" alt="SVG Image" width="100%" height="100%">
-                    <small>@mm0l0d0y</small>
+                <a href="https://t.me/mm0l0d0y" target="_blank" class="contact-card magnetic" rel="noopener">
+                    <div class="contact-icon">
+                        <img src="/assets/icons/icons8-tg.svg" alt="Telegram" width="48" height="48">
+                    </div>
+                    <h3>Telegram</h3>
+                    <p>@mm0l0d0y</p>
+                    <span class="contact-action">Написать сообщение</span>
                 </a>
-                <a href="https://github.com/Samurai2306" target="_blank" class="contact-card glass-button"
-                    target="_blank" rel="noopener">
-                    <img src="/assets/icons/icons8-github.svg" alt="SVG Image" width="100%" height="100%">
-                    <small>Samurai2306</small>
+                
+                <a href="https://github.com/Samurai2306" target="_blank" class="contact-card magnetic" rel="noopener">
+                    <div class="contact-icon">
+                        <img src="/assets/icons/icons8-github.svg" alt="GitHub" width="48" height="48">
+                    </div>
+                    <h3>GitHub</h3>
+                    <p>Samurai2306</p>
+                    <span class="contact-action">Посмотреть код</span>
                 </a>
-                <a href="mailto:undertale2006rus@gmail.com" target="_blank" class="contact-card glass-button">
-                    <img src="/assets/icons/icons8-gmail.svg" alt="SVG Image" width="100%" height="100%">
-                    <small>undertale2006rus@gmail.com</small>
+                
+                <a href="mailto:undertale2006rus@gmail.com" target="_blank" class="contact-card magnetic">
+                    <div class="contact-icon">
+                        <img src="/assets/icons/icons8-gmail.svg" alt="Email" width="48" height="48">
+                    </div>
+                    <h3>Email</h3>
+                    <p>undertale2006rus@gmail.com</p>
+                    <span class="contact-action">Отправить письмо</span>
                 </a>
-                <a href="https://vk.com/glebnigger" target="_blank" class="contact-card glass-button">
-                    <img src="/assets/icons/icons8-vk.svg" alt="SVG Image" width="100%" height="100%">
-                    <small>glebnigger</small>
+                
+                <a href="https://vk.com/glebnigger" target="_blank" class="contact-card magnetic">
+                    <div class="contact-icon">
+                        <img src="/assets/icons/icons8-vk.svg" alt="VKontakte" width="48" height="48">
+                    </div>
+                    <h3>VKontakte</h3>
+                    <p>glebnigger</p>
+                    <span class="contact-action">Написать в VK</span>
                 </a>
             </div>
         </section>
-        </header>
+
+        <!-- Contact Form Section -->
+        <section class="contact-form-section scroll-reveal">
+            <h2 class="section-title animated-gradient-text">Напишите мне</h2>
+            <p class="form-description">Есть идея для проекта? Хотите обсудить сотрудничество? Свяжитесь со мной!</p>
+            
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name" class="form-label">Ваше имя</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject" class="form-label">Тема сообщения</label>
+                    <input type="text" id="subject" name="subject" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" class="form-label">Сообщение</label>
+                    <textarea id="message" name="message" class="form-textarea" rows="5" required></textarea>
+                </div>
+                
+                <button type="submit" class="form-submit glass-button">
+                    <span class="submit-text">Отправить сообщение</span>
+                    <span class="submit-icon">→</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- Additional Info Section -->
+        <section class="contact-info scroll-reveal">
+            <div class="info-cards">
+                <div class="info-card magnetic">
+                    <div class="info-icon">💼</div>
+                    <h3>Готов к работе</h3>
+                    <p>Открыт для новых проектов и интересных предложений</p>
+                </div>
+                
+                <div class="info-card magnetic">
+                    <div class="info-icon">⚡</div>
+                    <h3>Быстрый ответ</h3>
+                    <p>Обычно отвечаю в течение нескольких часов</p>
+                </div>
+                
+                <div class="info-card magnetic">
+                    <div class="info-icon">🌍</div>
+                    <h3>Удаленная работа</h3>
+                    <p>Готов работать с командами из любой точки мира</p>
+                </div>
+            </div>
+        </section>
 
         <footer class="neo-footer">
             <div class="footer-content">
@@ -87,7 +168,57 @@
     </div>
 
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/projects.js"></script>
+    <script>
+        // Contact Form Handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(contactForm);
+                    const name = formData.get('name');
+                    const email = formData.get('email');
+                    const subject = formData.get('subject');
+                    const message = formData.get('message');
+                    
+                    // Create mailto link
+                    const mailtoLink = `mailto:undertale2006rus@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Имя: ${name}\nEmail: ${email}\n\nСообщение:\n${message}`)}`;
+                    
+                    // Open email client
+                    window.location.href = mailtoLink;
+                    
+                    // Show success message
+                    const submitButton = contactForm.querySelector('.form-submit');
+                    const originalText = submitButton.innerHTML;
+                    
+                    submitButton.innerHTML = 'Сообщение отправлено!';
+                    submitButton.style.background = 'var(--gradient-primary)';
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        submitButton.innerHTML = originalText;
+                    }, 3000);
+                });
+                
+                // Add focus effects to form inputs
+                const formInputs = contactForm.querySelectorAll('.form-input, .form-textarea');
+                formInputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        this.parentElement.classList.add('focused');
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        this.parentElement.classList.remove('focused');
+                    });
+                });
+            }
+        });
+    </script>
 </body>
-
 </html>

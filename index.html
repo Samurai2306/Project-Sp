@@ -13,9 +13,17 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
+    <!-- Google Fonts для выразительной типографики -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- Подключение библиотеки GSAP для сложных анимаций -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js для 3D объектов -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
     <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
@@ -81,6 +89,9 @@
                         <a href="projects.html" class="neo-nav__link">Проекты</a>
                     </li>
                     <li class="neo-nav__item">
+                        <a href="order.html" class="neo-nav__link">Заказать</a>
+                    </li>
+                    <li class="neo-nav__item">
                         <a href="contacts.html" class="neo-nav__link">Контакты</a>
                     </li>
                 </ul>
@@ -93,8 +104,8 @@
                 <div class="hero-text">
                     <!-- Имя и статус владельца портфолио -->
                     <h1 class="animated-gradient-text">Глеб Чернов</h1>
-                    <p class="subtitle typing-animation">Fullstack разработчик & Студент РТУ МИРЭА & классный парень</p>
-                    <p class="hero-description">Создаю современные веб-приложения, десктопные решения и управляю IT-инфраструктурой. Junior++ с passion к инновациям.</p>
+                    <p class="subtitle typing-animation">Fullstack разработчик & Студент РТУ МИРЭА</p>
+                    <p class="hero-description">Создаю современные веб-приложения, десктопные решения и управляю IT-инфраструктурой. Уровень Junior++ с passion к инновациям и постоянному развитию.</p>
                     <!-- hero-stats: Блок с дополнительной статистикой (например, опыт, проекты, навыки) -->
                     <div class="hero-stats">
                         <div class="stat">
@@ -122,16 +133,42 @@
                 </div>
                 
                 <div class="hero-visual">
-                    <div class="floating-card">
-                        <div class="code-snippet">
-                            <pre><code class="language-javascript" >const developer = {
-  name: "Глеб Чернов",
-  role: "Fullstack Developer",
-  skills: ["React", "Node.js", "C#", "C++",
- "Python", "Flutter" ],
-  level: "Junior++",
-  passion: "Создавать инновации"
-};</code></pre>
+                    <div class="display-container">
+                        <div class="display-screen">
+                            <div class="display-frame">
+                                <div class="display-header">
+                                    <div class="display-dots">
+                                        <span class="dot red"></span>
+                                        <span class="dot yellow"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                    <div class="display-title">Terminal</div>
+                                </div>
+                                <div class="display-content">
+                                    <div class="code-line">
+                                        <span class="prompt">gleb@portfolio:~$</span>
+                                        <span class="command typing">whoami</span>
+                                    </div>
+                                    <div class="code-line output">
+                                        <span class="output-text">Глеб Чернов - Fullstack Developer</span>
+                                    </div>
+                                    <div class="code-line">
+                                        <span class="prompt">gleb@portfolio:~$</span>
+                                        <span class="command typing">cat skills.txt</span>
+                                    </div>
+                                    <div class="code-line output">
+                                        <span class="output-text">React, Node.js, C#, Python, Flutter</span>
+                                    </div>
+                                    <div class="code-line">
+                                        <span class="prompt">gleb@portfolio:~$</span>
+                                        <span class="command typing">echo "Ready to code!"</span>
+                                    </div>
+                                    <div class="code-line output">
+                                        <span class="output-text">Ready to code!</span>
+                                    </div>
+                                    <div class="cursor-blink">_</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -139,73 +176,70 @@
         </header>
 
         <!-- Quick Skills Preview -->
-        <section class="quick-skills">
+        <section class="quick-skills scroll-reveal">
             <h2 class="section-title animated-gradient-text">Технологический стек</h2>
             <div class="skills-marquee">
                 <div class="marquee-track">
-                    <span class="skill-tag">React</span>
-                    <span class="skill-tag">TypeScript</span>
-                    <span class="skill-tag">Node.js</span>
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">C#/.NET</span>
-                    <span class="skill-tag">PostgreSQL</span>
-                    <span class="skill-tag">Docker</span>
-                    <span class="skill-tag">C++</span>
-                    <span class="skill-tag">Flutter</span>
-                    <span class="skill-tag">Linux</span>
+                    <span class="skill-tag magnetic">React</span>
+                    <span class="skill-tag magnetic">TypeScript</span>
+                    <span class="skill-tag magnetic">Node.js</span>
+                    <span class="skill-tag magnetic">Python</span>
+                    <span class="skill-tag magnetic">C#/.NET</span>
+                    <span class="skill-tag magnetic">PostgreSQL</span>
+                    <span class="skill-tag magnetic">Docker</span>
+                    <span class="skill-tag magnetic">C++</span>
+                    <span class="skill-tag magnetic">Flutter</span>
+                    <span class="skill-tag magnetic">Linux</span>
                     <!-- Duplicate for seamless loop -->
-                    <span class="skill-tag">React</span>
-                    <span class="skill-tag">TypeScript</span>
-                    <span class="skill-tag">Node.js</span>
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">C#/.NET</span>
-                    <span class="skill-tag">PostgreSQL</span>
-                    <span class="skill-tag">Docker</span>
-                    <span class="skill-tag">C++</span>
-                    <span class="skill-tag">Flutter</span>
-                    <span class="skill-tag">Linux</span>
+                    <span class="skill-tag magnetic">React</span>
+                    <span class="skill-tag magnetic">TypeScript</span>
+                    <span class="skill-tag magnetic">Node.js</span>
+                    <span class="skill-tag magnetic">Python</span>
+                    <span class="skill-tag magnetic">C#/.NET</span>
+                    <span class="skill-tag magnetic">PostgreSQL</span>
+                    <span class="skill-tag magnetic">Docker</span>
+                    <span class="skill-tag magnetic">C++</span>
+                    <span class="skill-tag magnetic">Flutter</span>
+                    <span class="skill-tag magnetic">Linux</span>
                 </div>
             </div>
         </section>
 
         <!-- Featured Projects -->
-        <section class="featured-projects">
+        <section class="featured-projects scroll-reveal">
             <h2 class="section-title animated-gradient-text">Избранные проекты</h2>
             <div class="projects-showcase">
-                <div class="project-highlight">
+                <div class="project-highlight magnetic">
                     <div class="project-visual">
-                        <div class="project-orb"></div>
+                        <div class="project-orb parallax-element"></div>
                     </div>
                     <div class="project-info">
                         <h3>Веб-платформа для образования</h3>
                         <p>Полнофункциональная LMS система с реальным временем и аналитикой</p>
                         <div class="tech-stack">
-                            <span class="tech">React</span>
-                            <span class="tech">Node.js</span>
-                            <span class="tech">MongoDB</span>
+                            <span class="tech magnetic">React</span>
+                            <span class="tech magnetic">Node.js</span>
+                            <span class="tech magnetic">MongoDB</span>
                         </div>
-                        <a href="projects.html" class="glass-button">Исследовать проект</a>
+                        <a href="projects.html" class="glass-button magnetic">Исследовать проект</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Aspirations Section -->
-        <section class="aspirations">
+        <section class="aspirations scroll-reveal">
             <h2 class="section-title animated-gradient-text">Мои стремления</h2>
             <div class="aspiration-cards">
-                <div class="aspiration-card">
-                    <div class="aspiration-icon">🚀</div>
+                <div class="aspiration-card magnetic scroll-reveal-left">
                     <h3>Инновации</h3>
                     <p>Создание продуктов, которые меняют подход к решению повседневных задач</p>
                 </div>
-                <div class="aspiration-card">
-                    <div class="aspiration-icon">🌍</div>
+                <div class="aspiration-card magnetic scroll-reveal">
                     <h3>Стабильность</h3>
                     <p>Сохранение высокого уровня жизни и возможность сохранять гармонию между работой и отдыхом</p>
                 </div>
-                <div class="aspiration-card">
-                    <div class="aspiration-icon">📚</div>
+                <div class="aspiration-card magnetic scroll-reveal-right">
                     <h3>Непрерывное обучение</h3>
                     <p>Постоянное освоение новых технологий, инструментов и методологий разработки</p>
                 </div>

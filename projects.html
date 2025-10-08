@@ -11,6 +11,11 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     
+    <!-- Google Fonts для выразительной типографики -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- Встроенные стили для фоновой анимации и состояния загрузки -->
@@ -45,12 +50,12 @@
         align-items: center;
         justify-content: center;
     }
-    /* projects-die: Отдельный кубик */
+    /* projects-die: Отдельный кубик (уменьшенный) */
     .projects-die {
-        width: 280px;
-        height: 50px;
-        padding-bottom: 8px;
-        perspective: 900px;
+        width: 180px;
+        height: 35px;
+        padding-bottom: 6px;
+        perspective: 600px;
         position: relative;
     }
     /* projects-cube: 3D-кубик с надписями */
@@ -60,7 +65,7 @@
         height: 100%;
         transform-style: preserve-3d;
     }
-    /* projects-face: Грани кубика с текстом */
+    /* projects-face: Грани кубика с текстом (уменьшенные) */
     .projects-face {
         position: absolute;
         width: 100%;
@@ -69,13 +74,13 @@
         align-items: center;
         justify-content: center;
         font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
-        font-weight: 900;
-        letter-spacing: -1px;
+        font-weight: 600;
+        letter-spacing: -0.5px;
         backface-visibility: hidden;
         user-select: none;
-        text-shadow: 0 2px 12px #8B5FBF, 0 0 2px #000;
-        opacity: 0.65;
-        font-size: 30px;
+        text-shadow: 0 1px 8px rgba(155, 139, 200, 0.3), 0 0 1px #000;
+        opacity: 0.4;
+        font-size: 18px;
     }
     </style>
     
@@ -111,21 +116,27 @@
         <!-- Подключение GSAP для анимаций -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
-    // Уникальная анимация кубиков для страницы проектов
+    // Мягкая анимация кубиков для страницы проектов
     window.addEventListener('DOMContentLoaded', function() {
         if (!window.gsap || !document.querySelector('.projects-pov')) return;
-        const n = 13;
+        
+        // Уменьшенное количество кубиков
+        const n = 8;
+        
+        // Мягкие параметры для граней
         const rots = [
-            { ry: 270, a:0.5 },
-            { ry: 0,   a:0.85 },
-            { ry: 90,  a:0.4 },
+            { ry: 270, a:0.2 },
+            { ry: 0,   a:0.4 },
+            { ry: 90,  a:0.1 },
             { ry: 180, a:0.0 }
         ];
+        
         gsap.set('.projects-face', {
-            z: 180,
+            z: 150,
             rotateY: i => rots[i].ry,
-            transformOrigin: '50% 50% -181px'
+            transformOrigin: '50% 50% -151px'
         });
+        
         for (let i=0; i<n; i++){
             let die = document.querySelector('.projects-die');
             let cube = die.querySelector('.projects-cube');
@@ -134,31 +145,37 @@
                 document.querySelector('.projects-tray').append(clone);
                 cube = clone.querySelector('.projects-cube');
             }
-            gsap.timeline({repeat:-1, yoyo:true, defaults:{ease:'power3.inOut', duration:1}})
+            
+            // Очень медленная и плавная анимация
+            gsap.timeline({repeat:-1, yoyo:true, defaults:{ease:'power2.inOut', duration:3}})
             .fromTo(cube, {
-                rotateY:-90
+                rotateY:-30 // уменьшенный угол
             },{
-                rotateY:90,
-                ease:'power1.inOut',
-                duration:8
+                rotateY:30,
+                ease:'power2.inOut',
+                duration:15 // значительно медленнее
             })
+            // Мягкие цвета с фиолетовыми оттенками
             .fromTo(cube.querySelectorAll('.projects-face'), {
-                color:(j)=>'hsl('+(i/n*60+220)+', 38%,'+(45*[rots[3].a, rots[0].a, rots[1].a][j])+'%)'
+                color:(j)=>'hsl('+(i/n*30+280)+', 20%,'+(30*[rots[3].a, rots[0].a, rots[1].a][j])+'%)'
             },{
-                color:(j)=>'hsl('+(i/n*60+220)+', 32%,'+(38*[rots[0].a, rots[1].a, rots[2].a][j])+'%)'
+                color:(j)=>'hsl('+(i/n*30+280)+', 15%,'+(25*[rots[0].a, rots[1].a, rots[2].a][j])+'%)'
             }, 0)
             .to(cube.querySelectorAll('.projects-face'), {
-                color:(j)=>'hsl('+(i/n*60+220)+', 28%,'+(30*[rots[1].a, rots[2].a, rots[3].a][j])+'%)'
+                color:(j)=>'hsl('+(i/n*30+280)+', 10%,'+(20*[rots[1].a, rots[2].a, rots[3].a][j])+'%)'
             }, 1)
             .progress(i/n);
         }
+        
+        // Очень мягкая анимация ленты
         gsap.timeline()
-            .from('.projects-tray', {yPercent:-2, duration:2, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
-            .fromTo('.projects-tray', {rotate:-5},{rotate:5, duration:5, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
-            .from('.projects-die', {duration:0.01, opacity:0, stagger:{each:-0.05, ease:'power1.in'}}, 0)
-            .to('.projects-tray', {scale:1.05, duration:2, ease:'power3.inOut', yoyo:true, repeat:-1}, 0);
+            .from('.projects-tray', {yPercent:-0.5, duration:6, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            .fromTo('.projects-tray', {rotate:-1},{rotate:1, duration:8, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            .from('.projects-die', {duration:1, opacity:0, stagger:{each:0.2, ease:'power2.in'}}, 0)
+            .to('.projects-tray', {scale:1.01, duration:4, ease:'power2.inOut', yoyo:true, repeat:-1}, 0);
+            
         function setProjectsBgScale() {
-            const h = n*14;
+            const h = n*20; // увеличенная высота для более плавного отображения
             gsap.set('.projects-tray', {height:h});
             gsap.set('.projects-pov', {scale:window.innerHeight/h});
         }
@@ -179,6 +196,7 @@
                     <li class="neo-nav__item"><a href="index.html" class="neo-nav__link">Главная</a></li>
                     <li class="neo-nav__item"><a href="skills.html" class="neo-nav__link">Навыки</a></li>
                     <li class="neo-nav__item"><a href="projects.html" class="neo-nav__link neo-nav__link--active">Проекты</a></li>
+                    <li class="neo-nav__item"><a href="order.html" class="neo-nav__link">Заказать</a></li>
                     <li class="neo-nav__item"><a href="contacts.html" class="neo-nav__link">Контакты</a></li>
                 </ul>
             </div>
@@ -190,11 +208,11 @@
         </header>
 
         <!-- Projects Filter -->
-        <div class="projects-filter">
-            <button class="filter-btn active" data-filter="all">Все проекты</button>
-            <button class="filter-btn" data-filter="web">Веб-разработка</button>
-            <button class="filter-btn" data-filter="desktop">Десктоп</button>
-            <button class="filter-btn" data-filter="fullstack">Fullstack</button>
+        <div class="projects-filter scroll-reveal">
+            <button class="filter-btn magnetic active" data-filter="all">Все проекты</button>
+            <button class="filter-btn magnetic" data-filter="web">Веб-разработка</button>
+            <button class="filter-btn magnetic" data-filter="desktop">Десктоп</button>
+            <button class="filter-btn magnetic" data-filter="fullstack">Fullstack</button>
         </div>
 
         <!-- Projects Grid -->
@@ -215,8 +233,8 @@
                         <p id="modalDescription"></p>
                         <div class="modal-tech" id="modalTech"></div>
                         <div class="modal-links">
-                            <a href="#" id="modalLive" class="glass-button" target="_blank" rel="noopener">🚀 Live Demo</a>
-                            <a href="#" id="modalGitHub" class="glass-button glass-button-outline" target="_blank" rel="noopener">💻 GitHub</a>
+                            <a href="#" id="modalLive" class="glass-button" target="_blank" rel="noopener">Live Demo</a>
+                            <a href="#" id="modalGitHub" class="glass-button glass-button-outline" target="_blank" rel="noopener">GitHub</a>
                         </div>
                     </div>
                 </div>

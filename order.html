@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказать сайт | Глеб Чернов - Fullstack разработчик</title>
+    <meta name="description" content="Закажите современный сайт или веб-приложение. Разработка под ключ с гарантией качества и поддержкой.">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style">
+    <link rel="preload" href="assets/css/style.css" as="style">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/fonts.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>G</text></svg>">
+</head>
+<body class="loading">
+    <!-- Background Animation -->
+    <div class="pov-bg">
+        <div class="pov">
+            <div class="tray">
+                <div class="die">
+                    <div class="cube">
+                        <div class="face">ORDER</div>
+                        <div class="face">DESIGN</div>
+                        <div class="face">CODE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- glass-container: Основной контейнер для контента с эффектом "стекла" -->
+    <div class="glass-container">
+        <!-- Подключение GSAP для анимаций -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+    // Мягкая анимация кубиков для страницы заказа
+    window.addEventListener('DOMContentLoaded', function() {
+        if (!window.gsap || !document.querySelector('.pov')) return;
+        
+        // Уменьшенное количество кубиков
+        const n = 8;
+        
+        // Мягкие параметры для граней
+        const rots = [
+            { ry: 270, a:0.2 },
+            { ry: 0,   a:0.4 },
+            { ry: 90,  a:0.1 },
+            { ry: 180, a:0.0 }
+        ];
+        
+        gsap.set('.face', {
+            z: 150,
+            rotateY: i => rots[i].ry,
+            transformOrigin: '50% 50% -151px'
+        });
+        
+        for (let i=0; i<n; i++){
+            let die = document.querySelector('.die');
+            let cube = die.querySelector('.cube');
+            if (i>0){
+                let clone = die.cloneNode(true);
+                document.querySelector('.tray').append(clone);
+                cube = clone.querySelector('.cube');
+            }
+            
+            // Очень медленная и плавная анимация
+            gsap.timeline({repeat:-1, yoyo:true, defaults:{ease:'power2.inOut', duration:3}})
+            .fromTo(cube, {
+                rotateY:-30 // уменьшенный угол
+            },{
+                rotateY:30,
+                ease:'power2.inOut',
+                duration:15 // значительно медленнее
+            })
+            // Мягкие цвета с фиолетовыми оттенками
+            .fromTo(cube.querySelectorAll('.face'), {
+                color:(j)=>'hsl('+(i/n*30+280)+', 20%,'+(30*[rots[3].a, rots[0].a, rots[1].a][j])+'%)'
+            },{
+                color:(j)=>'hsl('+(i/n*30+280)+', 15%,'+(25*[rots[0].a, rots[1].a, rots[2].a][j])+'%)'
+            }, 0)
+            .to(cube.querySelectorAll('.face'), {
+                color:(j)=>'hsl('+(i/n*30+280)+', 10%,'+(20*[rots[1].a, rots[2].a, rots[3].a][j])+'%)'
+            }, 1)
+            .progress(i/n);
+        }
+        
+        // Очень мягкая анимация ленты
+        gsap.timeline()
+            .from('.tray', {yPercent:-0.5, duration:6, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            .fromTo('.tray', {rotate:-1},{rotate:1, duration:8, ease:'power1.inOut', yoyo:true, repeat:-1}, 0)
+            .from('.die', {duration:1, opacity:0, stagger:{each:0.2, ease:'power2.in'}}, 0)
+            .to('.tray', {scale:1.01, duration:4, ease:'power2.inOut', yoyo:true, repeat:-1}, 0);
+            
+        function setOrderBgScale() {
+            const h = n*20; // увеличенная высота для более плавного отображения
+            gsap.set('.tray', {height:h});
+            gsap.set('.pov', {scale:window.innerHeight/h});
+        }
+        window.addEventListener('resize', setOrderBgScale);
+        setOrderBgScale();
+    });
+    </script>
+        <!-- Navigation -->
+        <nav class="neo-nav" aria-label="Основная навигация">
+            <div class="nav-container">
+                <a href="index.html" class="neo-logo">Gleb Chernov</a>
+                <ul class="neo-nav__list">
+                    <li class="neo-nav__item"><a href="index.html" class="neo-nav__link">Главная</a></li>
+                    <li class="neo-nav__item"><a href="projects.html" class="neo-nav__link">Проекты</a></li>
+                    <li class="neo-nav__item"><a href="skills.html" class="neo-nav__link">Навыки</a></li>
+                    <li class="neo-nav__item"><a href="order.html" class="neo-nav__link neo-nav__link--active">Заказать</a></li>
+                    <li class="neo-nav__item"><a href="contacts.html" class="neo-nav__link">Контакты</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="hero">
+            <h1 class="animated-gradient-text">Заказать сайт</h1>
+            <p class="subtitle">Современные веб-решения под ключ с гарантией качества</p>
+        </header>
+
+        <!-- Pricing Plans Section -->
+        <section class="pricing-section scroll-reveal">
+            <h2 class="section-title animated-gradient-text">Тарифы разработки</h2>
+            <p class="section-description">Выберите подходящий вариант для вашего проекта</p>
+            
+            <div class="pricing-grid">
+                <!-- Basic Plan -->
+                <div class="pricing-card floating-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Landing Page</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">₽</span>
+                            <span class="price-amount">25,000</span>
+                        </div>
+                        <p class="pricing-description">Одностраничный сайт для презентации</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul class="features-list">
+                            <li class="feature-item">• Адаптивный дизайн</li>
+                            <li class="feature-item">• Современная анимация</li>
+                            <li class="feature-item">• SEO оптимизация</li>
+                            <li class="feature-item">• Контактная форма</li>
+                            <li class="feature-item">• 1 месяц поддержки</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <button class="glass-button pricing-btn" data-plan="landing">
+                            <span>Заказать</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Standard Plan -->
+                <div class="pricing-card floating-card featured">
+                    <div class="pricing-badge">Популярный</div>
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Корпоративный сайт</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">₽</span>
+                            <span class="price-amount">75,000</span>
+                        </div>
+                        <p class="pricing-description">Многостраничный сайт для бизнеса</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul class="features-list">
+                            <li class="feature-item">• До 10 страниц</li>
+                            <li class="feature-item">• Админ панель</li>
+                            <li class="feature-item">• CMS система</li>
+                            <li class="feature-item">• Интеграция с соцсетями</li>
+                            <li class="feature-item">• 3 месяца поддержки</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <button class="glass-button pricing-btn" data-plan="corporate">
+                            <span>Заказать</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Premium Plan -->
+                <div class="pricing-card floating-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Веб-приложение</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">₽</span>
+                            <span class="price-amount">150,000</span>
+                        </div>
+                        <p class="pricing-description">Полнофункциональное веб-приложение</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul class="features-list">
+                            <li class="feature-item">• Пользовательские роли</li>
+                            <li class="feature-item">• API интеграция</li>
+                            <li class="feature-item">• База данных</li>
+                            <li class="feature-item">• Безопасность</li>
+                            <li class="feature-item">• 6 месяцев поддержки</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-footer">
+                        <button class="glass-button pricing-btn" data-plan="webapp">
+                            <span>Заказать</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="process-section scroll-reveal">
+            <h2 class="section-title animated-gradient-text">Процесс разработки</h2>
+            <p class="section-description">Как мы создаем ваш проект</p>
+            
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Обсуждение</h3>
+                        <p>Анализируем ваши требования и цели проекта</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Дизайн</h3>
+                        <p>Создаем макеты и прототипы интерфейса</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Разработка</h3>
+                        <p>Программируем функционал и интегрируем системы</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Тестирование</h3>
+                        <p>Проверяем качество и исправляем ошибки</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Запуск</h3>
+                        <p>Деплоим проект и передаем вам готовое решение</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Order Form Section -->
+        <section class="order-form-section scroll-reveal">
+            <h2 class="section-title animated-gradient-text">Оформить заказ</h2>
+            <p class="section-description">Заполните форму и мы свяжемся с вами в течение 24 часов</p>
+            
+            <form class="order-form" id="orderForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Ваше имя</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Телефон</label>
+                        <input type="tel" id="phone" name="phone" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget" class="form-label">Бюджет</label>
+                        <select id="budget" name="budget" class="form-input" required>
+                            <option value="">Выберите бюджет</option>
+                            <option value="25-50">25,000 - 50,000 ₽</option>
+                            <option value="50-100">50,000 - 100,000 ₽</option>
+                            <option value="100-200">100,000 - 200,000 ₽</option>
+                            <option value="200+">200,000+ ₽</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="project-type" class="form-label">Тип проекта</label>
+                    <select id="project-type" name="project-type" class="form-input" required>
+                        <option value="">Выберите тип проекта</option>
+                        <option value="landing">Landing Page</option>
+                        <option value="corporate">Корпоративный сайт</option>
+                        <option value="webapp">Веб-приложение</option>
+                        <option value="ecommerce">Интернет-магазин</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description" class="form-label">Описание проекта</label>
+                    <textarea id="description" name="description" class="form-textarea" rows="5" placeholder="Расскажите о вашем проекте, его целях и особенностях..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="timeline" class="form-label">Желаемые сроки</label>
+                    <select id="timeline" name="timeline" class="form-input" required>
+                        <option value="">Выберите сроки</option>
+                        <option value="1-2">1-2 недели</option>
+                        <option value="2-4">2-4 недели</option>
+                        <option value="1-2-months">1-2 месяца</option>
+                        <option value="2+">2+ месяца</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="glass-button form-submit">
+                    <span class="submit-text">Отправить заявку</span>
+                    <span class="submit-icon">→</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- Contacts Section -->
+        <section id="contacts" class="contacts-section">
+            <h2 class="section-title animated-gradient-text">Давайте создавать вместе</h2>
+            <div class="contacts-grid">
+                <a href="https://t.me/mm0l0d0y" target="_blank" class="contact-card glass-button" target="_blank"
+                    rel="noopener">
+                    <img src="/assets/icons/icons8-tg.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>@mm0l0d0y</small>
+                </a>
+                <a href="mailto:undertale2006rus@gmail.com" class="contact-card glass-button" target="_blank"
+                    rel="noopener">
+                    <img src="/assets/icons/icons8-gmail.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>undertale2006rus@gmail.com</small>
+                </a>
+                <a href="https://github.com/mm0l0d0y" target="_blank" class="contact-card glass-button" target="_blank"
+                    rel="noopener">
+                    <img src="/assets/icons/icons8-github.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>github.com/mm0l0d0y</small>
+                </a>
+                <a href="https://vk.com/mm0l0d0y" target="_blank" class="contact-card glass-button" target="_blank"
+                    rel="noopener">
+                    <img src="/assets/icons/icons8-vk.svg" alt="SVG Image" width="100%" height="100%">
+                    <small>vk.com/mm0l0d0y</small>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Order Form Handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const orderForm = document.getElementById('orderForm');
+            const pricingBtns = document.querySelectorAll('.pricing-btn');
+            
+            // Handle pricing button clicks
+            pricingBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const plan = this.dataset.plan;
+                    const projectTypeSelect = document.getElementById('project-type');
+                    
+                    // Set project type based on button
+                    switch(plan) {
+                        case 'landing':
+                            projectTypeSelect.value = 'landing';
+                            break;
+                        case 'corporate':
+                            projectTypeSelect.value = 'corporate';
+                            break;
+                        case 'webapp':
+                            projectTypeSelect.value = 'webapp';
+                            break;
+                    }
+                    
+                    // Scroll to form
+                    document.querySelector('.order-form-section').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Handle form submission
+            if (orderForm) {
+                orderForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(orderForm);
+                    const name = formData.get('name');
+                    const email = formData.get('email');
+                    const phone = formData.get('phone');
+                    const budget = formData.get('budget');
+                    const projectType = formData.get('project-type');
+                    const description = formData.get('description');
+                    const timeline = formData.get('timeline');
+                    
+                    // Create mailto link
+                    const subject = `Заказ сайта - ${projectType}`;
+                    const body = `Имя: ${name}
+Email: ${email}
+Телефон: ${phone}
+Бюджет: ${budget}
+Тип проекта: ${projectType}
+Описание: ${description}
+Сроки: ${timeline}`;
+                    
+                    const mailtoLink = `mailto:undertale2006rus@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    
+                    // Open email client
+                    window.location.href = mailtoLink;
+                    
+                    // Show success message
+                    const submitButton = orderForm.querySelector('.form-submit');
+                    const originalText = submitButton.innerHTML;
+                    
+                    submitButton.innerHTML = 'Заявка отправлена!';
+                    submitButton.style.background = 'var(--gradient-primary)';
+                    
+                    // Reset form
+                    orderForm.reset();
+                    
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        submitButton.innerHTML = originalText;
+                    }, 3000);
+                });
+                
+                // Add focus effects to form inputs
+                const formInputs = orderForm.querySelectorAll('.form-input, .form-textarea');
+                formInputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        this.parentElement.classList.add('focused');
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        this.parentElement.classList.remove('focused');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
