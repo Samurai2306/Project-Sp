@@ -51,6 +51,101 @@
         .loaded {
             opacity: 1;
         }
+        
+        /* Стили для игровой ссылки в терминале */
+        .terminal-game-link {
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .terminal-game-link:hover {
+            transform: scale(1.05);
+        }
+        
+        .terminal-game-link .blink-text {
+            color: #00ff41;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+            animation: blink-animation 1.5s infinite, glow-pulse 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes blink-animation {
+            0%, 49% { opacity: 1; }
+            50%, 99% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px rgba(0, 255, 65, 0.5),
+                    0 0 20px rgba(0, 255, 65, 0.3);
+            }
+            50% {
+                text-shadow: 
+                    0 0 20px rgba(0, 255, 65, 0.8),
+                    0 0 30px rgba(0, 255, 65, 0.5),
+                    0 0 40px rgba(139, 95, 191, 0.3);
+            }
+        }
+        
+        .terminal-game-link:hover .blink-text {
+            color: #00ff88;
+            animation: none;
+            opacity: 1;
+            text-shadow: 
+                0 0 15px rgba(0, 255, 136, 0.8),
+                0 0 25px rgba(0, 255, 136, 0.6),
+                0 0 35px rgba(139, 95, 191, 0.5);
+        }
+        
+        /* Стили для иконок вместо эмодзи */
+        .terminal-icon {
+            filter: brightness(0) saturate(100%) invert(48%) sepia(18%) saturate(1086%) hue-rotate(51deg) brightness(80%) contrast(102%);
+            transition: all 0.3s ease;
+        }
+        
+        .terminal-game-link:hover .terminal-icon {
+            filter: brightness(0) saturate(100%) invert(58%) sepia(73%) saturate(1586%) hue-rotate(90deg) brightness(90%) contrast(102%);
+            transform: scale(1.1);
+        }
+        
+        .feature-icon img,
+        .benefit-icon img,
+        .advantage-icon img {
+            filter: brightness(0) saturate(100%) invert(37%) sepia(43%) saturate(1074%) hue-rotate(230deg) brightness(70%) contrast(105%);
+            transition: all 0.3s ease;
+        }
+        
+        /* Исключение для devices иконки - не красить */
+        .advantage-icon img[src*="devices_78336.svg"] {
+            filter: none !important;
+        }
+        
+        .advantage-card:hover .advantage-icon img {
+            filter: brightness(0) saturate(100%) invert(45%) sepia(73%) saturate(1274%) hue-rotate(230deg) brightness(85%) contrast(115%);
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .advantage-card:hover .advantage-icon img[src*="devices_78336.svg"] {
+            filter: none !important;
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        /* Стили для логотипа */
+        .logo-image {
+            height: 40px;
+            width: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .neo-logo:hover .logo-image {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="loading">
@@ -74,7 +169,9 @@
         <nav class="neo-nav" aria-label="Основная навигация">
             <div class="nav-container">
                 <!-- Логотип/имя владельца портфолио -->
-                <a href="index.html" class="neo-logo">GcH</a>
+                <a href="index.html" class="neo-logo">
+                    <img src="assets/images/LOGO.png" alt="Глеб Чернов" class="logo-image">
+                </a>
                 <!-- Кнопка для открытия мобильного меню (бургер) -->
                 <button class="mobile-menu-toggle" aria-label="Открыть меню">
                     <span>☰</span>
@@ -115,21 +212,21 @@
                             <span class="stat-label">Завершенных проекта</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number" data-count="1,5">0</span>
+                            <span class="stat-number" data-count="1.5">0</span>
                             <span class="stat-label">Года опыта</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number" data-count="10">0</span>
+                            <span class="stat-number stat-number-infinity" data-count="10" data-infinity="true">0</span>
                             <span class="stat-label">Технологий</span>
                         </div>
                     </div>
 
                     <div class="hero-links">
-                        <a href="projects.html" class="glass-button pulse-animation">
-                            <span> Чек-ап проектов</span>
+                        <a href="order.html" class="glass-button pulse-animation">
+                            <span>Заказать сайт</span>
                         </a>
-                        <a href="contacts.html" class="glass-button glass-button-outline">
-                            <span> Мои контакты</span>
+                        <a href="projects.html" class="glass-button glass-button-outline">
+                            <span>Мои проекты</span>
                         </a>
                     </div>
                 </div>
@@ -167,6 +264,17 @@
                                     </div>
                                     <div class="code-line output">
                                         <span class="output-text">Ready to code!</span>
+                                    </div>
+                                    <div class="code-line">
+                                        <span class="prompt">gleb@portfolio:~$</span>
+                                        <span class="command typing">./play_games.sh</span>
+                                    </div>
+                                    <div class="code-line output">
+                                        <a href="games.html" class="terminal-game-link">
+                                            <img src="assets/icons/development_icon_131032.svg" alt="Games" class="terminal-icon" style="width: 16px; height: 16px; vertical-align: middle; margin: 0 4px;">
+                                            <span class="output-text blink-text">Click me</span>
+                                            <img src="assets/icons/development_icon_131032.svg" alt="Games" class="terminal-icon" style="width: 16px; height: 16px; vertical-align: middle; margin: 0 4px;">
+                                        </a>
                                     </div>
                                     <div class="cursor-blink">_</div>
                                 </div>
@@ -207,24 +315,160 @@
             </div>
         </section>
 
-        <!-- Featured Projects -->
-        <section class="featured-projects scroll-reveal">
-            <h2 class="section-title animated-gradient-text">Избранные проекты</h2>
-            <div class="projects-showcase">
-                <div class="project-highlight magnetic">
+        <!-- Featured Project - Best Work -->
+        <section class="featured-project scroll-reveal">
+            <h2 class="section-title animated-gradient-text">Мой лучший проект</h2>
+            <p class="section-description">Флагманский проект, демонстрирующий мои навыки fullstack разработки</p>
+            
+            <div class="best-project-showcase floating-card">
+                <div class="project-preview">
+                    <div class="project-badge">⭐ Избранный проект</div>
                     <div class="project-visual">
                         <div class="project-orb parallax-element"></div>
                     </div>
-                    <div class="project-info">
-                        <h3>Веб-платформа для образования</h3>
-                        <p>Полнофункциональная LMS система с реальным временем и аналитикой</p>
-                        <div class="tech-stack">
-                            <span class="tech magnetic">React</span>
-                            <span class="tech magnetic">Node.js</span>
-                            <span class="tech magnetic">MongoDB</span>
+                </div>
+                
+                <div class="project-details">
+                    <h3 class="project-title">Образовательная LMS платформа</h3>
+                    <p class="project-description">
+                        Масштабная система управления обучением, которая включает в себя все современные функции 
+                        для дистанционного обучения. Платформа поддерживает потоковую передачу видео, интерактивные 
+                        тесты, домашние задания и подробную аналитику для преподавателей.
+                    </p>
+                    
+                    <div class="project-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">📹</span>
+                            <span class="feature-text">Видео-стриминг</span>
                         </div>
-                        <a href="projects.html" class="glass-button magnetic">Исследовать проект</a>
+                        <div class="feature-item">
+                            <span class="feature-icon">
+                                <img src="assets/icons/profit_analytics_increase_chart_data_study_icon_143883.svg" alt="Analytics" style="width: 24px; height: 24px;">
+                            </span>
+                            <span class="feature-text">Аналитика успеваемости</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">💬</span>
+                            <span class="feature-text">Чат в реальном времени</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🔐</span>
+                            <span class="feature-text">Безопасная авторизация</span>
+                        </div>
                     </div>
+                    
+                    <div class="tech-stack">
+                        <span class="tech magnetic">React</span>
+                        <span class="tech magnetic">Node.js</span>
+                        <span class="tech magnetic">MongoDB</span>
+                        <span class="tech magnetic">WebRTC</span>
+                        <span class="tech magnetic">Redis</span>
+                        <span class="tech magnetic">Docker</span>
+                    </div>
+                    
+                    <div class="project-actions">
+                        <a href="projects.html" class="glass-button magnetic">
+                            <span>Все проекты</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Order CTA Section -->
+        <section class="order-cta-section scroll-reveal">
+            <div class="cta-content floating-card">
+                <div class="cta-text">
+                    <h2 class="animated-gradient-text">Готовы создать свой проект?</h2>
+                    <p class="cta-description">
+                        Я разработаю современный и функциональный сайт или веб-приложение под ключ. 
+                        От лендинга до сложных fullstack решений — воплощу ваши идеи в жизнь.
+                    </p>
+                    
+                    <div class="cta-benefits">
+                        <div class="benefit-item">
+                            <span class="benefit-icon">
+                                <img src="assets/icons/stopwatch_watch_timer_time_clock_deadline_icon_220238.svg" alt="Fast" style="width: 32px; height: 32px;">
+                            </span>
+                            <div class="benefit-content">
+                                <h4>Быстрая разработка</h4>
+                                <p>Оптимальные сроки без потери качества</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">💎</span>
+                            <div class="benefit-content">
+                                <h4>Современный дизайн</h4>
+                                <p>Красивый и удобный интерфейс</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🛠️</span>
+                            <div class="benefit-content">
+                                <h4>Техподдержка</h4>
+                                <p>Помощь после запуска проекта</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-actions">
+                    <a href="order.html" class="glass-button pulse-animation magnetic">
+                        <span>Заказать сайт</span>
+                    </a>
+                    <a href="contacts.html" class="glass-button glass-button-outline magnetic">
+                        <span>Связаться со мной</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Me Section -->
+        <section class="why-choose-section scroll-reveal">
+            <h2 class="section-title animated-gradient-text">Почему выбирают меня</h2>
+            <p class="section-description">Профессиональный подход к каждому проекту</p>
+            
+            <div class="advantages-grid">
+                <div class="advantage-card floating-card scroll-reveal-left">
+                    <div class="advantage-icon">
+                        <img src="assets/icons/devices_78336.svg" alt="Modern" style="width: 48px; height: 48px;">
+                    </div>
+                    <h3>Современный стек</h3>
+                    <p>Использую передовые технологии и лучшие практики разработки для создания быстрых и надежных решений</p>
+                </div>
+                
+                <div class="advantage-card floating-card scroll-reveal">
+                    <div class="advantage-icon">
+                        <img src="assets/icons/3586372-brain-creative-idea-mind_107940.svg" alt="Creative" style="width: 48px; height: 48px;">
+                    </div>
+                    <h3>Креативный подход</h3>
+                    <p>Не просто пишу код — создаю продуманные решения с вниманием к UX и бизнес-целям заказчика</p>
+                </div>
+                
+                <div class="advantage-card floating-card scroll-reveal-right">
+                    <div class="advantage-icon">
+                        <img src="assets/icons/stopwatch_watch_timer_time_clock_deadline_icon_220238.svg" alt="Deadline" style="width: 48px; height: 48px;">
+                    </div>
+                    <h3>Точные сроки</h3>
+                    <p>Четкое планирование и прозрачная коммуникация гарантируют выполнение проектов в срок</p>
+                </div>
+                
+                <div class="advantage-card floating-card scroll-reveal-left">
+                    <div class="advantage-icon">🛡️</div>
+                    <h3>Качественный код</h3>
+                    <p>Чистый, документированный код с покрытием тестами обеспечивает легкую поддержку и масштабирование</p>
+                </div>
+                
+                <div class="advantage-card floating-card scroll-reveal">
+                    <div class="advantage-icon">🤝</div>
+                    <h3>Поддержка 24/7</h3>
+                    <p>Всегда на связи для решения возникающих вопросов и помощи после запуска проекта</p>
+                </div>
+                
+                <div class="advantage-card floating-card scroll-reveal-right">
+                    <div class="advantage-icon">📈</div>
+                    <h3>Рост бизнеса</h3>
+                    <p>Мои решения помогают бизнесу автоматизировать процессы и увеличивать прибыль</p>
                 </div>
             </div>
         </section>
@@ -276,11 +520,13 @@
                 <div class="footer-info">
                     <h3>Глеб Чернов</h3>
                     <p>Fullstack разработчик & Студент РТУ МИРЭА</p>
+                    <p class="footer-description">Создаю современные веб-решения с фокусом на качество и производительность</p>
                 </div>
                 <div class="footer-links">
                     <a href="index.html">Главная</a>
                     <a href="skills.html">Навыки</a>
                     <a href="projects.html">Проекты</a>
+                    <a href="order.html">Заказать</a>
                     <a href="contacts.html">Контакты</a>
                 </div>
                 <div class="footer-copyright">

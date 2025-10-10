@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Мини-игры | Глеб Чернов</title>
+    <meta name="description" content="Коллекция мини-игр от Глеба Чернова">
+    <meta name="theme-color" content="#8B5FBF">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP для анимаций -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Основные стили -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/text-animation.css">
+    
+    <style>
+        /* Стили для игр */
+        .games-hero {
+            padding: 8rem 1rem 3rem;
+            text-align: center;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .games-section {
+            padding: 2rem 1rem 4rem;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .game-card {
+            background: var(--gradient-neo);
+            backdrop-filter: var(--blur-intensity);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-large);
+            padding: 2rem;
+            box-shadow: var(--shadow-bento);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: var(--shadow-hover), 0 0 40px rgba(139, 95, 191, 0.4);
+            border-color: var(--color-accent);
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .game-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+        
+        .game-stats {
+            display: flex;
+            gap: 2rem;
+            font-family: var(--font-mono);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--color-accent-light);
+            opacity: 0.7;
+            display: block;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            display: block;
+        }
+        
+        .game-canvas-container {
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--color-border);
+        }
+        
+        .game-canvas {
+            display: block !important;
+            margin: 0 auto;
+            border-radius: var(--border-radius-small);
+            box-shadow: 0 0 30px rgba(139, 95, 191, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+            min-height: 200px;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .game-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        
+        .game-btn {
+            padding: 0.75rem 2rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: var(--border-radius);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-neo-light);
+            font-family: var(--font-design);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .game-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .game-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-hover), 0 8px 25px rgba(139, 95, 191, 0.6);
+        }
+        
+        .game-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        .game-btn.secondary {
+            background: transparent;
+            border: 2px solid var(--color-accent);
+            color: var(--color-accent);
+        }
+        
+        .game-instructions {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--border-radius-small);
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 3px solid var(--color-accent);
+        }
+        
+        .game-instructions h4 {
+            color: var(--color-accent);
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+        
+        .game-instructions p {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .game-over-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius);
+            z-index: 10;
+        }
+        
+        .game-over-overlay.active {
+            display: flex;
+        }
+        
+        .game-over-content {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .game-over-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .game-over-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 2048 стили */
+        .grid-2048 {
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: var(--border-radius);
+            min-height: 450px;
+            visibility: visible !important;
+            opacity: 1 !important;
+            border: 3px solid #8B7ED8; /* Видимая граница для отладки */
+        }
+        
+        .tile-2048 {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-small);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid var(--color-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Анимация появления новой плитки */
+        @keyframes tileAppear {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.15) rotate(5deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+        
+        /* Анимация объединения плиток */
+        @keyframes tileMerge {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+                box-shadow: 0 0 30px currentColor;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Блик на плитках */
+        .tile-2048::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .tile-2048:hover::before {
+            left: 100%;
+        }
+        
+        .tile-2048.tile-2 { 
+            background: linear-gradient(135deg, #8B7ED8, #9B8BE8); 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(139, 126, 216, 0.5);
+        }
+        .tile-2048.tile-4 { 
+            background: linear-gradient(135deg, #7A6DC7, #8A7DD7); 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(122, 109, 199, 0.5);
+        }
+        .tile-2048.tile-8 { 
+            background: linear-gradient(135deg, #6B5CB6, #7B6CC6); 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(107, 92, 182, 0.5);
+        }
+        .tile-2048.tile-16 { 
+            background: linear-gradient(135deg, #5C4BA5, #6C5BB5); 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(92, 75, 165, 0.5);
+        }
+        .tile-2048.tile-32 { 
+            background: linear-gradient(135deg, #4D3A94, #5D4AA4); 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(77, 58, 148, 0.5);
+        }
+        .tile-2048.tile-64 { 
+            background: linear-gradient(135deg, #3E2983, #4E3993); 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(62, 41, 131, 0.5);
+        }
+        .tile-2048.tile-128 { 
+            background: linear-gradient(135deg, #B8A9E8, #C8B9F8); 
+            color: white; 
+            font-size: 1.5rem; 
+            box-shadow: 0 6px 20px rgba(184, 169, 232, 0.6);
+        }
+        .tile-2048.tile-256 { 
+            background: linear-gradient(135deg, #9B8BC8, #AB9BD8); 
+            color: white; 
+            font-size: 1.5rem; 
+            box-shadow: 0 6px 20px rgba(155, 139, 200, 0.6);
+        }
+        .tile-2048.tile-512 { 
+            background: linear-gradient(135deg, #7C6BAA, #8C7BBA); 
+            color: white; 
+            font-size: 1.5rem; 
+            box-shadow: 0 6px 20px rgba(124, 107, 170, 0.6);
+        }
+        .tile-2048.tile-1024 { 
+            background: linear-gradient(135deg, #5D4B8C, #6D5B9C); 
+            color: white; 
+            font-size: 1.2rem; 
+            box-shadow: 0 8px 25px rgba(93, 75, 140, 0.7);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .tile-2048.tile-2048 { 
+            background: var(--gradient-primary); 
+            color: white; 
+            font-size: 1.2rem; 
+            box-shadow: 0 8px 30px rgba(139, 95, 191, 0.8), 0 0 40px rgba(139, 95, 191, 0.5);
+            animation: pulse 1.5s ease-in-out infinite, glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 8px 30px rgba(139, 95, 191, 0.8), 0 0 40px rgba(139, 95, 191, 0.5); }
+            50% { box-shadow: 0 12px 40px rgba(139, 95, 191, 1), 0 0 60px rgba(139, 95, 191, 0.8); }
+        }
+        
+        /* Мобильные кнопки управления */
+        .mobile-controls {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+        }
+        
+        .control-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-neo);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            color: var(--color-accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .control-btn:active {
+            transform: scale(0.95);
+            background: var(--color-accent);
+            color: white;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .mobile-controls {
+                display: flex;
+            }
+        }
+        
+        @media screen and (min-width: 768px) {
+            .games-grid {
+                gap: 4rem;
+            }
+            
+            .game-card {
+                padding: 3rem;
+            }
+            
+            .game-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media screen and (min-width: 1024px) {
+            .game-stats {
+                gap: 3rem;
+            }
+            
+            .stat-value {
+                font-size: 2rem;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .game-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .game-title {
+                font-size: 1.5rem;
+            }
+            
+            .game-stats {
+                gap: 1.5rem;
+                justify-content: center;
+            }
+            
+            .stat-value {
+                font-size: 1.25rem;
+            }
+            
+            .game-canvas-container {
+                padding: 1rem;
+            }
+            
+            .grid-2048 {
+                gap: 0.5rem;
+                padding: 0.5rem;
+                max-width: 100%;
+            }
+            
+            .tile-2048 {
+                font-size: 1.5rem;
+            }
+            
+            .tile-2048.tile-128,
+            .tile-2048.tile-256,
+            .tile-2048.tile-512 {
+                font-size: 1rem;
+            }
+            
+            .tile-2048.tile-1024,
+            .tile-2048.tile-2048 {
+                font-size: 0.9rem;
+            }
+            
+            .game-over-content h3 {
+                font-size: 2rem;
+            }
+            
+            .game-over-content p {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Стили для иконок в заголовках игр */
+        .game-title img {
+            filter: brightness(0) saturate(100%) invert(37%) sepia(43%) saturate(1074%) hue-rotate(230deg) brightness(70%) contrast(105%);
+            transition: all 0.3s ease;
+        }
+        
+        .game-card:hover .game-title img {
+            filter: brightness(0) saturate(100%) invert(45%) sepia(73%) saturate(1274%) hue-rotate(230deg) brightness(85%) contrast(115%);
+            transform: scale(1.1) rotate(5deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Фон с кубиками -->
+    <div class="pov-bg">
+        <div class="pov">
+            <div class="tray">
+                <div class="die">
+                    <div class="cube">
+                        <div class="face" style="font-size:35px"><</div>
+                        <div class="face" style="font-size:35px">GAME</div>
+                        <div class="face" style="font-size:35px">></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="glass-container">
+        <!-- Навигация -->
+        <nav class="neo-nav" aria-label="Основная навигация">
+            <div class="nav-container">
+                <a href="index.html" class="neo-logo">
+                    <img src="assets/images/LOGO.png" alt="Глеб Чернов" style="height: 40px; width: auto;">
+                </a>
+                <button class="mobile-menu-toggle" aria-label="Открыть меню">
+                    <span>☰</span>
+                </button>
+                <ul class="neo-nav__list">
+                    <li class="neo-nav__item">
+                        <a href="index.html" class="neo-nav__link">Главная</a>
+                    </li>
+                    <li class="neo-nav__item">
+                        <a href="skills.html" class="neo-nav__link">Навыки</a>
+                    </li>
+                    <li class="neo-nav__item">
+                        <a href="projects.html" class="neo-nav__link">Проекты</a>
+                    </li>
+                    <li class="neo-nav__item">
+                        <a href="games.html" class="neo-nav__link neo-nav__link--active">Игры</a>
+                    </li>
+                    <li class="neo-nav__item">
+                        <a href="order.html" class="neo-nav__link">Заказать</a>
+                    </li>
+                    <li class="neo-nav__item">
+                        <a href="contacts.html" class="neo-nav__link">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="games-hero">
+            <div>
+                <h1 class="animated-gradient-text text-animate" data-animation-type="combined" data-delay="25" data-duration="700">Мини-игры</h1>
+                <h3 class="hero-secondary text-animate" data-animation-type="decode" data-delay="20" data-duration="600"> Поздравляю! Ты нашел скрытую страницу. Тут пара мини игр которые тебе надеюсь понравятся.</h3>
+            </div>
+        </header>
+
+        <!-- Игры -->
+        <section class="games-section">
+            <div class="games-grid">
+                
+                <!-- Snake Game -->
+                <div class="game-card scroll-reveal">
+                    <div class="game-header">
+                        <h2 class="game-title">🐍 Snake</h2>
+                        <div class="game-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Очки</span>
+                                <span class="stat-value" id="snake-score">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Рекорд</span>
+                                <span class="stat-value" id="snake-best">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-canvas-container">
+                        <canvas id="snakeCanvas" class="game-canvas" width="400" height="400"></canvas>
+                        <div class="game-over-overlay" id="snake-game-over">
+                            <div class="game-over-content">
+                                <h3>Игра окончена!</h3>
+                                <p>Ваш счёт: <span id="snake-final-score">0</span></p>
+                                <button class="game-btn" onclick="resetSnake()">Играть снова</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button class="game-btn" id="snake-start">Старт</button>
+                        <button class="game-btn secondary" id="snake-pause">Пауза</button>
+                        <button class="game-btn secondary" onclick="resetSnake()">Рестарт</button>
+                    </div>
+                    
+                    <div class="game-instructions">
+                        <h4>📋 Управление:</h4>
+                        <p>• Стрелки ← ↑ → ↓ или WASD для управления</p>
+                        <p>• Собирайте еду и растите змейку</p>
+                        <p>• Не врезайтесь в стены и себя!</p>
+                    </div>
+                    
+                    <div class="mobile-controls" id="snake-mobile-controls">
+                        <div class="control-row">
+                            <button class="control-btn" data-direction="up">↑</button>
+                        </div>
+                        <div class="control-row">
+                            <button class="control-btn" data-direction="left">←</button>
+                            <button class="control-btn" data-direction="down">↓</button>
+                            <button class="control-btn" data-direction="right">→</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2048 Game -->
+                <div class="game-card scroll-reveal">
+                    <div class="game-header">
+                        <h2 class="game-title">
+                            <img src="assets/icons/web_development_coding_code_browse_browser_icon-icons.com_59980.svg" alt="2048" style="width: 32px; height: 32px; vertical-align: middle; margin-right: 8px;">
+                            2048
+                        </h2>
+                        <div class="game-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Очки</span>
+                                <span class="stat-value" id="game2048-score">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Рекорд</span>
+                                <span class="stat-value" id="game2048-best">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-canvas-container">
+                        <div class="grid-2048" id="grid-2048"></div>
+                        <div class="game-over-overlay" id="game2048-over">
+                            <div class="game-over-content">
+                                <h3>Игра окончена!</h3>
+                                <p>Ваш счёт: <span id="game2048-final-score">0</span></p>
+                                <button class="game-btn" onclick="reset2048()">Играть снова</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="reset2048()">Новая игра</button>
+                    </div>
+                    
+                    <div class="game-instructions">
+                        <h4>📋 Управление:</h4>
+                        <p>• Стрелки ← ↑ → ↓ или свайп на мобильных</p>
+                        <p>• Объединяйте одинаковые числа</p>
+                        <p>• Достигните плитки 2048!</p>
+                    </div>
+                </div>
+
+                <!-- Breakout Game -->
+                <div class="game-card scroll-reveal">
+                    <div class="game-header">
+                        <h2 class="game-title">
+                            <img src="assets/icons/development_icon_131032.svg" alt="Breakout" style="width: 32px; height: 32px; vertical-align: middle; margin-right: 8px;">
+                            Breakout
+                        </h2>
+                        <div class="game-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Очки</span>
+                                <span class="stat-value" id="breakout-score">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Рекорд</span>
+                                <span class="stat-value" id="breakout-best">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-canvas-container">
+                        <canvas id="breakoutCanvas" class="game-canvas" width="600" height="400"></canvas>
+                        <div class="game-over-overlay" id="breakout-game-over">
+                            <div class="game-over-content">
+                                <h3 id="breakout-result-title">Игра окончена!</h3>
+                                <p>Ваш счёт: <span id="breakout-final-score">0</span></p>
+                                <button class="game-btn" onclick="resetBreakout()">Играть снова</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button class="game-btn" id="breakout-start">Старт</button>
+                        <button class="game-btn secondary" id="breakout-pause">Пауза</button>
+                        <button class="game-btn secondary" onclick="resetBreakout()">Рестарт</button>
+                    </div>
+                    
+                    <div class="game-instructions">
+                        <h4>📋 Управление:</h4>
+                        <p>• Мышь, touch или стрелки ← → для управления</p>
+                        <p>• Разбивайте все кирпичи</p>
+                        <p>• Не упустите мяч!</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="neo-footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Глеб Чернов</h3>
+                    <p>Fullstack разработчик & Студент РТУ МИРЭА</p>
+                    <p class="footer-description">Создаю современные веб-решения с фокусом на качество и производительность</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="skills.html">Навыки</a>
+                    <a href="projects.html">Проекты</a>
+                    <a href="games.html">Игры</a>
+                    <a href="order.html">Заказать</a>
+                    <a href="contacts.html">Контакты</a>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; 2024 Глеб Чернов. Создано с ❤️ и большим количеством кода.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/text-animation.js"></script>
+    <script src="assets/js/games.js"></script>
+</body>
+</html>
+

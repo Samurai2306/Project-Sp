@@ -351,7 +351,10 @@ class MobilePortfolio {
 
     // Animated counters
     animateCounter(counter) {
-        const target = parseInt(counter.getAttribute('data-count'));
+        const targetStr = counter.getAttribute('data-count');
+        const isInfinity = counter.getAttribute('data-infinity') === 'true';
+        const hasDecimal = targetStr.includes('.');
+        const target = parseFloat(targetStr);
         const duration = 2000;
         const step = target / (duration / 16);
         let current = 0;
@@ -359,14 +362,68 @@ class MobilePortfolio {
         const updateCounter = () => {
             current += step;
             if (current < target) {
-                counter.textContent = Math.floor(current);
+                if (hasDecimal) {
+                    counter.textContent = current.toFixed(1);
+                } else {
+                    counter.textContent = Math.floor(current);
+                }
                 requestAnimationFrame(updateCounter);
             } else {
-                counter.textContent = target;
+                // Достигли целевого значения
+                if (hasDecimal) {
+                    counter.textContent = target.toFixed(1);
+                } else {
+                    counter.textContent = Math.floor(target);
+                }
+                
+                // Если это счётчик с бесконечностью, продолжаем анимацию
+                if (isInfinity) {
+                    setTimeout(() => {
+                        this.animateToInfinity(counter, target);
+                    }, 500);
+                }
             }
         };
 
         updateCounter();
+    }
+    
+    // Анимация превращения в бесконечность
+    animateToInfinity(counter, startValue) {
+        const maxValue = 999;
+        const duration = 1500;
+        const totalSteps = 60;
+        const stepDuration = duration / totalSteps;
+        let currentStep = 0;
+        
+        const updateToInfinity = () => {
+            currentStep++;
+            const progress = currentStep / totalSteps;
+            
+            // Экспоненциальное ускорение
+            const easedProgress = Math.pow(progress, 2);
+            const current = startValue + (maxValue - startValue) * easedProgress;
+            
+            if (currentStep < totalSteps) {
+                counter.textContent = Math.floor(current);
+                setTimeout(updateToInfinity, stepDuration);
+            } else {
+                // Быстрый счёт до большого числа
+                counter.textContent = '999+';
+                
+                // Превращаем в бесконечность
+                setTimeout(() => {
+                    counter.classList.add('transforming-to-infinity');
+                    setTimeout(() => {
+                        counter.textContent = '∞';
+                        counter.classList.remove('transforming-to-infinity');
+                        counter.classList.add('is-infinity');
+                    }, 300);
+                }, 300);
+            }
+        };
+        
+        updateToInfinity();
     }
 
     // Performance monitoring
@@ -771,6 +828,13 @@ class MobilePortfolio {
             }
         }, 3000);
 
+        // Hide all output lines initially
+        const outputs = document.querySelectorAll('.code-line.output');
+        outputs.forEach(output => {
+            output.style.opacity = '0';
+            output.style.display = 'none';
+        });
+
         // Add typing effect to commands
         const commands = document.querySelectorAll('.command.typing');
         commands.forEach((command, index) => {
@@ -786,9 +850,21 @@ class MobilePortfolio {
                         i++;
                         setTimeout(typeWriter, 100);
                     } else {
+                        // Убираем курсор и показываем output
                         setTimeout(() => {
                             command.style.borderRight = 'none';
-                        }, 1000);
+                            
+                            // Находим следующую output строку и показываем её
+                            const parentLine = command.closest('.code-line');
+                            let nextElement = parentLine.nextElementSibling;
+                            
+                            if (nextElement && nextElement.classList.contains('output')) {
+                                nextElement.style.display = 'block';
+                                setTimeout(() => {
+                                    nextElement.style.opacity = '1';
+                                }, 50);
+                            }
+                        }, 500);
                     }
                 };
                 typeWriter();
