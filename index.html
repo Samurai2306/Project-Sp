@@ -27,6 +27,8 @@
     
     <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Анимация текста -->
+    <link rel="stylesheet" href="assets/css/text-animation.css">
     
     <style>
         /* Резервные анимации, если GSAP не загрузился */
@@ -103,8 +105,8 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <!-- Имя и статус владельца портфолио -->
-                    <h1 class="animated-gradient-text">Глеб Чернов</h1>
-                    <p class="subtitle typing-animation">Fullstack разработчик & Студент РТУ МИРЭА</p>
+                    <h1 class="animated-gradient-text text-animate" data-animation-type="combined" data-delay="25" data-duration="700">Глеб Чернов</h1>
+                    <p class="subtitle text-animate" data-animation-type="decode" data-delay="20" data-duration="600">Fullstack разработчик & Студент РТУ МИРЭА</p>
                     <p class="hero-description">Создаю современные веб-приложения, десктопные решения и управляю IT-инфраструктурой. Уровень Junior++ с passion к инновациям и постоянному развитию.</p>
                     <!-- hero-stats: Блок с дополнительной статистикой (например, опыт, проекты, навыки) -->
                     <div class="hero-stats">
@@ -289,5 +291,6 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/text-animation.js"></script>
 </body>
 </html>

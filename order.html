@@ -16,6 +16,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/fonts.css">
+    <link rel="stylesheet" href="assets/css/text-animation.css">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>G</text></svg>">
@@ -128,8 +129,8 @@
         </nav>
 
         <header class="hero">
-            <h1 class="animated-gradient-text">Заказать сайт</h1>
-            <h3 class="hero-secondary">Современные веб-решения под ключ с гарантией качества</h3>
+            <h1 class="animated-gradient-text text-animate" data-animation-type="combined" data-delay="25" data-duration="700">Заказать сайт</h1>
+            <h3 class="hero-secondary text-animate" data-animation-type="decode" data-delay="20" data-duration="600">Современные веб-решения под ключ с гарантией качества</h3>
         </header>
 
         <!-- Pricing Plans Section -->
@@ -143,18 +144,18 @@
                     <div class="pricing-header">
                         <h3 class="pricing-title">Landing Page</h3>
                         <div class="pricing-price">
-                            <span class="price-currency">₽</span>
                             <span class="price-amount">25,000</span>
+                            <span class="price-currency">₽</span>
                         </div>
                         <p class="pricing-description">Одностраничный сайт для презентации</p>
                     </div>
                     <div class="pricing-features">
                         <ul class="features-list">
-                            <li class="feature-item">• Адаптивный дизайн</li>
                             <li class="feature-item">• Современная анимация</li>
-                            <li class="feature-item">• SEO оптимизация</li>
-                            <li class="feature-item">• Контактная форма</li>
+                            <li class="feature-item">• Адаптивный дизайн</li>
                             <li class="feature-item">• 1 месяц поддержки</li>
+                            <li class="feature-item">• Контактная форма</li>
+                            <li class="feature-item">• SEO оптимизация</li>
                         </ul>
                     </div>
                     <div class="pricing-footer">
@@ -170,18 +171,18 @@
                     <div class="pricing-header">
                         <h3 class="pricing-title">Корпоративный сайт</h3>
                         <div class="pricing-price">
-                            <span class="price-currency">₽</span>
                             <span class="price-amount">75,000</span>
+                            <span class="price-currency">₽</span>
                         </div>
                         <p class="pricing-description">Многостраничный сайт для бизнеса</p>
                     </div>
                     <div class="pricing-features">
                         <ul class="features-list">
+                            <li class="feature-item">• Интеграция с соцсетями</li>
+                            <li class="feature-item">• 3 месяца поддержки</li>
                             <li class="feature-item">• До 10 страниц</li>
                             <li class="feature-item">• Админ панель</li>
                             <li class="feature-item">• CMS система</li>
-                            <li class="feature-item">• Интеграция с соцсетями</li>
-                            <li class="feature-item">• 3 месяца поддержки</li>
                         </ul>
                     </div>
                     <div class="pricing-footer">
@@ -196,18 +197,18 @@
                     <div class="pricing-header">
                         <h3 class="pricing-title">Веб-приложение</h3>
                         <div class="pricing-price">
-                            <span class="price-currency">₽</span>
                             <span class="price-amount">150,000</span>
+                            <span class="price-currency">₽</span>
                         </div>
                         <p class="pricing-description">Полнофункциональное веб-приложение</p>
                     </div>
                     <div class="pricing-features">
                         <ul class="features-list">
                             <li class="feature-item">• Пользовательские роли</li>
-                            <li class="feature-item">• API интеграция</li>
-                            <li class="feature-item">• База данных</li>
-                            <li class="feature-item">• Безопасность</li>
                             <li class="feature-item">• 6 месяцев поддержки</li>
+                            <li class="feature-item">• API интеграция</li>
+                            <li class="feature-item">• Безопасность</li>
+                            <li class="feature-item">• База данных</li>
                         </ul>
                     </div>
                     <div class="pricing-footer">
@@ -362,6 +363,7 @@
 
     <!-- Scripts -->
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/text-animation.js"></script>
     <script>
         // Order Form Handler
         document.addEventListener('DOMContentLoaded', function() {

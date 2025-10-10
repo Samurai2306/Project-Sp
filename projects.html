@@ -18,6 +18,8 @@
     
     <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Анимация текста -->
+    <link rel="stylesheet" href="assets/css/text-animation.css">
     <!-- Встроенные стили для фоновой анимации и состояния загрузки -->
     <style>
     /* projects-bg: Фоновая анимация кубиков для страницы проектов */
@@ -208,8 +210,8 @@
         </nav>
 
         <header class="hero">
-            <h1 class="animated-gradient-text">Мои проекты</h1>
-            <h3 class="hero-secondary">Веб-приложения, десктопные программы и инновационные решения</h3>
+            <h1 class="animated-gradient-text text-animate" data-animation-type="combined" data-delay="25" data-duration="700">Мои проекты</h1>
+            <h3 class="hero-secondary text-animate" data-animation-type="decode" data-delay="20" data-duration="600">Веб-приложения, десктопные программы и инновационные решения</h3>
         </header>
 
         <!-- Projects Filter -->
@@ -284,6 +286,7 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/text-animation.js"></script>
     <script src="assets/js/projects.js"></script>
 </body>
 </html>
