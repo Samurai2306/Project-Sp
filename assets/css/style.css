@@ -994,6 +994,42 @@ body {
         inset 0 0 60px rgba(255, 255, 255, 0.1);
 }
 
+.project-logo-container {
+    width: 250px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    border: 2px solid rgba(139, 95, 191, 0.3);
+    animation: float 3s ease-in-out infinite;
+    box-shadow: 
+        0 0 40px rgba(139, 95, 191, 0.3),
+        0 0 80px rgba(139, 95, 191, 0.1);
+    transition: all 0.3s ease;
+}
+
+.project-logo-container:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 
+        0 0 60px rgba(139, 95, 191, 0.5),
+        0 0 100px rgba(139, 95, 191, 0.3);
+    border-color: rgba(139, 95, 191, 0.5);
+}
+
+.project-logo {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 20px rgba(139, 95, 191, 0.4));
+    transition: all 0.3s ease;
+}
+
+.project-logo-container:hover .project-logo {
+    filter: drop-shadow(0 8px 30px rgba(139, 95, 191, 0.6));
+}
+
 .project-details {
     display: flex;
     flex-direction: column;
@@ -2429,6 +2465,11 @@ select.form-input option {
         width: 160px;
         height: 160px;
     }
+
+    .project-logo-container {
+        width: 180px;
+        height: 180px;
+    }
     
     .project-title {
         font-size: 1.65rem;
@@ -2602,6 +2643,11 @@ select.form-input option {
         width: 180px;
         height: 180px;
     }
+
+    .project-logo-container {
+        width: 200px;
+        height: 200px;
+    }
     
     .project-preview {
         min-height: 220px;
@@ -2691,6 +2737,11 @@ select.form-input option {
     .project-orb {
         width: 220px;
         height: 220px;
+    }
+
+    .project-logo-container {
+        width: 280px;
+        height: 280px;
     }
     
     .project-title {
@@ -3320,6 +3371,11 @@ select.form-input option {
     .project-orb {
         width: 150px;
         height: 150px;
+    }
+
+    .project-logo-container {
+        width: 160px;
+        height: 160px;
     }
     
     .project-title {
