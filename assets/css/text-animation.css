@@ -50,8 +50,8 @@
 
 /* Для градиентного текста opacity работает, но градиент должен быть видимым */
 .animated-gradient-text .text-animation-letter {
-    /* Градиент применяется через background-clip */
-    background: linear-gradient(135deg, #8B7ED8, #B8A9E8, #8B7ED8);
+    /* Градиент применяется через background-clip - используем CSS переменные */
+    background: var(--gradient-primary, linear-gradient(135deg, #8B7ED8, #B8A9E8, #8B7ED8));
     background-size: 200% auto;
     background-position: 0% center;
     -webkit-background-clip: text;
@@ -59,6 +59,29 @@
     -webkit-text-fill-color: transparent;
     color: transparent;
     /* Анимация градиента */
+    animation: textShine 4s ease-in-out infinite alternate;
+}
+
+/* Theme-specific gradient text overrides */
+.theme-light .animated-gradient-text .text-animation-letter {
+    background: linear-gradient(135deg, #FF8A65, #D96542, #FFB38F);
+    background-size: 200% auto;
+    background-position: 0% center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: textShine 4s ease-in-out infinite alternate;
+}
+
+.theme-dark .animated-gradient-text .text-animation-letter {
+    background: var(--gradient-primary);
+    background-size: 200% auto;
+    background-position: 0% center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
     animation: textShine 4s ease-in-out infinite alternate;
 }
 

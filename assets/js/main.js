@@ -461,6 +461,9 @@ class MobilePortfolio {
             this.initParticleEffect();
         }
         
+        // Initialize image optimization
+        this.initImageOptimization();
+        
         // Lazy load heavy features
         this.initLazyLoading();
         
@@ -477,13 +480,80 @@ class MobilePortfolio {
     preloadCriticalImages() {
         // Preload hero images or critical above-the-fold images
         const criticalImages = [
-            // Add paths to critical images here
+            'assets/images/1.jpg',
+            'assets/images/2.jpg',
+            'assets/images/3.jpg'
         ];
 
         criticalImages.forEach(src => {
             const img = new Image();
             img.src = src;
+            img.onerror = () => {
+                console.warn(`Failed to preload image: ${src}`);
+            };
         });
+    }
+    
+    initImageOptimization() {
+        // Implement responsive images
+        this.setupResponsiveImages();
+        
+        // Add intersection observer for lazy loading
+        this.setupLazyLoading();
+        
+        // Optimize image loading based on connection
+        this.optimizeForConnection();
+    }
+    
+    setupResponsiveImages() {
+        const images = document.querySelectorAll('img[data-src]');
+        images.forEach(img => {
+            // Add loading placeholder
+            img.style.background = 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)';
+            img.style.backgroundSize = '200% 100%';
+            img.style.animation = 'shimmer 1.5s infinite';
+        });
+    }
+    
+    setupLazyLoading() {
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            img.classList.remove('lazy');
+                            observer.unobserve(img);
+                        }
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.01
+            });
+            
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    }
+    
+    optimizeForConnection() {
+        if ('connection' in navigator) {
+            const connection = navigator.connection;
+            
+            // Reduce image quality on slow connections
+            if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+                document.documentElement.classList.add('slow-connection');
+            }
+            
+            // Preload less on slow connections
+            if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g') {
+                this.preloadCriticalImages = () => {}; // Disable preloading
+            }
+        }
     }
 
     // Gentle Particle Background Effect
@@ -892,8 +962,96 @@ class PulseAnimation {
     }
 }
 
+// Theme Manager with persistence and graceful fallback
+const ThemeManager = {
+    storageKey: 'site-theme',
+    metaTheme: null,
+    getPreferred() {
+        const saved = localStorage.getItem(this.storageKey);
+        if (saved === 'light' || saved === 'dark') return saved;
+        const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        return prefersLight ? 'light' : 'dark';
+    },
+    apply(theme) {
+        const body = document.body;
+        body.classList.remove('theme-light', 'theme-dark');
+        body.classList.add(theme === 'light' ? 'theme-light' : 'theme-dark');
+        this.updateMeta(theme);
+        this.updateToggleThumb(theme);
+    },
+    updateMeta(theme) {
+        if (!this.metaTheme) {
+            this.metaTheme = document.querySelector('meta[name="theme-color"]');
+        }
+        if (this.metaTheme) {
+            const color = theme === 'light' ? '#E8D5C4' : '#0a0a0f';
+            this.metaTheme.setAttribute('content', color);
+        }
+    },
+    mountToggle() {
+        if (document.querySelector('.theme-toggle')) return;
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle';
+        btn.setAttribute('aria-label', 'Переключить тему');
+        btn.setAttribute('title', 'Переключить тему');
+
+        const thumb = document.createElement('div');
+        thumb.className = 'theme-toggle__thumb';
+        const sun = document.createElement('span');
+        sun.className = 'theme-toggle__icon theme-toggle__icon--sun';
+        sun.textContent = '☀️';
+        const moon = document.createElement('span');
+        moon.className = 'theme-toggle__icon theme-toggle__icon--moon';
+        moon.textContent = '🌙';
+        thumb.appendChild(sun);
+        thumb.appendChild(moon);
+        btn.appendChild(thumb);
+
+        btn.addEventListener('click', () => {
+            const current = document.body.classList.contains('theme-light') ? 'light' : 'dark';
+            const next = current === 'light' ? 'dark' : 'light';
+            localStorage.setItem(this.storageKey, next);
+            this.apply(next);
+        });
+
+        document.body.appendChild(btn);
+    },
+    updateToggleThumb(theme) {
+        const isLight = theme === 'light';
+        const sun = document.querySelector('.theme-toggle__icon--sun');
+        const moon = document.querySelector('.theme-toggle__icon--moon');
+        if (sun && moon) {
+            sun.style.opacity = isLight ? '1' : '0';
+            moon.style.opacity = isLight ? '0' : '1';
+        }
+    },
+    listenSystemChanges() {
+        if (!window.matchMedia) return;
+        const mql = window.matchMedia('(prefers-color-scheme: light)');
+        const handler = (e) => {
+            const saved = localStorage.getItem(this.storageKey);
+            if (saved) return; // respect explicit user choice
+            this.apply(e.matches ? 'light' : 'dark');
+        };
+        if (typeof mql.addEventListener === 'function') {
+            mql.addEventListener('change', handler);
+        } else if (typeof mql.addListener === 'function') {
+            mql.addListener(handler);
+        }
+    },
+    init() {
+        const theme = this.getPreferred();
+        this.apply(theme);
+        this.mountToggle();
+        this.listenSystemChanges();
+    }
+};
+
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Theme manager
+    ThemeManager.init();
+    // UI modules
     new MobilePortfolio();
     new PulseAnimation();
 });
