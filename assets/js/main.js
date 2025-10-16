@@ -135,6 +135,16 @@ class MobilePortfolio {
         const navLinks = document.querySelectorAll('.neo-nav__link');
 
         if (toggle && navList) {
+            // Create professional burger menu lines if they don't exist
+            if (!toggle.querySelector('span')) {
+                toggle.innerHTML = '<span></span><span></span><span></span>';
+            }
+            
+            // Add accessibility attributes
+            toggle.setAttribute('aria-label', 'Открыть меню');
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.setAttribute('role', 'button');
+            
             // Toggle menu
             toggle.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -177,12 +187,21 @@ class MobilePortfolio {
         
         if (navList && toggle) {
             this.isMobileMenuOpen = !this.isMobileMenuOpen;
-            navList.classList.toggle('mobile-open');
-            toggle.textContent = this.isMobileMenuOpen ? '✕' : '☰';
+            navList.classList.toggle('active');
+            toggle.classList.toggle('active');
+            
+            // Update accessibility attributes
+            toggle.setAttribute('aria-expanded', this.isMobileMenuOpen);
             toggle.setAttribute('aria-label', this.isMobileMenuOpen ? 'Закрыть меню' : 'Открыть меню');
             
             // Prevent body scroll when menu is open
-            document.body.style.overflow = this.isMobileMenuOpen ? 'hidden' : '';
+            if (this.isMobileMenuOpen) {
+                document.body.style.overflow = 'hidden';
+                document.body.classList.add('menu-open');
+            } else {
+                document.body.style.overflow = '';
+                document.body.classList.remove('menu-open');
+            }
         }
     }
 
@@ -192,10 +211,16 @@ class MobilePortfolio {
         
         if (navList && toggle) {
             this.isMobileMenuOpen = false;
-            navList.classList.remove('mobile-open');
-            toggle.textContent = '☰';
+            navList.classList.remove('active');
+            toggle.classList.remove('active');
+            
+            // Update accessibility attributes
+            toggle.setAttribute('aria-expanded', 'false');
             toggle.setAttribute('aria-label', 'Открыть меню');
+            
+            // Restore body scroll
             document.body.style.overflow = '';
+            document.body.classList.remove('menu-open');
         }
     }
 
@@ -218,6 +243,78 @@ class MobilePortfolio {
                 // Remove active state
                 this.style.transform = '';
             });
+        });
+        
+        // Mobile-specific optimizations
+        this.optimizeForMobile();
+    }
+    
+    // Mobile performance optimizations
+    optimizeForMobile() {
+        // Detect mobile device
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            // Reduce animation complexity on mobile
+            document.body.classList.add('mobile-device');
+            
+            // Optimize images for mobile
+            this.optimizeImagesForMobile();
+            
+            // Reduce particle effects on mobile
+            const particleCanvas = document.querySelector('.particle-canvas');
+            if (particleCanvas) {
+                particleCanvas.style.display = 'none';
+            }
+            
+            // Optimize scroll performance
+            this.optimizeScrollForMobile();
+        }
+    }
+    
+    // Optimize images for mobile devices
+    optimizeImagesForMobile() {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            // Add loading optimization
+            if (!img.hasAttribute('loading')) {
+                img.setAttribute('loading', 'lazy');
+            }
+            
+            // Optimize image rendering
+            img.style.imageRendering = 'auto';
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+        });
+    }
+    
+    // Optimize scroll performance for mobile
+    optimizeScrollForMobile() {
+        let scrollTimeout;
+        
+        const handleScroll = () => {
+            // Throttle scroll events on mobile
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                // Mobile-specific scroll handling
+                this.handleMobileScroll();
+            }, 16); // ~60fps
+        };
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    
+    // Handle mobile scroll events
+    handleMobileScroll() {
+        // Add mobile-specific scroll optimizations
+        const scrollY = window.scrollY;
+        
+        // Optimize parallax effects for mobile
+        const parallaxElements = document.querySelectorAll('.parallax-element');
+        parallaxElements.forEach(element => {
+            const speed = element.dataset.speed || 0.5;
+            const yPos = -(scrollY * speed);
+            element.style.transform = `translateY(${yPos}px)`;
         });
     }
 
@@ -989,32 +1086,17 @@ const ThemeManager = {
         }
     },
     mountToggle() {
-        if (document.querySelector('.theme-toggle')) return;
-        const btn = document.createElement('button');
-        btn.className = 'theme-toggle';
+        const btn = document.querySelector('.theme-toggle');
+        if (!btn) return;
+        
         btn.setAttribute('aria-label', 'Переключить тему');
         btn.setAttribute('title', 'Переключить тему');
-
-        const thumb = document.createElement('div');
-        thumb.className = 'theme-toggle__thumb';
-        const sun = document.createElement('span');
-        sun.className = 'theme-toggle__icon theme-toggle__icon--sun';
-        sun.textContent = '☀️';
-        const moon = document.createElement('span');
-        moon.className = 'theme-toggle__icon theme-toggle__icon--moon';
-        moon.textContent = '🌙';
-        thumb.appendChild(sun);
-        thumb.appendChild(moon);
-        btn.appendChild(thumb);
-
         btn.addEventListener('click', () => {
             const current = document.body.classList.contains('theme-light') ? 'light' : 'dark';
             const next = current === 'light' ? 'dark' : 'light';
             localStorage.setItem(this.storageKey, next);
             this.apply(next);
         });
-
-        document.body.appendChild(btn);
     },
     updateToggleThumb(theme) {
         const isLight = theme === 'light';

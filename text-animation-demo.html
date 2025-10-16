@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Демо анимации текста v2.0 | Глеб Чернов</title>
     
     <!-- Стили -->
@@ -240,12 +240,79 @@
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
+            
+            .demo-header {
+                padding: 2rem 1rem;
+            }
+            
+            .demo-header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-header p {
+                font-size: 1rem;
+            }
+            
+            .demo-card {
+                padding: 1.5rem;
+            }
+            
+            .demo-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .demo-header {
+                padding: 1.5rem 0.75rem;
+            }
+            
+            .demo-header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .demo-card {
+                padding: 1rem;
+            }
+            
+            .demo-title {
+                font-size: 1.25rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="skip-link">Перейти к основному содержимому</a>
+    
+    <!-- Navigation -->
+    <nav class="neo-nav" aria-label="Основная навигация">
+        <div class="nav-container">
+            <a href="index.html" class="neo-logo">
+                <img src="assets/images/LOGO.png" alt="Глеб Чернов" style="height: 40px; width: auto;">
+            </a>
+            <ul class="neo-nav__list">
+                <li class="neo-nav__item"><a href="index.html" class="neo-nav__link">Главная</a></li>
+                <li class="neo-nav__item"><a href="skills.html" class="neo-nav__link">Навыки</a></li>
+                <li class="neo-nav__item"><a href="projects.html" class="neo-nav__link">Проекты</a></li>
+                <li class="neo-nav__item"><a href="order.html" class="neo-nav__link">Заказать</a></li>
+                <li class="neo-nav__item"><a href="contacts.html" class="neo-nav__link">Контакты</a></li>
+            </ul>
+            <!-- Кнопка переключения темы -->
+            <button class="theme-toggle" aria-label="Переключить тему">
+                <div class="theme-toggle__thumb">
+                    <div class="theme-toggle__icon theme-toggle__icon--sun">☀</div>
+                    <div class="theme-toggle__icon theme-toggle__icon--moon">🌙</div>
+                </div>
+            </button>
+            <!-- Кнопка для открытия мобильного меню (бургер) -->
+            <button class="mobile-menu-toggle" aria-label="Открыть меню">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
     <!-- Header -->
-    <header class="demo-header">
+    <header id="main-content" class="demo-header">
         <h1>Система анимации текста v2.0</h1>
         <p>Продвинутая анимация с падающими буквами, эффектом декодирования и комбинированными эффектами</p>
     </header>
