@@ -1,11 +1,4 @@
 /* ==== FONT LOADING ==== */
-@font-face {
-    font-family: 'Belarus';
-    src: url('../fonts/belarus.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
 
 @font-face {
     font-family: 'Minecraft';
@@ -15,13 +8,6 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: 'Noodles';
-    src: url('../fonts/noodles.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
 
 /* CSS Variables for Enhanced Purple Theme with Smooth Animations */
 :root {
@@ -71,8 +57,8 @@
     --font-display: 'Space Grotesk', 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', 'Courier New', monospace;
     --font-design: 'Minecraft', 'Space Grotesk', sans-serif;
-    --font-gaming: 'Noodles', 'JetBrains Mono', monospace;
-    --font-creative: 'Noodles', 'Space Grotesk', sans-serif;
+    --font-gaming: 'JetBrains Mono', monospace;
+    --font-creative: 'Space Grotesk', sans-serif;
     
     /* Sizes */
     --border-radius: 24px;
@@ -82,38 +68,7 @@
     --blur-strong: blur(40px);
 }
 
-/* THEME: DARK (current default palette) */
-.theme-dark {
-    --color-bg: #0a0a0f;
-    --color-surface: rgba(255, 255, 255, 0.02);
-    --color-glass: rgba(255, 255, 255, 0.06);
-    --color-border: rgba(255, 255, 255, 0.12);
-    --color-text: #ffffff;
-    --color-primary: #8B7ED8;
-    --color-primary-light: #B8A9E8;
-    --color-primary-dark: #6B5B9A;
-    --color-primary-soft: #D4C7F0;
-    --color-primary-glow: #9B8BC8;
-    --color-accent: #B8A9E8;
-    --color-accent-light: #E8E0F5;
-    --color-accent-dark: #7A6BA8;
-    --color-accent-glow: #D4C7F0;
-    --color-secondary: #9B8BC8;
-    --color-secondary-light: #B8A9E8;
-    --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-primary-light));
-    --gradient-bg: linear-gradient(135deg, #0f0f15, #1a1a2a, #2a1f3a, #1a1a2a);
-    --gradient-holographic: linear-gradient(125deg, transparent 20%, rgba(184, 169, 232, 0.15) 40%, rgba(155, 139, 200, 0.15) 60%, transparent 80%);
-    --gradient-neo: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-    --gradient-neo-inset: linear-gradient(145deg, rgba(0,0,0,0.1), rgba(255,255,255,0.03));
-    --gradient-glow: radial-gradient(circle at center, rgba(184, 169, 232, 0.05) 0%, transparent 70%);
-    --gradient-display: linear-gradient(135deg, #1a1a2a, #1f1f35, #0f0f15);
-    --shadow-neo-light: 6px 6px 12px rgba(0, 0, 0, 0.2), -6px -6px 12px rgba(255, 255, 255, 0.03);
-    --shadow-neo-dark: inset 6px 6px 12px rgba(0, 0, 0, 0.2), inset -6px -6px 12px rgba(255, 255, 255, 0.03);
-    --shadow-glass: 0 6px 24px 0 rgba(155, 139, 200, 0.15);
-    --shadow-glow: 0 0 20px rgba(155, 139, 200, 0.2);
-    --shadow-hover: 0 15px 35px rgba(155, 139, 200, 0.25);
-    --shadow-bento: 0 3px 15px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
+/* THEME: DARK (inherits from :root, no need to redeclare) */
 
 /* THEME: LIGHT */
 .theme-light {
@@ -192,7 +147,6 @@ input.form-input, textarea.form-textarea, select.form-input {
     flex-shrink: 0;
 }
 .theme-toggle:hover { 
-    transform: translateY(-2px); 
     box-shadow: var(--shadow-hover); 
 }
 .theme-toggle__thumb {
@@ -259,28 +213,6 @@ body.theme-dark .theme-toggle__icon--moon { opacity: 1; }
     }
 }
 
-/* Extra small mobile devices */
-@media (max-width: 480px) {
-    .theme-toggle { 
-        width: 40px;
-        height: 20px;
-        margin-right: 0.4rem;
-        padding: 0 3px;
-    }
-    
-    .theme-toggle__thumb {
-        width: 14px;
-        height: 14px;
-    }
-    
-    body.theme-dark .theme-toggle__thumb {
-        transform: translateX(20px);
-    }
-    
-    .theme-toggle__icon {
-        font-size: 9px;
-    }
-}
 
 /* === Light theme component refinements === */
 .theme-light .neo-nav {
@@ -359,7 +291,7 @@ body.theme-dark .theme-toggle__icon--moon { opacity: 1; }
 }
 .theme-light .code-line .prompt { color: #6B5B9A; }
 .theme-light .command { color: #FF8A65; }
-.theme-light .output-text { color: #6b4b3f; }
+.theme-light .output-text { color: #fdb395; }
 
 /* Buttons and toggles in light */
 .theme-light .glass-button {
@@ -482,7 +414,7 @@ body.theme-dark .theme-toggle__icon--moon { opacity: 1; }
 }
 
 .theme-light .display-title {
-    color: #1a1614;
+    color: #ffffff;
     opacity: 0.9;
 }
 
@@ -762,7 +694,7 @@ body.theme-dark .theme-toggle__icon--moon { opacity: 1; }
 
 /* Light theme skill level labels - улучшенная цветовая градация */
 .theme-light .skill-level-label.beginner {
-    background: linear-gradient(135deg, #f4d091 0%, #f7cc7b 50%, #deae6f 100%);
+    background: linear-gradient(135deg, #f1c075 0%, #f5b265 50%, #d48d4a 100%);
     color: #ffffff;
     box-shadow: 0 4px 15px rgba(255, 138, 101, 0.4);
     font-weight: 700;
@@ -1215,10 +1147,24 @@ body.menu-open {
     
     .theme-toggle {
         position: relative;
-        width: 36px;
-        height: 18px;
+        width: 44px;
+        height: 22px;
         margin-right: 0.5rem;
         flex-shrink: 0;
+        padding: 0 4px;
+    }
+    
+    .theme-toggle__thumb {
+        width: 16px;
+        height: 16px;
+    }
+    
+    body.theme-dark .theme-toggle__thumb {
+        transform: translateX(22px);
+    }
+    
+    .theme-toggle__icon {
+        font-size: 10px;
     }
     
     /* Add padding to main content to avoid overlap with fixed nav */
@@ -3624,19 +3570,20 @@ select.form-input option {
     }
     
     .theme-toggle {
-        width: 32px;
-        height: 16px;
-        margin-right: 0.4rem;
+        width: 44px;
+        height: 22px;
+        margin-right: 0.5rem;
         flex-shrink: 0;
+        padding: 0 4px;
     }
     
     .theme-toggle__thumb {
-        width: 12px;
-        height: 12px;
+        width: 16px;
+        height: 16px;
     }
     
     body.theme-dark .theme-toggle__thumb {
-        transform: translateX(16px);
+        transform: translateX(22px);
     }
     
     .neo-logo {
@@ -6444,22 +6391,23 @@ select.form-input option {
     
     /* Кнопка переключения темы */
     .theme-toggle {
-        width: 36px;
-        height: 18px;
-        margin-right: 0.3rem;
+        width: 44px;
+        height: 22px;
+        margin-right: 0.5rem;
+        padding: 0 4px;
     }
     
     .theme-toggle__thumb {
-        width: 12px;
-        height: 12px;
+        width: 16px;
+        height: 16px;
     }
     
     body.theme-dark .theme-toggle__thumb {
-        transform: translateX(18px);
+        transform: translateX(22px);
     }
     
     .theme-toggle__icon {
-        font-size: 8px;
+        font-size: 10px;
     }
     
     /* Мобильное меню */

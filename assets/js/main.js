@@ -566,6 +566,159 @@ class MobilePortfolio {
         
         // Performance monitoring
         this.initPerformanceMonitoring();
+        
+        // 🚀 ИНТЕГРАЦИЯ С СИСТЕМОЙ ОПТИМИЗАЦИИ
+        this.integrateWithOptimizationSystem();
+    }
+    
+    // 🚀 ИНТЕГРАЦИЯ С СИСТЕМОЙ ОПТИМИЗАЦИИ
+    integrateWithOptimizationSystem() {
+        // Интеграция с Performance Optimizer
+        if (window.performanceOptimizer) {
+            console.log('🔗 Интеграция с системой оптимизации производительности...');
+            
+            // Передаем управление анимациями системе оптимизации
+            this.optimizeAnimationsWithSystem();
+            
+            // Интеграция с системой кэширования
+            this.integrateWithCachingSystem();
+        }
+        
+        // Интеграция с Smart Data Manager
+        if (window.smartDataManager) {
+            console.log('🔗 Интеграция с системой управления данными...');
+            
+            // Предзагрузка данных проектов
+            this.preloadProjectsData();
+            
+            // Интеграция с системой приоритизации
+            this.integrateWithDataPriorities();
+        }
+    }
+    
+    // 🎯 ОПТИМИЗАЦИЯ АНИМАЦИЙ С СИСТЕМОЙ
+    optimizeAnimationsWithSystem() {
+        // Адаптивная оптимизация анимаций
+        const connectionSpeed = window.performanceOptimizer.connectionSpeed;
+        
+        if (connectionSpeed.effectiveType === 'slow-2g' || connectionSpeed.effectiveType === '2g') {
+            // Отключаем тяжелые анимации на медленном соединении
+            document.documentElement.classList.add('slow-connection');
+            this.disableHeavyAnimations();
+        }
+        
+        // Мониторинг FPS и адаптация
+        this.setupFPSMonitoring();
+    }
+    
+    // 📊 МОНИТОРИНГ FPS
+    setupFPSMonitoring() {
+        let fps = 0;
+        let lastTime = performance.now();
+        
+        const measureFPS = () => {
+            const now = performance.now();
+            fps = 1000 / (now - lastTime);
+            lastTime = now;
+            
+            // Адаптация производительности
+            if (fps < 30) {
+                this.adaptPerformanceForLowFPS();
+            }
+            
+            requestAnimationFrame(measureFPS);
+        };
+        
+        measureFPS();
+    }
+    
+    // ⚡ АДАПТАЦИЯ ПРОИЗВОДИТЕЛЬНОСТИ
+    adaptPerformanceForLowFPS() {
+        // Уменьшаем качество анимаций
+        document.documentElement.style.setProperty('--animation-duration', '0.1s');
+        
+        // Отключаем тяжелые эффекты
+        this.disableHeavyAnimations();
+        
+        // Уменьшаем количество частиц
+        this.reduceParticleCount();
+    }
+    
+    // 🎨 ОТКЛЮЧЕНИЕ ТЯЖЕЛЫХ АНИМАЦИЙ
+    disableHeavyAnimations() {
+        // Отключаем частицы
+        const particleCanvas = document.querySelector('.particle-canvas');
+        if (particleCanvas) {
+            particleCanvas.style.display = 'none';
+        }
+        
+        // Уменьшаем количество кубиков
+        const cubes = document.querySelectorAll('.die');
+        if (cubes.length > 3) {
+            for (let i = 3; i < cubes.length; i++) {
+                cubes[i].style.display = 'none';
+            }
+        }
+        
+        // Отключаем сложные анимации
+        document.documentElement.classList.add('reduced-motion');
+    }
+    
+    // 🔢 УМЕНЬШЕНИЕ КОЛИЧЕСТВА ЧАСТИЦ
+    reduceParticleCount() {
+        // Уменьшаем количество частиц в 2 раза
+        if (this.particleCount) {
+            this.particleCount = Math.floor(this.particleCount / 2);
+        }
+    }
+    
+    // 💾 ИНТЕГРАЦИЯ С СИСТЕМОЙ КЭШИРОВАНИЯ
+    integrateWithCachingSystem() {
+        // Кэшируем критические изображения
+        const criticalImages = [
+            'assets/images/LOGO.png',
+            'assets/images/1.jpg',
+            'assets/images/2.jpg',
+            'assets/images/3.jpg'
+        ];
+        
+        criticalImages.forEach(src => {
+            window.performanceOptimizer.preloadResource({
+                url: src,
+                type: 'image',
+                priority: window.performanceOptimizer.priorities.CRITICAL
+            });
+        });
+    }
+    
+    // 📦 ПРЕДЗАГРУЗКА ДАННЫХ ПРОЕКТОВ
+    preloadProjectsData() {
+        // Предзагружаем данные проектов
+        window.smartDataManager.loadData('projects-data', '/api/projects', {
+            priority: 2,
+            timeout: 5000
+        }).then(data => {
+            console.log('📦 Данные проектов предзагружены:', data);
+        }).catch(error => {
+            console.warn('❌ Ошибка предзагрузки данных проектов:', error);
+        });
+    }
+    
+    // 🎯 ИНТЕГРАЦИЯ С ПРИОРИТЕТАМИ ДАННЫХ
+    integrateWithDataPriorities() {
+        // Настраиваем приоритеты для различных типов данных
+        const dataPriorities = {
+            'user-profile': 1,
+            'projects-data': 2,
+            'skills-data': 2,
+            'games-data': 3,
+            'analytics': 4
+        };
+        
+        // Применяем приоритеты
+        Object.entries(dataPriorities).forEach(([key, priority]) => {
+            window.smartDataManager.dataPriorities.set(key, priority);
+        });
     }
 
     handleResize() {

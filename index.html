@@ -9,13 +9,29 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <!-- Предзагрузка ресурсов для ускорения работы сайта -->
+    <!-- 🚀 КРИТИЧЕСКАЯ ПРЕДЗАГРУЗКА РЕСУРСОВ -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    
-    <!-- Google Fonts для выразительной типографики -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Предзагрузка критических ресурсов -->
+    <link rel="preload" href="assets/css/style.css" as="style">
+    <link rel="preload" href="assets/css/text-animation.css" as="style">
+    <link rel="preload" href="assets/css/fonts.css" as="style">
+    <link rel="preload" href="assets/js/main.js" as="script">
+    <link rel="preload" href="assets/js/performance-optimizer.js" as="script">
+    <link rel="preload" href="assets/js/smart-data-manager.js" as="script">
+    <link rel="preload" href="assets/images/LOGO.png" as="image">
+    <link rel="preload" href="assets/fonts/minecraft.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="assets/fonts/belarus.otf" as="font" type="font/otf" crossorigin>
+    
+    <!-- Предзагрузка важных изображений -->
+    <link rel="prefetch" href="assets/images/1.jpg" as="image">
+    <link rel="prefetch" href="assets/images/2.jpg" as="image">
+    <link rel="prefetch" href="assets/images/3.jpg" as="image">
+    
+    <!-- Google Fonts для выразительной типографики -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font loading optimization -->
@@ -40,17 +56,40 @@
         }
     </style>
     
-    <!-- Подключение библиотеки GSAP для сложных анимаций -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Three.js для 3D объектов -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- 🎯 ОПТИМИЗИРОВАННАЯ ЗАГРУЗКА БИБЛИОТЕК -->
+    <!-- GSAP загружается асинхронно для улучшения производительности -->
+    <script>
+        // Асинхронная загрузка GSAP
+        (function() {
+            const gsapScript = document.createElement('script');
+            gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
+            gsapScript.async = true;
+            gsapScript.onload = function() {
+                // Загружаем ScrollTrigger после GSAP
+                const scrollTriggerScript = document.createElement('script');
+                scrollTriggerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
+                scrollTriggerScript.async = true;
+                document.head.appendChild(scrollTriggerScript);
+            };
+            document.head.appendChild(gsapScript);
+        })();
+        
+        // Асинхронная загрузка Three.js (только при необходимости)
+        (function() {
+            const threeScript = document.createElement('script');
+            threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+            threeScript.async = true;
+            threeScript.defer = true;
+            document.head.appendChild(threeScript);
+        })();
+    </script>
     
     <!-- Основной файл стилей -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- Анимация текста -->
     <link rel="stylesheet" href="assets/css/text-animation.css">
+    <!-- 🚀 CSS оптимизации производительности -->
+    <link rel="stylesheet" href="assets/css/performance-optimizations.css">
     
     <style>
         /* Резервные анимации, если GSAP не загрузился */
@@ -64,14 +103,99 @@
             100% { transform: translateX(-50%); }
         }
         
+        /* 🎨 ПРЕДОТВРАЩЕНИЕ БЕЛОГО ФОНА ПРИ ЗАГРУЗКЕ */
+        html {
+            background: var(--color-bg, #0a0a0f);
+            transition: background-color 0.3s ease;
+        }
+        
+        body {
+            background: var(--color-bg, #0a0a0f);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+        
         /* Стили для состояния загрузки страницы */
         .loading {
             opacity: 0;
             transition: opacity 0.3s ease;
+            background: var(--color-bg, #0a0a0f);
         }
         
         .loaded {
             opacity: 1;
+        }
+        
+        /* 🎯 АДАПТИВНЫЙ ФОН ДЛЯ РАЗНЫХ ТЕМ */
+        .theme-dark {
+            --color-bg: #0a0a0f;
+            --color-bg-gradient: linear-gradient(135deg, #0f0f15, #1a1a2a, #2a1f3a, #1a1a2a);
+        }
+        
+        .theme-light {
+            --color-bg: #E8D5C4;
+            --color-bg-gradient: linear-gradient(135deg, #F0E6D8, #E8D5C4, #E0C8B8, #F0E6D8);
+        }
+        
+        /* 🌟 УЛУЧШЕННЫЙ ФОН С ГРАДИЕНТОМ */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg-gradient, var(--color-bg));
+            z-index: -2;
+            transition: background 0.3s ease;
+        }
+        
+        /* 🎨 ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ ФОНА */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(139, 95, 191, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(184, 169, 232, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* 🌙 ТЕМНАЯ ТЕМА - ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ */
+        .theme-dark body::after {
+            background: radial-gradient(circle at 20% 80%, rgba(139, 95, 191, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(184, 169, 232, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(107, 92, 182, 0.05) 0%, transparent 70%);
+        }
+        
+        /* ☀️ СВЕТЛАЯ ТЕМА - ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ */
+        .theme-light body::after {
+            background: radial-gradient(circle at 20% 80%, rgba(255, 138, 101, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 193, 166, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 138, 101, 0.05) 0%, transparent 70%);
+        }
+        
+        /* 🚀 ПРЕДЗАГРУЗКА ТЕМЫ ИЗ LOCALSTORAGE */
+        .theme-preload {
+            background: var(--color-bg, #0a0a0f);
+        }
+        
+        /* 📱 МОБИЛЬНЫЕ ОПТИМИЗАЦИИ */
+        @media (max-width: 768px) {
+            body::after {
+                opacity: 0.3;
+            }
+        }
+        
+        /* ⚡ ОПТИМИЗАЦИЯ ДЛЯ МЕДЛЕННЫХ СОЕДИНЕНИЙ */
+        .slow-connection body::after {
+            display: none;
         }
         
         /* Стили для игровой ссылки в терминале */
@@ -570,7 +694,68 @@
         </footer>
     </div>
 
+    <!-- 🚀 ОПТИМИЗИРОВАННАЯ ЗАГРУЗКА СКРИПТОВ -->
+    <script src="assets/js/performance-optimizer.js"></script>
+    <script src="assets/js/smart-data-manager.js"></script>
+    <script src="assets/js/performance-monitor.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/text-animation.js"></script>
+    
+    <!-- 🎯 ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ ОПТИМИЗАЦИИ -->
+    <script>
+        // 🎨 ПРЕДЗАГРУЗКА ТЕМЫ ДЛЯ ПРЕДОТВРАЩЕНИЯ БЕЛОГО ФОНА
+        (function() {
+            // Получаем сохраненную тему из localStorage
+            const savedTheme = localStorage.getItem('site-theme');
+            const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            const theme = savedTheme || (prefersLight ? 'light' : 'dark');
+            
+            // Применяем тему немедленно для предотвращения белого фона
+            document.documentElement.classList.add(theme === 'light' ? 'theme-light' : 'theme-dark');
+            document.body.classList.add('theme-preload');
+            
+            console.log('🎨 Тема предзагружена:', theme);
+        })();
+        
+        // Инициализация системы оптимизации производительности
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Инициализация системы оптимизации...');
+            
+            // Проверяем поддержку Service Worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('🔧 Service Worker зарегистрирован:', registration);
+                    })
+                    .catch(error => {
+                        console.warn('❌ Ошибка регистрации Service Worker:', error);
+                    });
+            }
+            
+            // Инициализация предзагрузки данных
+            if (window.smartDataManager) {
+                const dataConfig = [
+                    { key: 'projects-data', url: '/api/projects', priority: 2 },
+                    { key: 'skills-data', url: '/api/skills', priority: 2 },
+                    { key: 'games-data', url: '/api/games', priority: 3 }
+                ];
+                
+                window.smartDataManager.preloadData(dataConfig);
+            }
+            
+            // Инициализация мониторинга производительности
+            if (window.performanceMonitor) {
+                console.log('📊 Система мониторинга производительности активна');
+                
+                // Генерируем отчет каждые 30 секунд
+                setInterval(() => {
+                    const report = window.performanceMonitor.generateReport();
+                    console.log('📊 Отчет о производительности:', report);
+                }, 30000);
+            }
+            
+            console.log('✅ Система оптимизации инициализирована');
+        });
+    </script>
 </body>
 </html>
